@@ -1,6 +1,6 @@
 package com.example.eziketobenna.bakingapp.data.network;
 
-import com.example.eziketobenna.bakingapp.data.Recipe;
+import com.example.eziketobenna.bakingapp.data.database.Recipe;
 
 import java.util.List;
 

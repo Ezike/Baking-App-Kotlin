@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
-import com.example.eziketobenna.bakingapp.data.Recipe;
+import com.example.eziketobenna.bakingapp.data.database.Recipe;
 
 import java.util.List;
 
@@ -29,11 +29,10 @@ public class NetworkDataSource {
     private final MutableLiveData<List<Recipe>> mDownloadedRecipes;
     private final AppExecutors mExecutors;
 
-    public NetworkDataSource(Context mContext, AppExecutors mExecutors) {
-        this.mContext = mContext.getApplicationContext();
+    public NetworkDataSource(Context context, AppExecutors mExecutors) {
+        this.mContext = context.getApplicationContext();
         this.mExecutors = mExecutors;
         mDownloadedRecipes = new MutableLiveData<>();
-
     }
 
     /**
@@ -68,31 +67,28 @@ public class NetworkDataSource {
      */
     void fetchRecipes() {
         Log.d(LOG_TAG, "Fetch recipe started");
-        mExecutors.networkIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                ApiInterface apiService = ApiClient.getClient();
-                Call<List<Recipe>> call = apiService.getRecipe();
-                call.enqueue(new Callback<List<Recipe>>() {
-                    @Override
-                    public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                        int statusCode = response.code();
-                        Log.d(LOG_TAG, "onResponse: " + statusCode);
-                        List<Recipe> recipes = response.body();
-                        if (recipes != null) {
-                            Log.d(LOG_TAG, "Received " + recipes.size() + " recipes");
-                        }
-                        mDownloadedRecipes.postValue(recipes);
+        mExecutors.networkIO().execute(() -> {
+            ApiInterface apiService = ApiClient.getClient();
+            Call<List<Recipe>> call = apiService.getRecipe();
+            call.enqueue(new Callback<List<Recipe>>() {
+                @Override
+                public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                    int statusCode = response.code();
+                    Log.d(LOG_TAG, "onResponse: " + statusCode);
+                    List<Recipe> recipes = response.body();
+                    if (recipes != null) {
+                        Log.d(LOG_TAG, "Received " + recipes.size() + " recipes");
                     }
+                    mDownloadedRecipes.postValue(recipes);
+                }
 
-                    @Override
-                    public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                        t.printStackTrace();
-                        Log.d(LOG_TAG, "onFailure: " + t.getMessage());
-                    }
-                });
+                @Override
+                public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.d(LOG_TAG, "onFailure: " + t.getMessage());
+                }
+            });
 
-            }
         });
     }
 }

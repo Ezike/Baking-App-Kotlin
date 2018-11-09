@@ -1,9 +1,14 @@
-package com.example.eziketobenna.bakingapp.data;
+package com.example.eziketobenna.bakingapp.data.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "recipe")
 public class Recipe {
     @SerializedName("image")
     private String image;
@@ -17,11 +22,25 @@ public class Recipe {
     @SerializedName("ingredients")
     private List<Ingredients> ingredients;
 
+    @PrimaryKey
     @SerializedName("id")
     private int id;
 
     @SerializedName("steps")
     private List<Steps> steps;
+
+    public Recipe(String image, int servings, String name, List<Ingredients> ingredients, int id, List<Steps> steps) {
+        this.image = image;
+        this.servings = servings;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.id = id;
+        this.steps = steps;
+    }
+
+    @Ignore
+    public Recipe() {
+    }
 
     public String getImage() {
         return image;
