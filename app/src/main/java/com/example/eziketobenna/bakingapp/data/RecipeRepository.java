@@ -62,6 +62,14 @@ public class RecipeRepository {
         startFetchRecipeService();
     }
 
+    public LiveData<List<Recipe>> getAllRecipes() {
+        return mRecipeDao.getAllRecipes();
+    }
+
+    public LiveData<Recipe> getRecipeById(int id) {
+        return mRecipeDao.getRecipeById(id);
+    }
+
     /**
      * Deletes old data
      */
