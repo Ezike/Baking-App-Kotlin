@@ -29,6 +29,7 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+        <service android:name=".data.network.RecipeIntentService" />
     </application>
 
 </manifest>
