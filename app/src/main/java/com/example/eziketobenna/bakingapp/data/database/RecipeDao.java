@@ -13,13 +13,13 @@ import java.util.List;
 public interface RecipeDao {
 
     @Query("SELECT * FROM recipe")
-    LiveData<List<Recipe>> getAllRecipe();
+    LiveData<List<Recipe>> getAllRecipes();
 
     @Query("SELECT * FROM recipe WHERE id = :id")
     LiveData<Recipe> getRecipeById(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void BulkInsert(Recipe... recipes);
+    void BulkInsert(List<Recipe> recipes);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Recipe item);
@@ -28,5 +28,5 @@ public interface RecipeDao {
     void delete(Recipe item);
 
     @Query("DELETE FROM recipe")
-    void deleteAllMovies();
+    void deleteAllRecipes();
 }

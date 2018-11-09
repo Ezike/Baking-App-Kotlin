@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
+import com.example.eziketobenna.bakingapp.data.database.AppDatabase;
 import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 
 /**
@@ -11,9 +12,10 @@ import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
  */
 public class InjectorUtils {
     public static RecipeRepository provideRepository(Context context) {
+        AppDatabase appDatabase = AppDatabase.getInstance(context.getApplicationContext());
         AppExecutors executors = AppExecutors.getInstance();
         NetworkDataSource networkDataSource = NetworkDataSource.getInstance(context.getApplicationContext(), executors);
-        return RecipeRepository.getInstance(networkDataSource, executors);
+        return RecipeRepository.getInstance(appDatabase.recipeDao(), networkDataSource, executors);
     }
 
     public static NetworkDataSource provideNetworkDataSource(Context context) {

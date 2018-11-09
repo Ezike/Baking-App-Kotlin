@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
 import com.example.eziketobenna.bakingapp.data.database.Recipe;
+import com.example.eziketobenna.bakingapp.data.database.RecipeDao;
 import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 
 import java.util.List;
@@ -18,28 +19,35 @@ public class RecipeRepository {
     // For Singleton instantiation
     private static final Object LOCK = new Object();
     private static RecipeRepository sInstance;
+    private final RecipeDao mRecipeDao;
     private final NetworkDataSource mNetworkDataSource;
     private AppExecutors mExecutors;
     private boolean mInitialized = false;
 
-    private RecipeRepository(NetworkDataSource networkDataSource, AppExecutors executors) {
+    private RecipeRepository(RecipeDao recipeDao, NetworkDataSource networkDataSource, AppExecutors executors) {
+        mRecipeDao = recipeDao;
         mNetworkDataSource = networkDataSource;
         mExecutors = executors;
 
         // As long as the repository exists, observe the network LiveData.
         // If that LiveData changes, update the database.
         LiveData<List<Recipe>> networkData = mNetworkDataSource.getRecipes();
-        networkData.observeForever(recipes -> mExecutors.diskIO().execute(() -> {
-
+        networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(() -> {
+            // delete old data
+            deleteOldData();
+            Log.d(LOG_TAG, "Old weather deleted");
+            // Insert our new weather data into Sunshine's database
+            mRecipeDao.BulkInsert(newRecipes);
+            Log.d(LOG_TAG, "New values inserted");
         }));
     }
 
-    public synchronized static RecipeRepository getInstance(
-            NetworkDataSource networkDataSource, AppExecutors executors) {
+    public synchronized static RecipeRepository getInstance(RecipeDao recipeDao,
+                                                            NetworkDataSource networkDataSource, AppExecutors executors) {
         Log.d(LOG_TAG, "Getting repository");
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new RecipeRepository(networkDataSource, executors);
+                sInstance = new RecipeRepository(recipeDao, networkDataSource, executors);
                 Log.d(LOG_TAG, "Made new repository");
             }
         }
@@ -53,6 +61,14 @@ public class RecipeRepository {
         mInitialized = true;
         startFetchRecipeService();
     }
+
+    /**
+     * Deletes old data
+     */
+    private void deleteOldData() {
+        mRecipeDao.deleteAllRecipes();
+    }
+
 
     /**
      * Fetch recipes in the background
