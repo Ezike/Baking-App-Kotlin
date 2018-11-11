@@ -3,6 +3,7 @@ package com.example.eziketobenna.bakingapp.data.database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -19,6 +20,7 @@ public class Recipe {
     @SerializedName("name")
     private String name;
 
+    @TypeConverters(IngredientListConverter.class)
     @SerializedName("ingredients")
     private List<Ingredients> ingredients;
 
@@ -26,6 +28,7 @@ public class Recipe {
     @SerializedName("id")
     private int id;
 
+    @TypeConverters(StepListConverter.class)
     @SerializedName("steps")
     private List<Steps> steps;
 

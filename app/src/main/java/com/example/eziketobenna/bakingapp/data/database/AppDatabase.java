@@ -3,6 +3,7 @@ package com.example.eziketobenna.bakingapp.data.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 
 // List of the entry classes and associated TypeConverters
 @Database(entities = Recipe.class, version = 1, exportSchema = false)
+@TypeConverters({IngredientListConverter.class, StepListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final String DB_NAME = "recipe_db";
