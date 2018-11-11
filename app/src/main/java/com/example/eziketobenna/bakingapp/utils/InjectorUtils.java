@@ -6,6 +6,7 @@ import com.example.eziketobenna.bakingapp.AppExecutors;
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
 import com.example.eziketobenna.bakingapp.data.database.AppDatabase;
 import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
+import com.example.eziketobenna.bakingapp.ui.RecipeViewModelFactoy;
 
 /**
  * Provides static methods to inject the various classes needed for Sunshine
@@ -22,5 +23,10 @@ public class InjectorUtils {
         AppExecutors executors = AppExecutors.getInstance();
         return NetworkDataSource.getInstance(context.getApplicationContext(), executors);
 
+    }
+
+    public static RecipeViewModelFactoy provideRecipeViewModelFactory(Context context) {
+        RecipeRepository repository = provideRepository(context.getApplicationContext());
+        return new RecipeViewModelFactoy(repository);
     }
 }
