@@ -14,7 +14,7 @@ class IngredientListConverter {
     private static Gson gson = new Gson();
 
     @TypeConverter
-    static List<Ingredients> toList(String string) {
+    public static List<Ingredients> toList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -24,7 +24,7 @@ class IngredientListConverter {
     }
 
     @TypeConverter
-    static String toString(List<Ingredients> ingredientList) {
+    public static String toString(List<Ingredients> ingredientList) {
         return ingredientList == null ? null : gson.toJson(ingredientList);
     }
 }

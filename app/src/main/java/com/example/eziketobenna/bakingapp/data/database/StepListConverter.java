@@ -14,7 +14,7 @@ class StepListConverter {
     private static Gson gson = new Gson();
 
     @TypeConverter
-    static List<Steps> StringToStepsList(String string) {
+    public static List<Steps> StringToStepsList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -24,7 +24,7 @@ class StepListConverter {
     }
 
     @TypeConverter
-    static String StepListToString(List<Steps> stepsList) {
+    public static String StepListToString(List<Steps> stepsList) {
         return stepsList == null ? null : gson.toJson(stepsList);
     }
 }

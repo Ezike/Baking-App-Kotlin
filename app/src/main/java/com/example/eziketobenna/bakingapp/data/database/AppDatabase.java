@@ -14,7 +14,7 @@ import android.util.Log;
  */
 
 // List of the entry classes and associated TypeConverters
-@Database(entities = Recipe.class, version = 1, exportSchema = false)
+@Database(entities = {Recipe.class, Steps.class}, version = 1, exportSchema = false)
 @TypeConverters({IngredientListConverter.class, StepListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();

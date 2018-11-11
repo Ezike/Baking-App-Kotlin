@@ -1,7 +1,12 @@
 package com.example.eziketobenna.bakingapp.data.database;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "steps")
 public class Steps {
     @SerializedName("videoURL")
     private String videoURL;
@@ -9,6 +14,7 @@ public class Steps {
     @SerializedName("description")
     private String description;
 
+    @PrimaryKey
     @SerializedName("id")
     private int id;
 
@@ -18,6 +24,7 @@ public class Steps {
     @SerializedName("thumbnailURL")
     private String thumbnailURL;
 
+    @Ignore
     public Steps() {
     }
 
