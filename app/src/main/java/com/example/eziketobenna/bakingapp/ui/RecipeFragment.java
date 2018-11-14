@@ -20,12 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
+import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
 import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,12 +30,12 @@ import butterknife.ButterKnife;
 public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClickListener {
     public final static String LIST_STATE_KEY = "list_state";
     private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
-    @BindView(R.id.main_rv)
     RecyclerView mRecyclerView;
     private RecipeAdapter mAdapter;
     private Context mContext;
     private Parcelable listState;
     private GridLayoutManager gridLayoutManager;
+    FragmentRecipeBinding binding;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -49,8 +46,9 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
                              Bundle savedInstanceState) {
         mContext = getActivity();
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        initViews(view);
+        binding = FragmentRecipeBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        initViews();
         checkOrientation();
         setUpViewModel();
         return view;
@@ -92,8 +90,8 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     }
 
     // Initial views
-    private void initViews(View view) {
-        ButterKnife.bind(this, view);
+    private void initViews() {
+        mRecyclerView = binding.mainRv;
         gridLayoutManager = new GridLayoutManager(mContext, 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
