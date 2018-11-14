@@ -4,9 +4,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
 
+import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.database.IngredientListConverter;
 import com.example.eziketobenna.bakingapp.data.database.StepListConverter;
+import com.example.eziketobenna.bakingapp.utils.GlideApp;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -45,6 +49,15 @@ public class Recipe {
 
     @Ignore
     public Recipe() {
+    }
+
+    @BindingAdapter({"image"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        GlideApp.with(view.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(view);
     }
 
     public String getImage() {
