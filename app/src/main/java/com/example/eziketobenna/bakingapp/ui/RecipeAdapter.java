@@ -17,7 +17,6 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private List<Recipe> mRecipeList;
     private Context mContext;
-    private LayoutInflater layoutInflater;
     private RecipeClickListener mListener;
 
     public RecipeAdapter(Context context) {
@@ -27,7 +26,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         ContentMainBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.content_main, viewGroup,
                 false);
         return new ViewHolder(binding.getRoot());

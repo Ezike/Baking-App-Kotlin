@@ -15,15 +15,12 @@
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/sixteen_dp"
+        android:layout_margin="@dimen/twenty_dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/hello_blank_fragment"
-        app:cardCornerRadius="@dimen/eight_dp"
-        app:cardElevation="@dimen/two_dp"
+        app:cardCornerRadius="@dimen/four_dp"
+        app:cardElevation="@dimen/six_dp"
         app:cardPreventCornerOverlap="true"
-        app:strokeColor="@color/colorAccent"
-        app:strokeWidth="@dimen/one_dp"
         tools:context=".ui.RecipeFragment"
         tools:targetApi="lollipop">
 
@@ -52,11 +49,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/sixteen_dp"
-                android:lineSpacingExtra="8dp"
+                android:gravity="center"
                 android:text="@{recipe.name}"
+                android:lineSpacingExtra="@dimen/four_dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_image" />
         </android.support.constraint.ConstraintLayout>

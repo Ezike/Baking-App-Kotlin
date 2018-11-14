@@ -59,7 +59,9 @@ public class NetworkDataSource {
      */
     public void startFetchRecipeService() {
         Intent intentToFetch = new Intent(mContext, RecipeIntentService.class);
+        mContext.startService(intentToFetch);
         Log.d(LOG_TAG, "Service created");
+
     }
 
     /*

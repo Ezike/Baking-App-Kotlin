@@ -32,13 +32,16 @@ public class RecipeRepository {
         // As long as the repository exists, observe the network LiveData.
         // If that LiveData changes, update the database.
         LiveData<List<Recipe>> networkData = mNetworkDataSource.getRecipes();
-        networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(() -> {
-            // delete old data
-            deleteOldData();
-            Log.d(LOG_TAG, "Old weather deleted");
-            // Insert our new weather data into Sunshine's database
-            mRecipeDao.BulkInsert(newRecipes);
-            Log.d(LOG_TAG, "New values inserted");
+        networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                // delete old data
+                RecipeRepository.this.deleteOldData();
+                Log.d(LOG_TAG, "Old weather deleted");
+                // Insert our new weather data into Sunshine's database
+                mRecipeDao.BulkInsert(newRecipes);
+                Log.d(LOG_TAG, "New values inserted");
+            }
         }));
     }
 
@@ -63,10 +66,12 @@ public class RecipeRepository {
     }
 
     public LiveData<List<Recipe>> getAllRecipes() {
+        initializeData();
         return mRecipeDao.getAllRecipes();
     }
 
     public LiveData<Recipe> getRecipeById(int id) {
+        initializeData();
         return mRecipeDao.getRecipeById(id);
     }
 

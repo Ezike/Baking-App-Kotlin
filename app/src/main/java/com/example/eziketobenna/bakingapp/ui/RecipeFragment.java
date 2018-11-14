@@ -1,9 +1,10 @@
 package com.example.eziketobenna.bakingapp.ui;
 
 
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,14 +15,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
-import com.example.eziketobenna.bakingapp.utils.GridSpacingItemDecoration;
+import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +51,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
         initViews(view);
         checkOrientation();
+
+        // Setup ViewModel
+        RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
+        RecipeViewModel viewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
+        viewModel.getAllRecipes().observe((LifecycleOwner) mContext, recipes -> mAdapter.setRecipes(recipes));
         return view;
     }
 
@@ -67,12 +72,22 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
     }
 
+    // Check if there is internet connection
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
     // Initial views
     private void initViews(View view) {
         ButterKnife.bind(this, view);
         gridLayoutManager = new GridLayoutManager(mContext, 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, dpToPx(4), true));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
@@ -89,25 +104,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             gridLayoutManager = new GridLayoutManager(mContext, 4);
             mRecyclerView.setLayoutManager(gridLayoutManager);
         }
-    }
-
-    // Check if there is internet connection
-    private boolean isConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connectivityManager != null) {
-            networkInfo = connectivityManager.getActiveNetworkInfo();
-        }
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
     @Override

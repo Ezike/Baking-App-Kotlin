@@ -4,9 +4,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import com.example.eziketobenna.bakingapp.BR;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.database.IngredientListConverter;
 import com.example.eziketobenna.bakingapp.data.database.StepListConverter;
@@ -16,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @Entity(tableName = "recipe")
-public class Recipe {
+public class Recipe extends BaseObservable {
     @SerializedName("image")
     private String image;
 
@@ -60,12 +63,14 @@ public class Recipe {
                 .into(view);
     }
 
+    @Bindable
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+        notifyPropertyChanged(BR.image);
     }
 
     public int getServings() {
@@ -76,12 +81,14 @@ public class Recipe {
         this.servings = servings;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
     public List<Ingredients> getIngredients() {
