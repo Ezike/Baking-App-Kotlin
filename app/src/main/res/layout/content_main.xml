@@ -15,7 +15,7 @@
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/twenty_dp"
+        android:layout_margin="@dimen/sixteen_dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/hello_blank_fragment"
         app:cardCornerRadius="@dimen/four_dp"

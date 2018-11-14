@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,12 +52,19 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
         initViews(view);
         checkOrientation();
+        setUpViewModel();
+        return view;
+    }
 
-        // Setup ViewModel
+    // Setup ViewModel
+    private void setUpViewModel() {
+        Log.d(LOG_TAG, "Viewmodel setup");
         RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
         RecipeViewModel viewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
-        viewModel.getAllRecipes().observe((LifecycleOwner) mContext, recipes -> mAdapter.setRecipes(recipes));
-        return view;
+        viewModel.getAllRecipes().observe((LifecycleOwner) mContext, recipes -> {
+            Log.d(LOG_TAG, "Displaying recipes in fragment");
+            mAdapter.setRecipes(recipes);
+        });
     }
 
     @Override
@@ -108,6 +116,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     @Override
     public void onRecipeClick(Recipe recipe) {
-
+        Log.d(LOG_TAG, "Recipe clicked");
     }
 }
