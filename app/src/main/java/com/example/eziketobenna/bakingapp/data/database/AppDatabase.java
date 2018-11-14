@@ -7,6 +7,9 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eziketobenna.bakingapp.data.model.Recipe;
+import com.example.eziketobenna.bakingapp.data.model.Steps;
+
 
 /**
  * {@link AppDatabase} database for the application including a table for {@link Recipe}

@@ -1,10 +1,12 @@
-package com.example.eziketobenna.bakingapp.data.database;
+package com.example.eziketobenna.bakingapp.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import com.example.eziketobenna.bakingapp.data.database.IngredientListConverter;
+import com.example.eziketobenna.bakingapp.data.database.StepListConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

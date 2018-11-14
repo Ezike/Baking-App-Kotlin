@@ -1,7 +1,7 @@
 package com.example.eziketobenna.bakingapp.ui;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider.NewInstanceFactory;
+import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
@@ -10,10 +10,11 @@ import com.example.eziketobenna.bakingapp.data.RecipeRepository;
  * Factory method that allows us to create a ViewModel with a constructor that takes a
  * {@link RecipeRepository}
  */
-public class RecipeViewModelFactoy extends NewInstanceFactory {
+public class RecipeViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+
     private final RecipeRepository mRepository;
 
-    public RecipeViewModelFactoy(RecipeRepository mRepository) {
+    public RecipeViewModelFactory(RecipeRepository mRepository) {
         this.mRepository = mRepository;
     }
 

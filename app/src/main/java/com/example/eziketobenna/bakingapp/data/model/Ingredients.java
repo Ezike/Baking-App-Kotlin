@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.data.database;
+package com.example.eziketobenna.bakingapp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

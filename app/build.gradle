@@ -43,12 +43,16 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    def lifecycle_version = "1.1.1"
-
     // ViewModel and LiveData
+    def lifecycle_version = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
     implementation "android.arch.persistence.room:runtime:$lifecycle_version"
     annotationProcessor "android.arch.persistence.room:compiler:$lifecycle_version"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
 
 }

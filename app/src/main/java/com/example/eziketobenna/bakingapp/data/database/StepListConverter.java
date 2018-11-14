@@ -2,6 +2,7 @@ package com.example.eziketobenna.bakingapp.data.database;
 
 import android.arch.persistence.room.TypeConverter;
 
+import com.example.eziketobenna.bakingapp.data.model.Steps;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -9,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-class StepListConverter {
+public class StepListConverter {
 
     private static Gson gson = new Gson();
 

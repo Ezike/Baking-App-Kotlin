@@ -4,8 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
-import com.example.eziketobenna.bakingapp.data.database.Recipe;
 import com.example.eziketobenna.bakingapp.data.database.RecipeDao;
+import com.example.eziketobenna.bakingapp.data.model.Recipe;
 import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
-import com.example.eziketobenna.bakingapp.data.database.Recipe;
+import com.example.eziketobenna.bakingapp.data.model.Recipe;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class NetworkDataSource {
     private final AppExecutors mExecutors;
 
     public NetworkDataSource(Context context, AppExecutors mExecutors) {
-        this.mContext = context.getApplicationContext();
+        mContext = context.getApplicationContext();
         this.mExecutors = mExecutors;
         mDownloadedRecipes = new MutableLiveData<>();
     }
