@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
 import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
 import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +32,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     public final static String LIST_STATE_KEY = "list_state";
     private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
     RecyclerView mRecyclerView;
+    ShimmerFrameLayout mShimmer;
     private RecipeAdapter mAdapter;
     private Context mContext;
     private Parcelable listState;
@@ -47,6 +49,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         mContext = getActivity();
         // Inflate the layout for this fragment
         binding = FragmentRecipeBinding.inflate(inflater, container, false);
+
         View view = binding.getRoot();
         initViews();
         checkOrientation();
@@ -91,6 +94,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Initial views
     private void initViews() {
+        mShimmer = binding.shimmer;
         mRecyclerView = binding.mainRv;
         gridLayoutManager = new GridLayoutManager(mContext, 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
@@ -110,6 +114,18 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             gridLayoutManager = new GridLayoutManager(mContext, 4);
             mRecyclerView.setLayoutManager(gridLayoutManager);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmer.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mShimmer.stopShimmer();
     }
 
     @Override

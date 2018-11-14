@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,15 +9,22 @@
         tools:context=".ui.RecipeFragment">
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_view_container"
+            android:id="@+id/shimmer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="top|center"
             android:orientation="vertical"
-            app:shimmer_duration="800">
+            app:shimmer_duration="900">
 
-            <include layout="@layout/recipe_placeholder_item" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <include layout="@layout/recipe_placeholder_item" />
+
+
+            </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <android.support.v7.widget.RecyclerView

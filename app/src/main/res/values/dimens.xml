@@ -15,6 +15,6 @@
     <dimen name="forty_eight_dp">48dp</dimen>
     <dimen name="one_dp">1dp</dimen>
     <dimen name="six_dp">6dp</dimen>
-    <dimen name="one_fifty_dp">150dp</dimen>
-    <dimen name="one_eighty_dp">180dp</dimen>
+    <dimen name="two_hundred_dp">200dp</dimen>
+    <dimen name="two_forty_dp">240dp</dimen>
 </resources>
