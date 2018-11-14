@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eziketobenna.bakingapp.R;
@@ -17,21 +18,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private List<Recipe> mRecipeList;
     private Context mContext;
     private LayoutInflater layoutInflater;
+    private RecipeClickListener mListener;
 
-    public RecipeAdapter(List<Recipe> recipeList, Context context) {
-        mRecipeList = recipeList;
+    public RecipeAdapter(Context context) {
         mContext = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (layoutInflater == null) {
-            layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        }
+        layoutInflater = LayoutInflater.from(viewGroup.getContext());
         ContentMainBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.content_main, viewGroup,
                 false);
-        return new ViewHolder(binding);
+        return new ViewHolder(binding.getRoot());
     }
 
     @Override
@@ -42,20 +41,38 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRecipeList == null ? 0 : mRecipeList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+
+    public void setRecipes(List<Recipe> recipes) {
+        mRecipeList = recipes;
+        notifyDataSetChanged();
+    }
+
+    public interface RecipeClickListener {
+        void onRecipeClick(Recipe recipe);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ContentMainBinding binding;
 
-        public ViewHolder(@NonNull final ContentMainBinding itemBinding) {
-            super(itemBinding.getRoot());
-            this.binding = itemBinding;
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(this);
         }
 
         void bind(Recipe recipe) {
             binding.setRecipe(recipe);
             binding.executePendingBindings();
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Recipe recipe = mRecipeList.get(position);
+
         }
     }
 }
