@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.ui;
+package com.example.eziketobenna.bakingapp.ui.recipes;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

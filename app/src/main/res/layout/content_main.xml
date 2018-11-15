@@ -21,7 +21,7 @@
         app:cardCornerRadius="@dimen/four_dp"
         app:cardElevation="@dimen/six_dp"
         app:cardPreventCornerOverlap="true"
-        tools:context=".ui.RecipeFragment"
+        tools:context=".ui.recipes.RecipeFragment"
         tools:targetApi="lollipop">
 
         <android.support.constraint.ConstraintLayout

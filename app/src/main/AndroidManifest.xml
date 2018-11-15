@@ -7,13 +7,13 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:fullBackupContent="@xml/backup_descriptor"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.recipes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,28 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <service android:name=".data.network.RecipeIntentService" />
+
+        <activity android:name=".ui.details.DetailActivity" />
+        <activity
+            android:name=".ui.details.StepListActivity"
+            android:label="@string/title_step_list"
+            android:parentActivityName=".ui.recipes.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.eziketobenna.bakingapp.ui.recipes.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.details.StepDetailActivity"
+            android:label="@string/title_step_detail"
+            android:parentActivityName=".ui.details.StepListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.eziketobenna.bakingapp.ui.details.StepListActivity" />
+        </activity>
     </application>
 
 </manifest>

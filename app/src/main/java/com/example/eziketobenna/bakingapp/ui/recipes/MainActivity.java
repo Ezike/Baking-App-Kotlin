@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.ui;
+package com.example.eziketobenna.bakingapp.ui.recipes;
 
 import android.os.Build;
 import android.os.Bundle;

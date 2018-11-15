@@ -5,4 +5,6 @@
     <string name="no_internet">Check your internet connection</string>
     <string name="retry">Retry</string>
     <string name="error">An error occurred</string>
+    <string name="title_step_list">Steps</string>
+    <string name="title_step_detail">Step Detail</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.ui;
+package com.example.eziketobenna.bakingapp.ui.recipes;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -19,8 +19,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private Context mContext;
     private RecipeClickListener mListener;
 
-    public RecipeAdapter(Context context) {
+    RecipeAdapter(Context context, RecipeClickListener listener) {
         mContext = context;
+        mListener = listener;
     }
 
     @NonNull
@@ -71,6 +72,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public void onClick(View v) {
             int position = getAdapterPosition();
             Recipe recipe = mRecipeList.get(position);
+            mListener.onRecipeClick(recipe);
 
         }
     }

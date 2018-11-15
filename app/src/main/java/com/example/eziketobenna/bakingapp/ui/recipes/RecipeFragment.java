@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.ui;
+package com.example.eziketobenna.bakingapp.ui.recipes;
 
 
 import android.arch.lifecycle.LifecycleOwner;
@@ -67,16 +67,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         return view;
     }
 
-    private void checkIfConnected() {
-        if (!isConnected() && mList == null) {
-            showSnackBar();
-            mShimmer.startShimmer();
-        } else {
-            mShimmer.setVisibility(View.GONE);
-            mShimmer.stopShimmer();
-        }
-    }
-
     // Initial views
     private void initViews() {
         mFrameLayout = binding.mainFrame;
@@ -87,7 +77,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
-        mAdapter = new RecipeAdapter(mContext);
+        mAdapter = new RecipeAdapter(mContext, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -106,6 +96,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Set the recipes from database to the RecyclerView Adapter
     private void setRecipesToAdapter(List<Recipe> recipes) {
+        mShimmer.startShimmer();
         if (recipes != null && recipes.size() != 0) {
             mAdapter.setRecipes(recipes);
             mList = recipes;
@@ -116,6 +107,16 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             mShimmer.stopShimmer();
             mShimmer.setVisibility(View.GONE);
 
+        }
+    }
+
+    private void checkIfConnected() {
+        if (!isConnected() && mList == null) {
+            showSnackBar();
+            mShimmer.startShimmer();
+        } else {
+            mShimmer.setVisibility(View.GONE);
+            mShimmer.stopShimmer();
         }
     }
 
