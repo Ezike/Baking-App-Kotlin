@@ -1,12 +1,15 @@
 package com.example.eziketobenna.bakingapp.data.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.example.eziketobenna.bakingapp.BR;
 import com.google.gson.annotations.SerializedName;
 
-public class Step implements Parcelable {
+public class Step extends BaseObservable implements Parcelable {
     @SerializedName("videoURL")
     private String videoURL;
 
@@ -61,6 +64,7 @@ public class Step implements Parcelable {
         this.videoURL = videoURL;
     }
 
+
     public String getDescription() {
         return description;
     }
@@ -77,12 +81,14 @@ public class Step implements Parcelable {
         this.id = id;
     }
 
+    @Bindable
     public String getShortDescription() {
         return shortDescription;
     }
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+        notifyPropertyChanged(BR.shortDescription);
     }
 
     public String getThumbnailURL() {

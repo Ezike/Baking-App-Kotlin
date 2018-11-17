@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Ingredient;
 import com.example.eziketobenna.bakingapp.data.model.Step;
+import com.example.eziketobenna.bakingapp.databinding.IngredientListContentBinding;
+import com.example.eziketobenna.bakingapp.databinding.StepListContentBinding;
 
 import java.util.List;
 
@@ -40,16 +43,19 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         switch (i) {
             case INGREDIENT:
-                View ingredientView = inflater.inflate(R.layout.step_list_content, viewGroup, false);
-                holder = new IngredientViewHolder(ingredientView);
+                IngredientListContentBinding ingredientListContentBinding = DataBindingUtil
+                        .inflate(inflater, R.layout.ingredient_list_content, viewGroup, false);
+                holder = new IngredientViewHolder(ingredientListContentBinding.getRoot());
                 break;
             case STEP:
-                View stepView = inflater.inflate(R.layout.step_list_content, viewGroup, false);
-                holder = new StepViewHolder(stepView);
+                StepListContentBinding stepListContentBinding = DataBindingUtil
+                        .inflate(inflater, R.layout.step_list_content, viewGroup, false);
+                holder = new StepViewHolder(stepListContentBinding.getRoot());
                 break;
             default:
-                View view = inflater.inflate(R.layout.step_list_content, viewGroup, false);
-                holder = new StepViewHolder(view);
+                stepListContentBinding = DataBindingUtil
+                        .inflate(inflater, R.layout.step_list_content, viewGroup, false);
+                holder = new StepViewHolder(stepListContentBinding.getRoot());
                 break;
         }
         return holder;
@@ -61,12 +67,18 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (viewHolder.getItemViewType()) {
             case INGREDIENT:
                 IngredientViewHolder ingredientViewHolder = (IngredientViewHolder) viewHolder;
+                Ingredient ingredient = (Ingredient) mDataSet.get(i);
+                ingredientViewHolder.bind(ingredient);
                 break;
             case STEP:
                 StepViewHolder stepViewHolder = (StepViewHolder) viewHolder;
+                Step step = (Step) mDataSet.get(i);
+                stepViewHolder.bind(step);
                 break;
             default:
                 StepViewHolder view = (StepViewHolder) viewHolder;
+                step = (Step) mDataSet.get(i);
+                view.bind(step);
                 break;
         }
     }
@@ -77,14 +89,30 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     class StepViewHolder extends RecyclerView.ViewHolder {
+        private final StepListContentBinding stepBinding;
+
         StepViewHolder(@NonNull View itemView) {
             super(itemView);
+            stepBinding = DataBindingUtil.bind(itemView);
+        }
+
+        void bind(Step step) {
+            stepBinding.setStep(step);
+            stepBinding.executePendingBindings();
         }
     }
 
     class IngredientViewHolder extends RecyclerView.ViewHolder {
+        private final IngredientListContentBinding ingredientBinding;
+
         IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
+            ingredientBinding = DataBindingUtil.bind(itemView);
+        }
+
+        void bind(Ingredient ingredient) {
+            ingredientBinding.setIngredient(ingredient);
+            ingredientBinding.executePendingBindings();
         }
     }
 }

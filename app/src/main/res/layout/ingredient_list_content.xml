@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/ingredient_list"
+    <data>
+
+        <variable
+            name="ingredient"
+            type="com.example.eziketobenna.bakingapp.data.model.Ingredient" />
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:text="@string/ingredients_title_text"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</RelativeLayout>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ingredient_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@{ingredient.ingredient}"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </RelativeLayout>
+</layout>

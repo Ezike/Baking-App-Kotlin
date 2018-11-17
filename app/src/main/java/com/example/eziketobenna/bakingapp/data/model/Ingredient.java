@@ -1,12 +1,15 @@
 package com.example.eziketobenna.bakingapp.data.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.example.eziketobenna.bakingapp.BR;
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient implements Parcelable {
+public class Ingredient extends BaseObservable implements Parcelable {
     @SerializedName("quantity")
     private Double quantity;
 
@@ -63,12 +66,14 @@ public class Ingredient implements Parcelable {
         this.measure = measure;
     }
 
+    @Bindable
     public String getIngredient() {
         return ingredient;
     }
 
     public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
+        notifyPropertyChanged(BR.ingredient);
     }
 
     @Override
