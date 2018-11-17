@@ -65,7 +65,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         checkOrientation();
         setUpViewModel();
         checkIfConnected();
-
         return view;
     }
 
@@ -174,7 +173,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         in.putExtra(StepListActivity.INTENT_EXTRA, recipe);
         in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(in);
-
         Log.d(LOG_TAG, "Recipe clicked");
     }
 }

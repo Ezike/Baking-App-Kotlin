@@ -33,24 +33,14 @@ public class Recipe extends BaseObservable implements Parcelable {
     @SerializedName("name")
     private String name;
 
-    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
-
     @PrimaryKey
     @SerializedName("id")
     private int id;
+
     @TypeConverters(IngredientListConverter.class)
     @SerializedName("ingredients")
     private List<Ingredient> ingredients;
+
     @TypeConverters(StepListConverter.class)
     @SerializedName("steps")
     private List<Step> steps;
@@ -67,6 +57,18 @@ public class Recipe extends BaseObservable implements Parcelable {
         this.id = id;
         this.steps = steps;
     }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     protected Recipe(Parcel in) {
         image = in.readString();

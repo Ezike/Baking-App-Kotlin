@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +21,14 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int STEP = 1;
     private boolean isTwoPane;
     private List<Object> mDataSet;
+    StepClickListener mListener;
+    Context mContext;
 
-    public DetailAdapter(List<Object> mDataSet, boolean isTwoPane) {
+    public DetailAdapter(Context context, List<Object> mDataSet, boolean isTwoPane, StepClickListener listener) {
+        mContext = context;
         this.mDataSet = mDataSet;
         this.isTwoPane = isTwoPane;
+        mListener = listener;
     }
 
     @Override
@@ -68,17 +73,23 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case INGREDIENT:
                 IngredientViewHolder ingredientViewHolder = (IngredientViewHolder) viewHolder;
                 Ingredient ingredient = (Ingredient) mDataSet.get(i);
-                ingredientViewHolder.bind(ingredient);
+                if (ingredient != null) {
+                    ingredientViewHolder.bind(ingredient);
+                }
                 break;
             case STEP:
                 StepViewHolder stepViewHolder = (StepViewHolder) viewHolder;
                 Step step = (Step) mDataSet.get(i);
-                stepViewHolder.bind(step);
+                if (step != null) {
+                    stepViewHolder.bind(step);
+                }
                 break;
             default:
                 StepViewHolder view = (StepViewHolder) viewHolder;
                 step = (Step) mDataSet.get(i);
-                view.bind(step);
+                if (step != null) {
+                    view.bind(step);
+                }
                 break;
         }
     }
@@ -88,17 +99,29 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return mDataSet == null ? 0 : mDataSet.size();
     }
 
-    class StepViewHolder extends RecyclerView.ViewHolder {
+    public interface StepClickListener {
+        void onStepClick(Step step);
+    }
+
+    class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final StepListContentBinding stepBinding;
 
         StepViewHolder(@NonNull View itemView) {
             super(itemView);
             stepBinding = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(this);
         }
 
         void bind(Step step) {
             stepBinding.setStep(step);
             stepBinding.executePendingBindings();
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Step step = (Step) mDataSet.get(position);
+            mListener.onStepClick(step);
         }
     }
 
