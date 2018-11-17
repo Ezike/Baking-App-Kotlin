@@ -8,7 +8,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
-import com.example.eziketobenna.bakingapp.data.model.Steps;
 
 
 /**
@@ -17,7 +16,7 @@ import com.example.eziketobenna.bakingapp.data.model.Steps;
  */
 
 // List of the entry classes and associated TypeConverters
-@Database(entities = {Recipe.class, Steps.class}, version = 1, exportSchema = false)
+@Database(entities = Recipe.class, version = 2, exportSchema = false)
 @TypeConverters({IngredientListConverter.class, StepListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
@@ -30,7 +29,8 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (sInstance == null) {
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, DB_NAME).build();
+                            AppDatabase.class, DB_NAME).fallbackToDestructiveMigration()
+                            .build();
                     Log.d(LOG_TAG, "Made new database");
                 }
 

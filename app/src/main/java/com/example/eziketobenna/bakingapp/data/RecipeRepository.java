@@ -67,18 +67,12 @@ public class RecipeRepository {
         return mRecipeDao.getAllRecipes();
     }
 
-    public LiveData<Recipe> getRecipeById(int id) {
-        initializeData();
-        return mRecipeDao.getRecipeById(id);
-    }
-
     /**
      * Deletes old data
      */
     private void deleteOldData() {
         mRecipeDao.deleteAllRecipes();
     }
-
 
     /**
      * Fetch recipes in the background

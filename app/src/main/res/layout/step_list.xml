@@ -6,8 +6,7 @@
     android:name="com.example.eziketobenna.bakingapp.ui.details.StepListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="@dimen/sixteen_dp"
+    android:layout_marginRight="@dimen/sixteen_dp"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    tools:context=".ui.details.StepListActivity"
-    tools:listitem="@layout/step_list_content" />
+    tools:context=".ui.details.StepListActivity" />

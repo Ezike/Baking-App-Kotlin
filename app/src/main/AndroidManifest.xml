@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.recipes.MainActivity">
+        <activity
+            android:name=".ui.recipes.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +35,6 @@
 
         <service android:name=".data.network.RecipeIntentService" />
 
-        <activity android:name=".ui.details.DetailActivity" />
         <activity
             android:name=".ui.details.StepListActivity"
             android:label="@string/title_step_list"

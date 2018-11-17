@@ -4,6 +4,7 @@ package com.example.eziketobenna.bakingapp.ui.recipes;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -25,6 +26,7 @@ import android.widget.FrameLayout;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
 import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
+import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
 import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -168,6 +170,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     @Override
     public void onRecipeClick(Recipe recipe) {
+        Intent in = new Intent(mContext, StepListActivity.class);
+        in.putExtra(StepListActivity.INTENT_EXTRA, recipe);
+        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(in);
+
         Log.d(LOG_TAG, "Recipe clicked");
     }
 }

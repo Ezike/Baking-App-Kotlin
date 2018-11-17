@@ -13,7 +13,7 @@
     tools:context=".ui.details.StepListActivity">
 
     <!--
-    This layout is a two-pane layout for the Steps
+    This layout is a two-pane layout for the Step
     master/detail flow.
     
     -->
@@ -27,8 +27,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context="com.example.eziketobenna.bakingapp.ui.details.StepListActivity"
-        tools:listitem="@layout/step_list_content" />
+        tools:context="com.example.eziketobenna.bakingapp.ui.details.StepListActivity" />
 
     <FrameLayout
         android:id="@+id/step_detail_container"

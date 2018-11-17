@@ -73,7 +73,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             int position = getAdapterPosition();
             Recipe recipe = mRecipeList.get(position);
             mListener.onRecipeClick(recipe);
-
         }
     }
 }

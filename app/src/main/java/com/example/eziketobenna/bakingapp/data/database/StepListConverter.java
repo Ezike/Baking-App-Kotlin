@@ -2,7 +2,7 @@ package com.example.eziketobenna.bakingapp.data.database;
 
 import android.arch.persistence.room.TypeConverter;
 
-import com.example.eziketobenna.bakingapp.data.model.Steps;
+import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,17 +15,17 @@ public class StepListConverter {
     private static Gson gson = new Gson();
 
     @TypeConverter
-    public static List<Steps> StringToStepsList(String string) {
+    public static List<Step> StringToStepsList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
-        Type stepListType = new TypeToken<List<Steps>>() {
+        Type stepListType = new TypeToken<List<Step>>() {
         }.getType();
         return gson.fromJson(string, stepListType);
     }
 
     @TypeConverter
-    public static String StepListToString(List<Steps> stepsList) {
-        return stepsList == null ? null : gson.toJson(stepsList);
+    public static String StepListToString(List<Step> stepList) {
+        return stepList == null ? null : gson.toJson(stepList);
     }
 }
