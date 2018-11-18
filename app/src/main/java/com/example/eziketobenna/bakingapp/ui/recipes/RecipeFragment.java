@@ -49,7 +49,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private Parcelable mListState;
     FragmentRecipeBinding binding;
     private GridLayoutManager mLayoutManager;
-    private List<Recipe> mList;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -100,7 +99,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         mShimmer.startShimmer();
         if (recipes != null && recipes.size() != 0) {
             mAdapter.setRecipes(recipes);
-            mList = recipes;
             if (mListState != null) {
                 mLayoutManager.onRestoreInstanceState(mListState);
             }
@@ -112,7 +110,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     }
 
     private void checkIfConnected() {
-        if (!isConnected() && mList == null) {
+        if (!isConnected()) {
             showSnackBar();
             mShimmer.startShimmer();
         } else {
@@ -150,7 +148,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
-                    setRecipesToAdapter(mList);
                     Log.d(LOG_TAG, "Retrying network fetch");
                 });
         snackbar.show();

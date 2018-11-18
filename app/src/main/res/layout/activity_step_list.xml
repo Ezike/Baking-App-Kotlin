@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="recipes"
-            type="com.example.eziketobenna.bakingapp.data.model.Recipe" />
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-
             android:elevation="@dimen/two_dp"
             android:minHeight="?attr/actionBarSize"
             tools:targetApi="lollipop" />

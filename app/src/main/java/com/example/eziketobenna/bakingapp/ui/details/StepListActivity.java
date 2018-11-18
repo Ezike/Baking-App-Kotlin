@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -81,9 +80,9 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
 
             // Set toolbar title
             setTitle(mRecipeName);
-
-            // Log to check if the right objects are gotten
-            Log.d(LOG_TAG, "onCreate: " + mRecipe.toString());
+//
+//            // Log to check if the right objects are gotten
+//            Log.d(LOG_TAG, "onCreate: " + mRecipe.toString());
         }
 
         if (findViewById(R.id.step_detail_container) != null) {

@@ -22,9 +22,11 @@ import com.stepstone.stepper.VerificationError;
  * in a {@link StepListActivity}.
  */
 public class StepDetailActivity extends AppCompatActivity implements StepperLayout.StepperListener {
-    //    private StepperAdapter mStepperAdapter;
+    //    private com.example.eziketobenna.bakingapp.ui.details.StepperAdapter mStepperAdapter;
     Step step;
     private StepperLayout mStepperLayout;
+    private StepperAdapter mStepperAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +34,23 @@ public class StepDetailActivity extends AppCompatActivity implements StepperLayo
         ActivityStepDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
         Toolbar toolbar = binding.detailListToolbar;
         setSupportActionBar(toolbar);
-        mStepperLayout = binding.stepperLayout;
+
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
+        mStepperLayout = binding.stepperLayout;
+        mStepperAdapter = new StepperAdapter(getSupportFragmentManager(), this);
+        mStepperLayout.setAdapter(mStepperAdapter);
+        mStepperLayout.setListener(this);
+
 
         step = getIntent().getParcelableExtra((StepDetailFragment.EXTRA));
         String shortDesc = step.getShortDescription();
-        setTitle(step.getShortDescription());
+        setTitle(shortDesc);
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
@@ -90,6 +93,6 @@ public class StepDetailActivity extends AppCompatActivity implements StepperLayo
 
     @Override
     public void onReturn() {
-
+        finish();
     }
 }
