@@ -58,4 +58,7 @@ dependencies {
 
     // Shimmer layout
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
+
+    // material stepper
+    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
 }

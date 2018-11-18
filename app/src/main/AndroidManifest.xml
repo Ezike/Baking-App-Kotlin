@@ -39,6 +39,7 @@
             android:name=".ui.details.StepListActivity"
             android:label="@string/title_step_list"
             android:parentActivityName=".ui.recipes.MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
