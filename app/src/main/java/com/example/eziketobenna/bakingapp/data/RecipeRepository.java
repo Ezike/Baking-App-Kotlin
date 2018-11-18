@@ -34,7 +34,7 @@ public class RecipeRepository {
         LiveData<List<Recipe>> networkData = mNetworkDataSource.getRecipes();
         networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(() -> {
             // delete old data
-            RecipeRepository.this.deleteOldData();
+            deleteOldData();
             Log.d(LOG_TAG, "Old weather deleted");
             // Insert new data
             mRecipeDao.BulkInsert(newRecipes);
