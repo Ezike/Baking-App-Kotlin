@@ -7,13 +7,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.example.eziketobenna.bakingapp.databinding.ActivityStepDetailBinding;
-import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 
 /**
  * An activity representing a single Step detail screen. This
@@ -21,12 +18,9 @@ import com.stepstone.stepper.VerificationError;
  * item details are presented side-by-side with a list of items
  * in a {@link StepListActivity}.
  */
-public class StepDetailActivity extends AppCompatActivity implements StepperLayout.StepperListener {
-    //    private com.example.eziketobenna.bakingapp.ui.details.StepperAdapter mStepperAdapter;
-    Step step;
-    private StepperLayout mStepperLayout;
-    private StepperAdapter mStepperAdapter;
+public class StepDetailActivity extends AppCompatActivity {
 
+    Step step;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +34,6 @@ public class StepDetailActivity extends AppCompatActivity implements StepperLayo
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        mStepperLayout = binding.stepperLayout;
-        mStepperAdapter = new StepperAdapter(getSupportFragmentManager(), this);
-        mStepperLayout.setAdapter(mStepperAdapter);
-        mStepperLayout.setListener(this);
-
 
         step = getIntent().getParcelableExtra((StepDetailFragment.EXTRA));
         String shortDesc = step.getShortDescription();
@@ -76,23 +64,4 @@ public class StepDetailActivity extends AppCompatActivity implements StepperLayo
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onCompleted(View completeButton) {
-
-    }
-
-    @Override
-    public void onError(VerificationError verificationError) {
-
-    }
-
-    @Override
-    public void onStepSelected(int newStepPosition) {
-
-    }
-
-    @Override
-    public void onReturn() {
-        finish();
-    }
 }
