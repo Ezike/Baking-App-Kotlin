@@ -59,6 +59,6 @@ dependencies {
     // Shimmer layout
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
-    // material stepper
-    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+    // ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.1'
 }
