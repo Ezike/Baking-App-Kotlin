@@ -1,19 +1,29 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.example.eziketobenna.bakingapp.databinding.StepDetailBinding;
-import com.stepstone.stepper.BlockingStep;
-import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 /**
  * A fragment representing a single Step detail screen.
@@ -21,12 +31,17 @@ import com.stepstone.stepper.VerificationError;
  * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
-public class StepDetailFragment extends Fragment implements BlockingStep {
+public class StepDetailFragment extends Fragment implements Player.EventListener {
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     public static final String EXTRA = "step";
     private static final String ARG_POSITION = "position";
+    Context mContext;
+    String videoUrl;
+    private SimpleExoPlayer mExoPlayer;
+    private PlayerView mPlayerView;
     Step step;
-    private String videoUrl;
+    private long mPlaybackPosition;
+    private boolean mPlayWhenReady = true;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,36 +74,75 @@ public class StepDetailFragment extends Fragment implements BlockingStep {
                              Bundle savedInstanceState) {
         StepDetailBinding binding = StepDetailBinding.inflate(inflater, container, false);
         binding.setSteps(step);
+        mContext = getActivity();
+        mPlayerView = binding.playerView;
         return binding.getRoot();
     }
 
-    @Override
-    public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
-        callback.goToNextStep();
+    public void initPlayer() {
+        assert getArguments() != null;
+        step = getArguments().getParcelable(EXTRA);
+        assert step != null;
+        videoUrl = step.getVideoURL();
+        if (mExoPlayer == null && !(videoUrl.isEmpty())) {
+            mPlayerView.setVisibility(View.VISIBLE);
+            // Create an instance of exoPlayer
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector);
+            // Bind the player to the view.
+            mPlayerView.setPlayer(mExoPlayer);
+            mExoPlayer.addListener(this);
+            // Prepare the media source
+            String userAgent = Util.getUserAgent(mContext, getString(R.string.app_name));
+            DataSource.Factory dataSourceFactory =
+                    new DefaultDataSourceFactory(mContext, userAgent);
+            MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(videoUrl));
+            mExoPlayer.prepare(mediaSource);
+            mExoPlayer.seekTo(mPlaybackPosition);
+            mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+
+        } else {
+            // hide the video view
+            mPlayerView.setVisibility(View.GONE);
+        }
+    }
+
+    void releasePlayer() {
+        if (mExoPlayer != null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
 
     @Override
-    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+    public void onResume() {
+        super.onResume();
+        initPlayer();
     }
 
     @Override
-    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
-        callback.goToPrevStep();
-    }
-
-    @Nullable
-    @Override
-    public VerificationError verifyStep() {
-        return null;
+    public void onPause() {
+        super.onPause();
+        if (mExoPlayer != null)
+            mPlaybackPosition = mExoPlayer.getContentPosition();
+        releasePlayer();
     }
 
     @Override
-    public void onSelected() {
-
+    public void onDestroy() {
+        super.onDestroy();
+        releasePlayer();
     }
 
     @Override
-    public void onError(@NonNull VerificationError error) {
-
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+//        String stateString;
+//        switch (playbackState)
+//        if (playWhenReady && playbackState == Player.STATE_READY) {
+//            Log.d(TAG, "Player is playing");
+//        } else if (playbackState == Player.STATE_READY) {
+//            Log.d(TAG, "Player is paused");
+//        }
     }
 }
