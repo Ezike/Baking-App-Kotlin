@@ -1,37 +1,57 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/detail_list_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:elevation="@dimen/two_dp"
-            android:minHeight="?attr/actionBarSize"
-            tools:targetApi="lollipop" />
-
-        <FrameLayout
-            android:id="@+id/step_detail_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-        <com.stepstone.stepper.StepperLayout
-            android:id="@+id/stepperLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            app:ms_bottomNavigationBackground="@color/colorAccent"
-            app:ms_stepperType="tabs">
+            android:orientation="vertical">
 
-        </com.stepstone.stepper.StepperLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_list_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:elevation="@dimen/two_dp"
+                android:minHeight="?attr/actionBarSize"
+                tools:targetApi="lollipop" />
 
+            <FrameLayout
+                android:id="@+id/step_detail_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/yellow_bg">
+
+            <TextView
+                android:id="@+id/previous_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/sixteen_dp"
+                android:text="@string/prev"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="@dimen/sixteen_dp"
+                android:text="@string/next"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

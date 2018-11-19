@@ -8,4 +8,6 @@
     <string name="title_step_detail">Step Detail</string>
     <string name="no_recipe_data">Recipe data unavailable</string>
     <string name="ingredients_title_text">Ingredients</string>
+    <string name="next">NEXT</string>
+    <string name="prev">PREV</string>
 </resources>

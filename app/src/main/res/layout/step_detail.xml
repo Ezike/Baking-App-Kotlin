@@ -10,20 +10,35 @@
 
     </data>
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:background="#000000" />
 
         <TextView
             android:id="@+id/step_detail"
-            style="?android:attr/textAppearanceLarge"
+            style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/thirty_dp"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:layout_weight="1"
+            android:lineSpacingMultiplier="1.5"
+            android:paddingStart="@dimen/sixteen_dp"
+            android:paddingLeft="@dimen/sixteen_dp"
+            android:paddingEnd="@dimen/four_dp"
+            android:paddingRight="@dimen/four_dp"
             android:text="@{steps.description}"
-            android:textColor="@color/ms_black"
+            android:textColor="@android:color/black"
             android:textIsSelectable="true"
             tools:context=".ui.details.StepDetailFragment" />
     </LinearLayout>
