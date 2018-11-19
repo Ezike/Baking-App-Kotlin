@@ -35,13 +35,13 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     public static final String EXTRA = "step";
     private static final String ARG_POSITION = "position";
-    Context mContext;
-    String videoUrl;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
-    Step step;
     private long mPlaybackPosition;
     private boolean mPlayWhenReady = true;
+    Context mContext;
+    String videoUrl;
+    Step step;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,6 +67,12 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             step = getArguments().getParcelable(EXTRA);
             Log.d(LOG_TAG, "" + step);
         }
+
+        if (savedInstanceState != null) {
+            mPlaybackPosition = savedInstanceState.getLong(ARG_POSITION);
+        } else {
+            mPlaybackPosition = 0;
+        }
     }
 
     @Override
@@ -79,6 +85,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         return binding.getRoot();
     }
 
+    // initialise exo player
     public void initPlayer() {
         assert getArguments() != null;
         step = getArguments().getParcelable(EXTRA);
@@ -137,12 +144,16 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-//        String stateString;
-//        switch (playbackState)
-//        if (playWhenReady && playbackState == Player.STATE_READY) {
-//            Log.d(TAG, "Player is playing");
-//        } else if (playbackState == Player.STATE_READY) {
-//            Log.d(TAG, "Player is paused");
-//        }
+        if (playWhenReady && playbackState == Player.STATE_READY) {
+            Log.d(LOG_TAG, "Player is playing");
+        } else if (playbackState == Player.STATE_READY) {
+            Log.d(LOG_TAG, "Player is paused");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putLong(ARG_POSITION, mPlaybackPosition);
+        super.onSaveInstanceState(outState);
     }
 }
