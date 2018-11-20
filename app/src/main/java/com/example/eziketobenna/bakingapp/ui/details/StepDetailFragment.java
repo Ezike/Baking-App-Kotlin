@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
@@ -35,6 +36,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     public static final String EXTRA = "step";
     private static final String ARG_POSITION = "position";
+    private ImageView mIageView;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
     private long mPlaybackPosition;
@@ -64,7 +66,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         int position = getArguments().getInt(ARG_POSITION);
         if (getArguments() != null && getArguments().containsKey(EXTRA)) {
             step = getArguments().getParcelable(EXTRA);
-            Log.d(LOG_TAG, "" + step);
         }
 
         if (savedInstanceState != null) {
@@ -81,6 +82,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         binding.setSteps(step);
         mContext = getActivity();
         mPlayerView = binding.playerView;
+        mIageView = binding.errorImage;
         return binding.getRoot();
     }
 
@@ -107,6 +109,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         } else {
             // hide the video view
             mPlayerView.setVisibility(View.GONE);
+            mIageView.setVisibility(View.VISIBLE);
         }
     }
 
