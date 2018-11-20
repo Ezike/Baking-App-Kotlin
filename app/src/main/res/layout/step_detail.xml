@@ -26,7 +26,11 @@
         <ImageView
             android:id="@+id/error_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            errorImage="@{steps.thumbnailURL}"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
             android:contentDescription="@string/no_video" />
 
         <TextView
