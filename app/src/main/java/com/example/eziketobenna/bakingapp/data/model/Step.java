@@ -2,11 +2,15 @@ package com.example.eziketobenna.bakingapp.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.example.eziketobenna.bakingapp.BR;
+import com.example.eziketobenna.bakingapp.R;
+import com.example.eziketobenna.bakingapp.utils.GlideApp;
 import com.google.gson.annotations.SerializedName;
 
 public class Step extends BaseObservable implements Parcelable {
@@ -56,6 +60,14 @@ public class Step extends BaseObservable implements Parcelable {
         thumbnailURL = in.readString();
     }
 
+    @BindingAdapter({"errorImage"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        GlideApp.with(view.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(view);
+    }
     public String getVideoURL() {
         return videoURL;
     }
@@ -91,12 +103,14 @@ public class Step extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.shortDescription);
     }
 
+    @Bindable
     public String getThumbnailURL() {
         return thumbnailURL;
     }
 
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
+        notifyPropertyChanged(BR.thumbnailURL);
     }
 
     @Override
