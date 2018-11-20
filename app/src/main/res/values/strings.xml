@@ -12,4 +12,6 @@
     <string name="prev">PREV</string>
     <string name="ingredients_and_steps">Ingredients and Steps</string>
     <string name="no_video">To be displayed if there\'s no video</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
