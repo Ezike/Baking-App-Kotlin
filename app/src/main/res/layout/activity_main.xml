@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"
+        android:elevation="@dimen/two_dp"
         android:minHeight="?attr/actionBarSize"
         tools:targetApi="lollipop">
 

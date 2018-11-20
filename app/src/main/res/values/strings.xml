@@ -10,4 +10,6 @@
     <string name="ingredients_title_text">Ingredients</string>
     <string name="next">NEXT</string>
     <string name="prev">PREV</string>
+    <string name="ingredients_and_steps">Ingredients and Steps</string>
+    <string name="no_video">To be displayed if there\'s no video</string>
 </resources>

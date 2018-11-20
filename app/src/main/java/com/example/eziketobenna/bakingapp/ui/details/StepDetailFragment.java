@@ -38,7 +38,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
     private long mPlaybackPosition;
-    private boolean mPlayWhenReady = true;
     Context mContext;
     String videoUrl;
     Step step;
@@ -93,20 +92,17 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         videoUrl = step.getVideoURL();
         if (mExoPlayer == null && !(videoUrl.isEmpty())) {
             mPlayerView.setVisibility(View.VISIBLE);
-            // Create an instance of exoPlayer
             TrackSelector trackSelector = new DefaultTrackSelector();
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector);
-            // Bind the player to the view.
             mPlayerView.setPlayer(mExoPlayer);
             mExoPlayer.addListener(this);
-            // Prepare the media source
             String userAgent = Util.getUserAgent(mContext, getString(R.string.app_name));
             DataSource.Factory dataSourceFactory =
                     new DefaultDataSourceFactory(mContext, userAgent);
             MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(videoUrl));
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.seekTo(mPlaybackPosition);
-            mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+            mExoPlayer.setPlayWhenReady(true);
 
         } else {
             // hide the video view

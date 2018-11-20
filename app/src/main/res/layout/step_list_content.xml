@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,26 +9,29 @@
             type="com.example.eziketobenna.bakingapp.data.model.Step" />
     </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+
+    <android.support.design.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/sixteen_dp"
+        tools:targetApi="lollipop">
 
-        <TextView
-            android:id="@+id/short_description"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@{step.shortDescription}"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:layout_margin="@dimen/two_dp"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/short_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sixteen_dp"
+                android:text="@{step.shortDescription}"
+                android:textAppearance="?attr/textAppearanceListItem" />
+        </LinearLayout>
+    </android.support.design.card.MaterialCardView>
+
+
 </layout>
