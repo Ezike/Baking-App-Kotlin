@@ -55,7 +55,7 @@
                 android:value="com.example.eziketobenna.bakingapp.ui.details.StepListActivity" />
         </activity>
 
-        <receiver android:name=".AppWidget">
+        <receiver android:name=".widget.AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

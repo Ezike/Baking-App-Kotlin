@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp;
+package com.example.eziketobenna.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
+import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.ui.recipes.MainActivity;
 
 /**
