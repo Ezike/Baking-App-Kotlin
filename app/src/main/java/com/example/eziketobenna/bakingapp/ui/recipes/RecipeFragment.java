@@ -40,15 +40,15 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
     private final int PORT_SPAN = 2;
     private final int LAND_SPAN = 4;
-    RecipeViewModel mViewModel;
-    FrameLayout mFrameLayout;
     private RecipeAdapter mAdapter;
     private Context mContext;
     private RecyclerView mRecyclerView;
+    RecipeViewModel mViewModel;
     private ShimmerFrameLayout mShimmer;
     private Parcelable mListState;
-    FragmentRecipeBinding binding;
+    FrameLayout mFrameLayout;
     private GridLayoutManager mLayoutManager;
+    FragmentRecipeBinding binding;
 
     public RecipeFragment() {
         // Required empty public constructor
