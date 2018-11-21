@@ -14,4 +14,5 @@
     <string name="no_video">To be displayed if there\'s no video</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="playback_icon">playback icon</string>
 </resources>
