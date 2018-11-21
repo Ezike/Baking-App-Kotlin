@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/yellow_bg">
+            android:background="@color/color">
 
             <TextView
                 android:id="@+id/previous_button"
@@ -38,8 +38,8 @@
                 android:layout_weight="1"
                 android:padding="@dimen/sixteen_dp"
                 android:text="@string/prev"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/next_button"
@@ -50,8 +50,8 @@
                 android:gravity="end"
                 android:padding="@dimen/sixteen_dp"
                 android:text="@string/next"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>
