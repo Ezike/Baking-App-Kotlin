@@ -36,10 +36,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/eight_dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/playback_icon"
+                android:layout_marginRight="@dimen/eight_dp"
                 android:src="@drawable/ic_play_arrow_black_24dp" />
         </RelativeLayout>
     </android.support.design.card.MaterialCardView>
