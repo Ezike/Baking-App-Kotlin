@@ -1,6 +1,7 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
@@ -37,12 +39,15 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public static final String EXTRA = "step";
     private static final String ARG_POSITION = "position";
     private ImageView mIageView;
+    int orientation;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
     private long mPlaybackPosition;
     Context mContext;
     String videoUrl;
     Step step;
+    private TextView mDescriptionTv;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -83,6 +88,8 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         mContext = getActivity();
         mPlayerView = binding.playerView;
         mIageView = binding.errorImage;
+        mDescriptionTv = binding.stepDetail;
+        orientation = getResources().getConfiguration().orientation;
         return binding.getRoot();
     }
 
@@ -108,8 +115,16 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
         } else {
             // hide the video view
-            mPlayerView.setVisibility(View.GONE);
-            mIageView.setVisibility(View.VISIBLE);
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                mPlayerView.setVisibility(View.GONE);
+                mIageView.setVisibility(View.VISIBLE);
+                mDescriptionTv.setVisibility(View.VISIBLE);
+                // In landscape
+            } else {
+                mPlayerView.setVisibility(View.GONE);
+                mIageView.setVisibility(View.VISIBLE);
+                // In portrait
+            }
         }
     }
 
