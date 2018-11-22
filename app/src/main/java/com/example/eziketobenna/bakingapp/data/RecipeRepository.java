@@ -74,6 +74,11 @@ public class RecipeRepository {
         mRecipeDao.deleteAllRecipes();
     }
 
+
+    public Recipe getRecipe(int id) {
+        return mRecipeDao.getSelectedRecipe(id);
+    }
+
     /**
      * Fetch recipes in the background
      */
