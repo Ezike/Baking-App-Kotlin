@@ -16,4 +16,5 @@
     <string name="add_widget">Add widget</string>
     <string name="playback_icon">playback icon</string>
     <string name="empty_view_text">No data available</string>
+    <string name="show_in_widget">Show in widget</string>
 </resources>
