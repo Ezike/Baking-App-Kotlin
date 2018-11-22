@@ -12,7 +12,7 @@ import com.example.eziketobenna.bakingapp.ui.recipes.RecipeViewModelFactory;
  * Provides static methods to inject the various classes needed for Sunshine
  */
 public class InjectorUtils {
-    private static RecipeRepository provideRepository(Context context) {
+    public static RecipeRepository provideRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context.getApplicationContext());
         AppExecutors executors = AppExecutors.getInstance();
         NetworkDataSource networkDataSource = NetworkDataSource.getInstance(context.getApplicationContext(), executors);
