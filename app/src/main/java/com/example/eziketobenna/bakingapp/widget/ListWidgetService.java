@@ -1,17 +1,35 @@
 package com.example.eziketobenna.bakingapp.widget;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.example.eziketobenna.bakingapp.R;
+import com.example.eziketobenna.bakingapp.data.RecipeRepository;
+import com.example.eziketobenna.bakingapp.data.model.Ingredient;
+import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
+import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
+
+import java.util.List;
 
 public class ListWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListRemoteViewsFactory();
+        return new ListRemoteViewsFactory(this.getApplicationContext());
     }
 
     class ListRemoteViewsFactory implements
             RemoteViewsService.RemoteViewsFactory {
+
+        private final Context mContext;
+        private List<Ingredient> mIngredientList;
+        private int recipeId;
+
+        ListRemoteViewsFactory(Context mContext) {
+            this.mContext = mContext;
+        }
 
         @Override
         public void onCreate() {
@@ -20,7 +38,15 @@ public class ListWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
+            //Get the id of the most recently chosen recipe id from shared preferences
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences(StepListActivity.PREF, Context.MODE_PRIVATE);
+            recipeId = sharedPreferences.getInt(StepListActivity.RECIPE_ID, 0);
 
+            // Get the recipe from database through repository
+            if (recipeId != 0) {
+                RecipeRepository repo = InjectorUtils.provideRepository(mContext);
+                mIngredientList = repo.getRecipe(recipeId).getIngredients();
+            }
         }
 
         @Override
@@ -30,12 +56,26 @@ public class ListWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return 0;
+            return mIngredientList == null ? 0 : mIngredientList.size();
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
-            return null;
+
+            RemoteViews views = new RemoteViews(mContext.getPackageName(),
+                    R.layout.list_item_widget);
+
+            Ingredient recipeIngredient = mIngredientList.get(position);
+            String measure = String.valueOf(recipeIngredient.getQuantity());
+            String ingredient = recipeIngredient.getIngredient();
+            views.setTextViewText(R.id.appwidget_ingredients, ingredient + "   " + measure);
+
+//            Bundle extras = new Bundle();
+//            extras.putInt(StepListActivity.RECIPE_ID, recipeId);
+//            Intent fillInIntent = new Intent();
+//            fillInIntent.putExtras(extras);
+//            views.setOnClickFillInIntent(R.id.appwidget_ingredients, fillInIntent);
+            return views;
         }
 
         @Override
@@ -45,7 +85,7 @@ public class ListWidgetService extends RemoteViewsService {
 
         @Override
         public int getViewTypeCount() {
-            return 0;
+            return 1;
         }
 
         @Override
