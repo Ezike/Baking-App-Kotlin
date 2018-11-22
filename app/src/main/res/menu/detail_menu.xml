@@ -4,5 +4,6 @@
     <item
         android:id="@+id/widget_menu"
         android:title="@string/show_in_widget"
+        android:menuCategory="secondary"
         app:showAsAction="always" />
 </menu>

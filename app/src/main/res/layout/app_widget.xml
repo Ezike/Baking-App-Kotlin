@@ -1,41 +1,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color"
+    android:id="@+id/appwidget_base"
     android:padding="@dimen/widget_margin">
 
     <TextView
         android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="#09C"
-        android:text="@string/appwidget_text"
+        android:layout_margin="@dimen/four_dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:padding="@dimen/sixteen_dp"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:textStyle="bold|italic" />
 
     <ListView
-        android:id="@+id/widget_list_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/appwidget_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        tools:listitem="@tools:sample/date/day_of_week" />
+        android:layout_below="@+id/appwidget_text"
+        android:descendantFocusability="blocksDescendants" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/empty_view"
+        android:id="@+id/appwidget_empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_below="@+id/appwidget_text"
         android:text="@string/empty_view_text"
-        android:textColor="#ffffff"
-        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

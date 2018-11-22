@@ -4,13 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/ingredients_widget"
+        android:id="@+id/appwidget_ingredients"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/eight_dp"
         android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:text="@tools:sample/lorem" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 </LinearLayout>
