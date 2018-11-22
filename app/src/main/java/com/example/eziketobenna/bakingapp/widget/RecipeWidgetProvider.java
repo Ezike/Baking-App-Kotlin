@@ -27,7 +27,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
 
-        //Get the id and name of the last chosen recipe from preferences
+        //Get the id and name of the recipe clicked by user
         SharedPreferences sharedPreferences = context.getSharedPreferences(StepListActivity.PREF, Context.MODE_PRIVATE);
         int recipeId = sharedPreferences.getInt(StepListActivity.RECIPE_ID, 0);
         String defaultValue = "No Recipe";
