@@ -19,6 +19,7 @@ import com.example.eziketobenna.bakingapp.data.model.Ingredient;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
 import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.example.eziketobenna.bakingapp.databinding.ActivityStepListBinding;
+import com.example.eziketobenna.bakingapp.widget.RecipeWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +35,10 @@ import java.util.List;
 public class StepListActivity extends AppCompatActivity implements DetailAdapter.StepClickListener {
 
     private static final String LOG_TAG = StepListActivity.class.getSimpleName();
-    private static final String PREF = "Preferences";
+    public static final String PREF = "Preferences";
     public static final String INTENT_EXTRA = "recipe";
-    private static final String RECIPE_ID = "id";
-    private static final String RECIPE_NAME = "name";
+    public static final String RECIPE_ID = "id";
+    public static final String RECIPE_NAME = "name";
     private boolean mTwoPane;
     private int mRecipeId;
     private String mRecipeName;
@@ -99,6 +100,9 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
         editor.putInt(RECIPE_ID, mRecipeId);
         editor.putString(RECIPE_NAME, mRecipeName);
         editor.apply();
+
+        //update the widget with current recipe details
+        RecipeWidgetProvider.updateWidget(this);
     }
 
     private void closeOnError() {
