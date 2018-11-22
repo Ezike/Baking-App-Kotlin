@@ -30,8 +30,8 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         //Get the id and name of the last chosen recipe from preferences
         SharedPreferences sharedPreferences = context.getSharedPreferences(StepListActivity.PREF, Context.MODE_PRIVATE);
         int recipeId = sharedPreferences.getInt(StepListActivity.RECIPE_ID, 0);
-        String value = "No Recipe";
-        CharSequence recipeName = sharedPreferences.getString(StepListActivity.RECIPE_NAME, value);
+        String defaultValue = "No Recipe";
+        CharSequence recipeName = sharedPreferences.getString(StepListActivity.RECIPE_NAME, defaultValue);
         views.setTextViewText(R.id.appwidget_text, recipeName);
 
         //Set adapter
