@@ -34,6 +34,9 @@
         </activity>
 
         <service android:name=".data.network.RecipeIntentService" />
+        <service
+            android:name=".widget.ListWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
             android:name=".ui.details.StepListActivity"
