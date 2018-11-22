@@ -1,8 +1,19 @@
 # BakingApp
+The BakingApp displays a list of recipes, ingredients required to make it, and steps plus video tutorials on how to make the recipe.
+It also has a home screen widget that displays the ingredients of a recipe that the user chooses.
 
 ## Project Overview
+This is the third project in the Udacity Nanodegree programme 2018
 
 ## Features
+* Local persistence using room DB
+* MVVM architecture 
+* Material design
+* Master detail fragment layout
+* Error handling for missing JSON data
+* Homescreen widget
+* Video playback/Streaming with Exoplayer
+* UI tests with Espresso
 
 ## Getting Started
 
@@ -18,10 +29,11 @@
 *   [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
 *   [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 *   [Room](https://developer.android.com/topic/libraries/architecture/room)
-*   [Glide]()
-*   [DataBinding 2.0]()
-*   [ShimmerLayout]()
-*   [Exoplayer]()
+*   [Glide](https://github.com/bumptech/glide)
+*   [DataBinding 2.0](https://developer.android.com/topic/libraries/data-binding)
+*   [ShimmerLayout](https://github.com/facebook/shimmer-android)
+*   [Exoplayer](https://github.com/google/ExoPlayer)
+*   [Espresso](https://developer.android.com/training/testing/espresso)
 
 ## License
 This project is licensed under the Apache License 2.0 - See: http://www.apache.org/licenses/LICENSE-2.0.txt
