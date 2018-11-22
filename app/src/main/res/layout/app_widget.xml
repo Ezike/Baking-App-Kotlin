@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -12,17 +13,19 @@
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
         android:background="#09C"
-        android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
         android:textStyle="bold|italic" />
 
     <ListView
         android:id="@+id/widget_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/step_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         tools:listitem="@tools:sample/date/day_of_week" />
 
 </RelativeLayout>
