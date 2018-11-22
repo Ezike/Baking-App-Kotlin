@@ -39,7 +39,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     public static final String LIST_STATE_KEY = "list_state";
     private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
     private final int PORT_SPAN = 2;
-    private final int LAND_SPAN = 4;
     private RecipeAdapter mAdapter;
     private Context mContext;
     private RecyclerView mRecyclerView;
@@ -159,10 +158,12 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             mLayoutManager = new GridLayoutManager(mContext, PORT_SPAN);
             mRecyclerView.setLayoutManager(mLayoutManager);
         } else if (mRecyclerView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            int LAND_SPAN = 4;
             mLayoutManager = new GridLayoutManager(mContext, LAND_SPAN);
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
     }
+
 
     @Override
     public void onRecipeClick(Recipe recipe) {

@@ -1,6 +1,7 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -30,30 +31,23 @@ import java.util.List;
  */
 public class StepListActivity extends AppCompatActivity implements DetailAdapter.StepClickListener {
 
-    public static final String INTENT_EXTRA = "recipe";
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private static final String LOG_TAG = StepListActivity.class.getSimpleName();
+    private static final String PREF = "Preferences";
+    public static final String INTENT_EXTRA = "recipe";
+    private static final String RECIPE_ID = "id";
+    private static final String RECIPE_NAME = "name";
     private boolean mTwoPane;
+    private int mRecipeId;
+    private String mRecipeName;
     ActivityStepListBinding binding;
     Toolbar toolbar;
-    private RecyclerView mRecyclerView;
-    private Recipe mRecipe;
-    private List<Ingredient> mIngredientList;
-    private List<Step> mStepList;
-    private String mRecipeName;
-    private ArrayList<Object> mBakingObjects;
     DetailAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_step_list);
-
         toolbar = binding.stepListToolbar;
-
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -61,8 +55,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        mBakingObjects = new ArrayList<>();
+        ArrayList<Object> mBakingObjects = new ArrayList<>();
 
         //Get intent extras
         Intent in = getIntent();
@@ -71,18 +64,15 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
         }
         assert in != null;
         if (in.hasExtra(INTENT_EXTRA)) {
-            mRecipe = getIntent().getParcelableExtra(INTENT_EXTRA);
-            mIngredientList = mRecipe.getIngredients();
-            mStepList = mRecipe.getSteps();
+            Recipe mRecipe = getIntent().getParcelableExtra(INTENT_EXTRA);
+            mRecipeId = mRecipe.getId();
             mRecipeName = mRecipe.getName();
+            List<Ingredient> mIngredientList = mRecipe.getIngredients();
+            List<Step> mStepList = mRecipe.getSteps();
+            String mRecipeName = mRecipe.getName();
             mBakingObjects.addAll(mIngredientList);
             mBakingObjects.addAll(mStepList);
-
-            // Set toolbar title
             setTitle(mRecipeName);
-//
-//            // Log to check if the right objects are gotten
-//            Log.d(LOG_TAG, "onCreate: " + mRecipe.toString());
         }
 
         if (findViewById(R.id.step_detail_container) != null) {
@@ -93,11 +83,20 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
             mTwoPane = true;
         }
 
-        mRecyclerView = findViewById(R.id.step_list);
+        RecyclerView mRecyclerView = findViewById(R.id.step_list);
         assert mRecyclerView != null;
         mAdapter = new DetailAdapter(this, mBakingObjects, mTwoPane, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void saveToPref() {
+        //Save clicked recipe to shared preferences for the widget
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(RECIPE_ID, mRecipeId);
+        editor.putString(RECIPE_NAME, mRecipeName);
+        editor.apply();
     }
 
     private void closeOnError() {
