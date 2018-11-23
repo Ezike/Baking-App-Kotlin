@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,6 +29,7 @@ import com.example.eziketobenna.bakingapp.data.model.Recipe;
 import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
 import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
 import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
+import com.example.eziketobenna.bakingapp.utils.SimpleIdlingResource;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
@@ -40,14 +42,16 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
     private final int PORT_SPAN = 2;
     private RecipeAdapter mAdapter;
+    private SimpleIdlingResource mIdlingResource;
     private Context mContext;
     private RecyclerView mRecyclerView;
-    RecipeViewModel mViewModel;
     private ShimmerFrameLayout mShimmer;
     private Parcelable mListState;
-    FrameLayout mFrameLayout;
     private GridLayoutManager mLayoutManager;
+    RecipeViewModel mViewModel;
+    FrameLayout mFrameLayout;
     FragmentRecipeBinding binding;
+
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -63,6 +67,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         checkOrientation();
         setUpViewModel();
         checkIfConnected();
+        // As background operations happen, idling = false
+        if (mIdlingResource != null) {
+            mIdlingResource.setIdleState(false);
+        }
+
         return view;
     }
 
@@ -95,6 +104,10 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Set the recipes from database to the RecyclerView Adapter
     private void setRecipesToAdapter(List<Recipe> recipes) {
+        // After background operation, idling = true
+        if (mIdlingResource != null) {
+            mIdlingResource.setIdleState(true);
+        }
         mShimmer.startShimmer();
         if (recipes != null && recipes.size() != 0) {
             mAdapter.setRecipes(recipes);
@@ -146,9 +159,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private void showSnackBar() {
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, view -> {
-                    Log.d(LOG_TAG, "Retrying network fetch");
-                });
+                .setAction(R.string.retry, view -> Log.d(LOG_TAG, "Retrying network fetch"));
         snackbar.show();
     }
 
@@ -164,6 +175,14 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         }
     }
 
+    @NonNull
+    @VisibleForTesting
+    public SimpleIdlingResource getmIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     public void onRecipeClick(Recipe recipe) {
