@@ -37,6 +37,7 @@ import com.google.android.exoplayer2.util.Util;
 public class StepDetailFragment extends Fragment implements Player.EventListener {
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     public static final String EXTRA = "step";
+    private TextView mDescriptionTv;
     private static final String ARG_POSITION = "position";
     private ImageView mIageView;
     int orientation;
@@ -46,7 +47,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     Context mContext;
     String videoUrl;
     Step step;
-    private TextView mDescriptionTv;
 
 
     /**
