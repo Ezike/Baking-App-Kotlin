@@ -85,7 +85,9 @@ public class Step extends BaseObservable implements Parcelable {
         this.description = description;
     }
 
+    @Bindable
     public int getId() {
+        notifyPropertyChanged(BR.id);
         return id;
     }
 
