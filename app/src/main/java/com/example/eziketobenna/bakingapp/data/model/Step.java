@@ -64,8 +64,8 @@ public class Step extends BaseObservable implements Parcelable {
     public static void loadImage(ImageView view, String imageUrl) {
         GlideApp.with(view.getContext())
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_foreground)
+                .placeholder(R.drawable.error)
+                .error(R.drawable.error)
                 .into(view);
     }
     public String getVideoURL() {
