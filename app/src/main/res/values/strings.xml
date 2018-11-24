@@ -18,4 +18,6 @@
     <string name="empty_view_text">No data available</string>
     <string name="show_in_widget">Show in widget</string>
     <string name="step_detail">Step Detail</string>
+    <string name="finish">Finish</string>
+    <string name="error_interface">You must implement the OnStepClickListener interface</string>
 </resources>
