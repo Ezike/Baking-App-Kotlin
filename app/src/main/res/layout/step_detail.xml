@@ -31,22 +31,31 @@
                 android:id="@+id/error_image"
                 errorImage="@{steps.thumbnailURL}"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/no_video"
                 android:scaleType="centerCrop"
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/header"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/step_bg"
+                android:padding="@dimen/twelve_dp"
+                android:text="@string/step_description" />
+
+            <TextView
                 android:id="@+id/step_detail"
                 style="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/twelve_dp"
                 android:layout_weight="1"
                 android:lineSpacingMultiplier="1.5"
-                android:paddingStart="@dimen/sixteen_dp"
-                android:paddingLeft="@dimen/sixteen_dp"
+                android:paddingStart="@dimen/eight_dp"
+                android:paddingLeft="@dimen/eight_dp"
                 android:paddingEnd="@dimen/four_dp"
                 android:paddingRight="@dimen/four_dp"
                 android:text="@{steps.description}"
