@@ -50,7 +50,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private ImageView mImageView;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
-    private TextView mDescTv;
+    private TextView mDescTv, mDescHeaderTv;
     private long mPlaybackPosition;
     private int orientation;
     Context mContext;
@@ -89,6 +89,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         mPlayerView = binding.playerView;
         mImageView = binding.errorImage;
         mDescTv = binding.stepDetail;
+        mDescHeaderTv = binding.header;
         orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fullScreen();
@@ -150,6 +151,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                 mPlayerView.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
                 mDescTv.setVisibility(View.VISIBLE);
+                mDescHeaderTv.setVisibility(View.VISIBLE);
             } else {
                 // In portrait
                 mPlayerView.setVisibility(View.GONE);
@@ -226,7 +228,9 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     }
 
     private void fullScreen() {
-        hideSystemUI();
-        mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+        if (!videoUrl.isEmpty()) {
+            hideSystemUI();
+            mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+        }
     }
 }
