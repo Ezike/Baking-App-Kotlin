@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
@@ -40,22 +42,24 @@ import java.util.Objects;
  * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
-public class StepDetailFragment extends Fragment implements Player.EventListener {
+public class StepDetailFragment extends Fragment implements Player.EventListener, View.OnClickListener {
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
-    public static final String EXTRA = "step";
     private static final String ARG_POSITION = "position";
-    private ImageView mIageView;
-    private int orientation, stepId;
+    public static final String EXTRA = "step";
+    OnStepClickListener mListener;
+    private ImageView mImageView;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
     private long mPlaybackPosition;
+    private int orientation;
     Context mContext;
     String videoUrl;
     Step step;
 
-    public static StepDetailFragment newInstance() {
+    public static StepDetailFragment newInstance(Step step) {
         StepDetailFragment fragment = new StepDetailFragment();
         Bundle b = new Bundle();
+        b.putParcelable(EXTRA, step);
         fragment.setArguments(b);
         return fragment;
     }
@@ -63,15 +67,10 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        assert getArguments() != null;
-        int position = getArguments().getInt(ARG_POSITION);
-        if (getArguments() != null && getArguments().containsKey(EXTRA)) {
+        if (getArguments() != null) {
             step = getArguments().getParcelable(EXTRA);
         }
-        assert step != null;
-        videoUrl = step.getVideoURL();
-        stepId = step.getId();
-
+        videoUrl = step != null ? step.getVideoURL() : null;
         if (savedInstanceState != null) {
             mPlaybackPosition = savedInstanceState.getLong(ARG_POSITION);
         } else {
@@ -86,12 +85,45 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         binding.setSteps(step);
         mContext = getActivity();
         mPlayerView = binding.playerView;
-        mIageView = binding.errorImage;
+        mImageView = binding.errorImage;
+        int stepId = step != null ? step.getId() : 0;
         orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fullScreen();
+        } else {
+            Button mNextBtn = binding.nextButton;
+            mNextBtn.setOnClickListener(this);
+            Button mPrevBtn = binding.previousButton;
+            mPrevBtn.setOnClickListener(this);
+            TextView mStepIndicator = binding.stepId;
+            String currentStep = "Step  " + String.valueOf(stepId);
+            mStepIndicator.setText(currentStep);
         }
         return binding.getRoot();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.next_button:
+                mListener.onNextStepClick(step);
+                break;
+            case R.id.previous_button:
+                mListener.onPrevStepClick(step);
+                break;
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnStepClickListener) {
+            mListener = (OnStepClickListener) context;
+        } else {
+            throw new ClassCastException(context.toString()
+                    + getString(R.string.error_interface));
+        }
     }
 
     // initialise exo player
@@ -111,19 +143,23 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             mExoPlayer.setPlayWhenReady(true);
 
         } else {
-            // In landscape
-            // hide the video view
+            // In landscape hide the video view
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                fullScreen();
                 mPlayerView.setVisibility(View.GONE);
-                mIageView.setVisibility(View.VISIBLE);
+                mImageView.setVisibility(View.VISIBLE);
             } else {
                 // In portrait
                 mPlayerView.setVisibility(View.GONE);
-                mIageView.setVisibility(View.VISIBLE);
+                mImageView.setVisibility(View.VISIBLE);
 
             }
         }
+    }
+
+    public interface OnStepClickListener {
+        void onPrevStepClick(Step step);
+
+        void onNextStepClick(Step step);
     }
 
     void releasePlayer() {
