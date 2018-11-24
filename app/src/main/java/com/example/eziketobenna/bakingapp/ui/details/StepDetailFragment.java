@@ -1,17 +1,20 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
@@ -23,10 +26,13 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
+import java.util.Objects;
 
 /**
  * A fragment representing a single Step detail screen.
@@ -37,10 +43,9 @@ import com.google.android.exoplayer2.util.Util;
 public class StepDetailFragment extends Fragment implements Player.EventListener {
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     public static final String EXTRA = "step";
-    private TextView mDescriptionTv;
     private static final String ARG_POSITION = "position";
     private ImageView mIageView;
-    int orientation;
+    private int orientation, stepId;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
     private long mPlaybackPosition;
@@ -48,18 +53,9 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     String videoUrl;
     Step step;
 
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public StepDetailFragment() {
-    }
-
-    public static StepDetailFragment newInstance(int position) {
+    public static StepDetailFragment newInstance() {
         StepDetailFragment fragment = new StepDetailFragment();
         Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
         fragment.setArguments(b);
         return fragment;
     }
@@ -72,6 +68,9 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         if (getArguments() != null && getArguments().containsKey(EXTRA)) {
             step = getArguments().getParcelable(EXTRA);
         }
+        assert step != null;
+        videoUrl = step.getVideoURL();
+        stepId = step.getId();
 
         if (savedInstanceState != null) {
             mPlaybackPosition = savedInstanceState.getLong(ARG_POSITION);
@@ -88,17 +87,15 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         mContext = getActivity();
         mPlayerView = binding.playerView;
         mIageView = binding.errorImage;
-        mDescriptionTv = binding.stepDetail;
         orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fullScreen();
+        }
         return binding.getRoot();
     }
 
     // initialise exo player
     public void initPlayer() {
-        assert getArguments() != null;
-        step = getArguments().getParcelable(EXTRA);
-        assert step != null;
-        videoUrl = step.getVideoURL();
         if (mExoPlayer == null && !(videoUrl.isEmpty())) {
             mPlayerView.setVisibility(View.VISIBLE);
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -114,16 +111,17 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             mExoPlayer.setPlayWhenReady(true);
 
         } else {
+            // In landscape
             // hide the video view
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                fullScreen();
                 mPlayerView.setVisibility(View.GONE);
                 mIageView.setVisibility(View.VISIBLE);
-                mDescriptionTv.setVisibility(View.VISIBLE);
-                // In landscape
             } else {
+                // In portrait
                 mPlayerView.setVisibility(View.GONE);
                 mIageView.setVisibility(View.VISIBLE);
-                // In portrait
+
             }
         }
     }
@@ -169,5 +167,27 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putLong(ARG_POSITION, mPlaybackPosition);
         super.onSaveInstanceState(outState);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void hideSystemUI() {
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+        getActivity().getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    private void fullScreen() {
+        hideSystemUI();
+        mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
     }
 }
