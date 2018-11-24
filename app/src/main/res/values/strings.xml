@@ -20,4 +20,5 @@
     <string name="step_detail">Step Detail</string>
     <string name="finish">Finish</string>
     <string name="error_interface">You must implement the OnStepClickListener interface</string>
+    <string name="step_description">Step Description</string>
 </resources>
