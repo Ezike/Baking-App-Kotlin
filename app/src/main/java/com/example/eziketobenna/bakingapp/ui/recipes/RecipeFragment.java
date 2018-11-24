@@ -104,7 +104,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             Log.d(LOG_TAG, "Displaying recipes");
             mShimmer.stopShimmer();
             mShimmer.setVisibility(View.GONE);
-
         }
     }
 
