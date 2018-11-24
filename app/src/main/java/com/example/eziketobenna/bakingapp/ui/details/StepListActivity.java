@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
     public static final String RECIPE_NAME = "name";
     private boolean mTwoPane;
     private int mRecipeId;
+    private List<Step> mStepList;
     private String mRecipeName;
     ActivityStepListBinding binding;
     Toolbar toolbar;
@@ -71,7 +73,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
             mRecipeId = mRecipe.getId();
             mRecipeName = mRecipe.getName();
             List<Ingredient> mIngredientList = mRecipe.getIngredients();
-            List<Step> mStepList = mRecipe.getSteps();
+            mStepList = mRecipe.getSteps();
             String mRecipeName = mRecipe.getName();
             mBakingObjects.addAll(mIngredientList);
             mBakingObjects.addAll(mStepList);
@@ -133,16 +135,14 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
     public void onStepClick(Step step) {
         if (step != null) {
             if (mTwoPane) {
-                Bundle arguments = new Bundle();
-                arguments.putParcelable(StepDetailFragment.EXTRA, step);
-                StepDetailFragment fragment = new StepDetailFragment();
-                fragment.setArguments(arguments);
+                StepDetailFragment fragment = StepDetailFragment.newInstance(step);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.step_detail_container, fragment)
                         .commit();
             } else {
                 Intent intent = new Intent(this, StepDetailActivity.class);
-                intent.putExtra(StepDetailFragment.EXTRA, step);
+                intent.putExtra(StepDetailActivity.EXTRA, step);
+                intent.putParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST, (ArrayList<? extends Parcelable>) mStepList);
                 startActivity(intent);
             }
 
