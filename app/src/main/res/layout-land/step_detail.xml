@@ -32,5 +32,6 @@
             android:scaleType="centerCrop"
             android:visibility="gone" />
 
+
     </LinearLayout>
 </layout>
