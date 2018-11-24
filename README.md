@@ -15,6 +15,12 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 * Video playback/streaming with Exoplayer
 * UI tests with Espresso
 
+<h2 align="left">Screenshots</h2>
+<h4 align="center">
+<img src="screenshots/main.png" width=280>
+<img src="screenshots/step.png" width=280>
+<img src="screenshots/detail.png" width=280>
+
 ## Getting Started
 To run the project, check the prerequisites below, then clone the repo to your Android studio or download the zip
 
