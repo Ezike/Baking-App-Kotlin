@@ -30,9 +30,8 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
     public static final String EXTRA_LIST = "step_list";
     public static final String STEP_INDEX = "index";
     public static final String STEP_LIST = "current list";
-    static final String LOG_TAG = StepDetailActivity.class.getSimpleName();
-    int stepIndex;
     private List<Step> mStepList;
+    int stepIndex;
     Step step;
 
     @Override
