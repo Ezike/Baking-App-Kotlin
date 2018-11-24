@@ -38,8 +38,7 @@ public class StepDetailActivity extends AppCompatActivity {
         }
 
         step = getIntent().getParcelableExtra((StepDetailFragment.EXTRA));
-        String shortDesc = step.getShortDescription();
-        setTitle(shortDesc);
+        setTitle(R.string.step_detail);
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
