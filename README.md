@@ -9,12 +9,14 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 * MVVM architecture 
 * Material design
 * Master detail fragment layout
+* Fragment interface callbacks for navigation
 * Error handling for missing JSON data
 * Homescreen widget
 * Video playback/streaming with Exoplayer
 * UI tests with Espresso
 
 ## Getting Started
+To run the project, check the prerequisites below, then clone the repo to your Android studio or download the zip
 
 ## Prerequisites
 *   Android Studio IDE 3.0+
