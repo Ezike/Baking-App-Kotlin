@@ -50,6 +50,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private ImageView mImageView;
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
+    private TextView mDescTv;
     private long mPlaybackPosition;
     private int orientation;
     Context mContext;
@@ -83,10 +84,11 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                              Bundle savedInstanceState) {
         StepDetailBinding binding = StepDetailBinding.inflate(inflater, container, false);
         binding.setSteps(step);
+        int stepId = step != null ? step.getId() : 0;
         mContext = getActivity();
         mPlayerView = binding.playerView;
         mImageView = binding.errorImage;
-        int stepId = step != null ? step.getId() : 0;
+        mDescTv = binding.stepDetail;
         orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fullScreen();
@@ -147,6 +149,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 mPlayerView.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
+                mDescTv.setVisibility(View.VISIBLE);
             } else {
                 // In portrait
                 mPlayerView.setVisibility(View.GONE);
