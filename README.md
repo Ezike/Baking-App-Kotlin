@@ -2,7 +2,7 @@
 The BakingApp displays a list of recipes, ingredients required to make it, and steps plus video tutorials on how to make the recipe.
 It also has a home screen widget that displays the ingredients of a recipe that the user chooses.
 
-### This is the third project in the Udacity Nanodegree programme 2018
+#### This is the third project in the Udacity Nanodegree programme 2018
 
 ## Features
 * Local persistence using room DB
