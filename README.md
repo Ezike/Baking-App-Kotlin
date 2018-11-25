@@ -20,6 +20,8 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 <img src="screenshots/main.png" width=280>
 <img src="screenshots/step.png" width=280>
 <img src="screenshots/detail.png" width=280>
+<img src="screenshots/tab_main.png" width=280>
+<img src="screenshots/tab_detail.png" width=280>
 
 ## Getting Started
 To run the project, check the prerequisites below, then clone the repo to your Android studio or download the zip
