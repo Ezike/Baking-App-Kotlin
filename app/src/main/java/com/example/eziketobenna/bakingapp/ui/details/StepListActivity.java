@@ -33,9 +33,8 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class StepListActivity extends AppCompatActivity implements DetailAdapter.StepClickListener {
+public class StepListActivity extends AppCompatActivity implements DetailAdapter.StepClickListener, StepDetailFragment.OnStepClickListener {
 
-    private static final String LOG_TAG = StepListActivity.class.getSimpleName();
     public static final String PREF = "Preferences";
     public static final String INTENT_EXTRA = "recipe";
     public static final String RECIPE_ID = "id";
@@ -147,6 +146,16 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
             }
 
         }
+
+    }
+
+    @Override
+    public void onPrevStepClick(Step step) {
+
+    }
+
+    @Override
+    public void onNextStepClick(Step step) {
 
     }
 }
