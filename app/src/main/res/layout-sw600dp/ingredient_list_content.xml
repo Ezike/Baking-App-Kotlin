@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/step_bg"
-        android:padding="@dimen/four_dp"
+        android:padding="@dimen/eight_dp"
         android:text="@{ingredient.ingredient}"
         android:textAppearance="?attr/textAppearanceListItem" />
 </layout>

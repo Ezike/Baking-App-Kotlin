@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="@dimen/four_dp"
+    android:layout_marginRight="@dimen/four_dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
@@ -24,8 +24,7 @@
         android:name="com.example.eziketobenna.bakingapp.ui.details.StepListFragment"
         android:layout_width="@dimen/item_width"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="@dimen/eight_dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context="com.example.eziketobenna.bakingapp.ui.details.StepListActivity" />
 
@@ -33,6 +32,6 @@
         android:id="@+id/step_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="2" />
 
 </LinearLayout>
