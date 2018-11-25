@@ -17,9 +17,9 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 
 <h2 align="left">Screenshots</h2>
 <h4 align="center">
-<img src="screenshots/main.png" width=280>
-<img src="screenshots/step.png" width=280>
-<img src="screenshots/detail.png" width=280>
+<img src="screenshots/main.png" height="280" width=280>
+<img src="screenshots/step.png" height="280" width=280>
+<img src="screenshots/detail.png" height="280" width=280>
 <img src="screenshots/tab_main.png"height=280>
 <img src="screenshots/tab_detail.png" height=280>
 
