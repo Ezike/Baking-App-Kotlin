@@ -13,7 +13,6 @@ import java.util.List;
 class RecipeViewModel extends ViewModel {
     private final RecipeRepository mRepository;
     private final LiveData<List<Recipe>> mAllRecipes;
-
     RecipeViewModel(RecipeRepository mRepository) {
         this.mRepository = mRepository;
         mAllRecipes = mRepository.getAllRecipes();

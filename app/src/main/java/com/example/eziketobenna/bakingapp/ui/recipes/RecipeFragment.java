@@ -85,12 +85,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         Log.d(LOG_TAG, "ViewModel setup");
         RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
         mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
-        getRecipes(mViewModel);
-    }
-
-    // Get recipes from ViewModel
-    private void getRecipes(RecipeViewModel viewModel) {
-        viewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
+        mViewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
     }
 
     // Set the recipes from database to the RecyclerView Adapter
@@ -102,7 +97,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
                 mLayoutManager.onRestoreInstanceState(mListState);
             }
             Log.d(LOG_TAG, "Displaying recipes");
-            mShimmer.stopShimmer();
             mShimmer.setVisibility(View.GONE);
         }
     }
@@ -115,6 +109,18 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             mShimmer.setVisibility(View.GONE);
             mShimmer.stopShimmer();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmer.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mShimmer.stopShimmer();
     }
 
     @Override
@@ -145,7 +151,13 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private void showSnackBar() {
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, view -> Log.d(LOG_TAG, "Retrying network fetch"));
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(LOG_TAG, "Retrying network fetch");
+                        InjectorUtils.provideNetworkDataSource(mContext).fetchRecipes();
+                    }
+                });
         snackbar.show();
     }
 
