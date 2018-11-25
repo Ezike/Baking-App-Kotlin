@@ -16,7 +16,7 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 * UI tests with Espresso
 
 <h2 align="left">Screenshots</h2>
-<h4 align="center">
+<h4 align="center" height="350" width="200" >
 <img src="screenshots/main.png">
 <img src="screenshots/step.png" height="280" width=280>
 <img src="screenshots/detail.png" height="280" width=280>
