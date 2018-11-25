@@ -53,6 +53,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private TextView mDescTv, mDescHeaderTv;
     private long mPlaybackPosition;
     private int orientation;
+    private boolean isTablet;
     Context mContext;
     String videoUrl;
     Step step;
@@ -90,7 +91,10 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         mImageView = binding.errorImage;
         mDescTv = binding.stepDetail;
         mDescHeaderTv = binding.header;
+        isTablet = getResources().getBoolean(R.bool.isTablet);
         orientation = getResources().getConfiguration().orientation;
+        // If screen is in landscape mode, show video in full screen
+        // else show nav buttons and indicator
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fullScreen();
         } else {
@@ -105,6 +109,11 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         return binding.getRoot();
     }
 
+    /**
+     * increment and decrement step in {@link StepDetailActivity}
+     *
+     * @param v is the clicked view
+     */
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -118,6 +127,12 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         }
     }
 
+    /***
+     * Insist that host activities {@link StepDetailActivity}
+     * {@link StepListActivity} implement the interface once the
+     * fragment is attached
+     * @param context of host activity
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -144,7 +159,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.seekTo(mPlaybackPosition);
             mExoPlayer.setPlayWhenReady(true);
-
         } else {
             // In landscape hide the video view
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -161,18 +175,35 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         }
     }
 
-    public interface OnStepClickListener {
-        void onPrevStepClick(Step step);
-
-        void onNextStepClick(Step step);
-    }
-
+    /**
+     * Release exoplayer so it doesn't take up system resources
+     */
     void releasePlayer() {
         if (mExoPlayer != null) {
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
         }
+    }
+
+    /**
+     * Hide system UI for fullscreen mode
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void hideSystemUI() {
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+        getActivity().getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -210,27 +241,23 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         super.onSaveInstanceState(outState);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void hideSystemUI() {
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
-        }
-        getActivity().getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
+    /**
+     * show video in fullscreen
+     */
     private void fullScreen() {
-        if (!videoUrl.isEmpty()) {
+        if (!videoUrl.isEmpty() && !isTablet) {
             hideSystemUI();
             mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         }
+    }
+
+    /**
+     * public interface that allows navigating
+     * between individual steps
+     */
+    public interface OnStepClickListener {
+        void onPrevStepClick(Step step);
+
+        void onNextStepClick(Step step);
     }
 }
