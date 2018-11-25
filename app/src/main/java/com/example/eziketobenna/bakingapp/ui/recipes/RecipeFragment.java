@@ -44,6 +44,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private RecyclerView mRecyclerView;
     private ShimmerFrameLayout mShimmer;
     private Parcelable mListState;
+    private boolean isSet;
     private GridLayoutManager mLayoutManager;
     RecipeViewModel mViewModel;
     FrameLayout mFrameLayout;
@@ -62,7 +63,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         initViews();
         checkOrientation();
         setUpViewModel();
-        checkIfConnected();
         return view;
     }
 
@@ -90,24 +90,34 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Set the recipes from database to the RecyclerView Adapter
     private void setRecipesToAdapter(List<Recipe> recipes) {
-        mShimmer.startShimmer();
         if (recipes != null && recipes.size() != 0) {
             mAdapter.setRecipes(recipes);
             if (mListState != null) {
                 mLayoutManager.onRestoreInstanceState(mListState);
             }
             Log.d(LOG_TAG, "Displaying recipes");
+            showData();
+            mShimmer.stopShimmer();
             mShimmer.setVisibility(View.GONE);
+        } else {
+            showEmpty();
         }
     }
 
-    private void checkIfConnected() {
+    private void showEmpty() {
         if (!isConnected()) {
             showSnackBar();
-            mShimmer.startShimmer();
         } else {
+            mShimmer.startShimmer();
+        }
+        isSet = true;
+    }
+
+    private void showData() {
+        if (isSet) {
             mShimmer.setVisibility(View.GONE);
             mShimmer.stopShimmer();
+            isSet = false;
         }
     }
 
@@ -151,12 +161,12 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private void showSnackBar() {
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(LOG_TAG, "Retrying network fetch");
+                .setAction(R.string.retry, view -> {
+                    Log.d(LOG_TAG, "Retrying network fetch");
+                    if (!isSet) {
                         InjectorUtils.provideNetworkDataSource(mContext).fetchRecipes();
                     }
+                    showEmpty();
                 });
         snackbar.show();
     }
