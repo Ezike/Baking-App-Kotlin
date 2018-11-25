@@ -61,13 +61,12 @@ public class NetworkDataSource {
         Intent intentToFetch = new Intent(mContext, RecipeIntentService.class);
         mContext.startService(intentToFetch);
         Log.d(LOG_TAG, "Service created");
-
     }
 
     /*
     fetch recipes from network
      */
-    void fetchRecipes() {
+    public void fetchRecipes() {
         Log.d(LOG_TAG, "Fetch recipe started");
         mExecutors.networkIO().execute(() -> {
             ApiInterface apiService = ApiClient.getClient();
@@ -83,7 +82,6 @@ public class NetworkDataSource {
                     }
                     mDownloadedRecipes.postValue(recipes);
                 }
-
                 @Override
                 public void onFailure(Call<List<Recipe>> call, Throwable t) {
                     t.printStackTrace();
