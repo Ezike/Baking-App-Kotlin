@@ -65,6 +65,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
+                android:previewImage="@drawable/error"
                 android:resource="@xml/app_widget_info" />
         </receiver>
     </application>

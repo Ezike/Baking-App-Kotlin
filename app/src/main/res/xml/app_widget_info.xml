@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:initialKeyguardLayout="@layout/app_widget"
     android:initialLayout="@layout/app_widget"
+    android:previewImage="@drawable/error"
     android:minWidth="100dp"
     android:minHeight="80dp"
     android:resizeMode="horizontal|vertical"
