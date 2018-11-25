@@ -5,5 +5,5 @@
     <color name="colorAccent">#42a5f5</color>
     <color name="color">#29302e</color>
     <color name="step_bg">#a6dbddde</color>
-    <color name="placeholder_bg">#dddddd</color>
+    <color name="placeholder_bg">#bdbdbd</color>
 </resources>
