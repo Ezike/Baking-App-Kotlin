@@ -28,6 +28,7 @@ import java.util.List;
 public class StepDetailActivity extends AppCompatActivity implements StepDetailFragment.OnStepClickListener {
     public static final String EXTRA = "step";
     public static final String EXTRA_LIST = "step_list";
+    public static final String EXTRA_NAME = "recipe name";
     public static final String STEP_INDEX = "index";
     public static final String STEP_LIST = "current list";
     private List<Step> mStepList;
@@ -40,12 +41,12 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
         ActivityStepDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
         Toolbar toolbar = binding.detailListToolbar;
         setSupportActionBar(toolbar);
-        setTitle(R.string.step_detail);
+        String mRecipeName = getIntent().getStringExtra(EXTRA_NAME);
+        setTitle(mRecipeName);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         if (savedInstanceState == null) {
             step = getIntent().getParcelableExtra((EXTRA));
             mStepList = getIntent().getParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST);
