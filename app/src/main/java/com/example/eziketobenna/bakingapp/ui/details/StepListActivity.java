@@ -141,6 +141,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
             } else {
                 Intent intent = new Intent(this, StepDetailActivity.class);
                 intent.putExtra(StepDetailActivity.EXTRA, step);
+                intent.putExtra(StepDetailActivity.EXTRA_NAME, mRecipeName);
                 intent.putParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST, (ArrayList<? extends Parcelable>) mStepList);
                 startActivity(intent);
             }
