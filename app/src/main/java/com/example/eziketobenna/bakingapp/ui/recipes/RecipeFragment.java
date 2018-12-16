@@ -163,7 +163,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
                     Log.d(LOG_TAG, "Retrying network fetch");
-                    if (!isSet) {
+                    if (isSet) {
                         InjectorUtils.provideNetworkDataSource(mContext).fetchRecipes();
                     }
                     showEmpty();
