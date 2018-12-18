@@ -8,23 +8,14 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 * Local persistence using room DB
 * MVVM architecture 
 * Material design
-* Master detail fragment layout
-* Fragment interface callbacks for navigation
-* Error handling for missing JSON data
+* Master detail layout
 * Homescreen widget
-* Video playback/streaming with Exoplayer
+* Video streaming with Exoplayer
 * UI tests with Espresso
 
-<h2 align="left">Screenshots</h2>
-<h4 align="center">
-<img src="screenshots/main.png" height="350" width="200">
-<img src="screenshots/step.png" height="350" width="200">
-<img src="screenshots/detail.png" height="350" width="200">
-<img src="screenshots/tab_main.png" height=260>
-<img src="screenshots/tab_detail.png" height=260>
-
 ## Getting Started
-To run the project, check the prerequisites below, then clone the repo to your Android studio or download the zip
+To run the project, check the prerequisites below, then clone the repo and build
+ on Android studio or download the zip file
 
 ## Prerequisites
 *   Android Studio IDE 3.0+
@@ -43,6 +34,17 @@ To run the project, check the prerequisites below, then clone the repo to your A
 *   [ShimmerLayout](https://github.com/facebook/shimmer-android)
 *   [Exoplayer](https://github.com/google/ExoPlayer)
 *   [Espresso](https://developer.android.com/training/testing/espresso)
+
+<h2 align="left">Screenshots</h2>
+<h4 align="center">
+<img src="screenshots/main.png" height="350" width="200">
+<img src="screenshots/step.png" height="350" width="200">
+<img src="screenshots/detail.png" height="350" width="200">
+<img src="screenshots/tab_main.png" height=260>
+<img src="screenshots/tab_detail.png" height=260>
+
+## Author
+Ezike Tobenna
 
 ## License
 This project is licensed under the Apache License 2.0 - See: http://www.apache.org/licenses/LICENSE-2.0.txt
