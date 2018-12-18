@@ -46,13 +46,8 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private Parcelable mListState;
     private boolean isSet;
     private GridLayoutManager mLayoutManager;
-    RecipeViewModel mViewModel;
-    FrameLayout mFrameLayout;
-    FragmentRecipeBinding binding;
-
-    public RecipeFragment() {
-        // Required empty public constructor
-    }
+    private FrameLayout mFrameLayout;
+    private FragmentRecipeBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -66,7 +61,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         return view;
     }
 
-    // Initial views
+    // Initialize all views
     private void initViews() {
         mFrameLayout = binding.mainFrame;
         mShimmer = binding.shimmer;
@@ -84,7 +79,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private void setUpViewModel() {
         Log.d(LOG_TAG, "ViewModel setup");
         RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
-        mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
+        RecipeViewModel mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
         mViewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
     }
 
@@ -104,6 +99,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         }
     }
 
+    // If there's no network, show the snackBar and start shimmer
     private void showEmpty() {
         if (!isConnected()) {
             showSnackBar();
@@ -113,6 +109,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         isSet = true;
     }
 
+    // If there's data, display the recipes and hide shimmer
     private void showData() {
         if (isSet) {
             mShimmer.setVisibility(View.GONE);
@@ -133,6 +130,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         mShimmer.stopShimmer();
     }
 
+    // Persist recyclerView scroll state
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -157,7 +155,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    /*Show SnackBar if there's an error*/
+    // Show SnackBar if there's no network or no data available
     private void showSnackBar() {
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
