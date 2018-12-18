@@ -16,21 +16,26 @@ import com.example.eziketobenna.bakingapp.databinding.StepListContentBinding;
 
 import java.util.List;
 
+/**
+ * RecyclerView Adapter class that displays steps and ingredients
+ * the Adapter takes two ViewHolder classes
+ */
 public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int INGREDIENT = 0;
     private static final int STEP = 1;
     private boolean isTwoPane;
     private List<Object> mDataSet;
-    StepClickListener mListener;
-    Context mContext;
+    private StepClickListener mListener;
+    private Context mContext;
 
-    public DetailAdapter(Context context, List<Object> mDataSet, boolean isTwoPane, StepClickListener listener) {
+    DetailAdapter(Context context, List<Object> mDataSet, boolean isTwoPane, StepClickListener listener) {
         mContext = context;
         this.mDataSet = mDataSet;
         this.isTwoPane = isTwoPane;
         mListener = listener;
     }
 
+    // check the type of object to be returned
     @Override
     public int getItemViewType(int position) {
         if (mDataSet.get(position) instanceof Ingredient) {
