@@ -10,6 +10,10 @@ import com.example.eziketobenna.bakingapp.data.model.Recipe;
 
 import java.util.List;
 
+/**
+ * class with methods for carrying out
+ * database operations with {@link AppDatabase}
+ */
 @Dao
 public interface RecipeDao {
 
@@ -20,7 +24,7 @@ public interface RecipeDao {
     Recipe getSelectedRecipe(int id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void BulkInsert(List<Recipe> recipes);
+    void bulkInsert(List<Recipe> recipes);
 
     @Query("DELETE FROM recipe")
     void deleteAllRecipes();

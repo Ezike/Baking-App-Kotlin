@@ -10,12 +10,17 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * converter class for {@link Step}
+ * to be used in {@link AppDatabase}
+ */
 public class StepListConverter {
 
     private static Gson gson = new Gson();
 
+    // returns step list
     @TypeConverter
-    public static List<Step> StringToStepsList(String string) {
+    static List<Step> StringToStepsList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -24,8 +29,9 @@ public class StepListConverter {
         return gson.fromJson(string, stepListType);
     }
 
+    // returns String
     @TypeConverter
-    public static String StepListToString(List<Step> stepList) {
+    static String StepListToString(List<Step> stepList) {
         return stepList == null ? null : gson.toJson(stepList);
     }
 }

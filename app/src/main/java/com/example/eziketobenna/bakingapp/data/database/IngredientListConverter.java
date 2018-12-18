@@ -10,12 +10,17 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * converter class for {@link Ingredient}
+ * used in {@link AppDatabase}
+ */
 public class IngredientListConverter {
 
     private static Gson gson = new Gson();
 
+    // returns Ingredient List
     @TypeConverter
-    public static List<Ingredient> toList(String string) {
+    static List<Ingredient> toList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -24,8 +29,9 @@ public class IngredientListConverter {
         return gson.fromJson(string, ingredientListType);
     }
 
+    // returns the String
     @TypeConverter
-    public static String toString(List<Ingredient> ingredientList) {
+    static String toString(List<Ingredient> ingredientList) {
         return ingredientList == null ? null : gson.toJson(ingredientList);
     }
 }

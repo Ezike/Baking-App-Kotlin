@@ -37,7 +37,7 @@ public class RecipeRepository {
             deleteOldData();
             Log.d(LOG_TAG, "Old weather deleted");
             // Insert new data
-            mRecipeDao.BulkInsert(newRecipes);
+            mRecipeDao.bulkInsert(newRecipes);
             Log.d(LOG_TAG, "New values inserted");
         }));
     }
