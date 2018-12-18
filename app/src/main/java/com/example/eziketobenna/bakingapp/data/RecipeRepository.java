@@ -28,14 +28,13 @@ public class RecipeRepository {
         mRecipeDao = recipeDao;
         mNetworkDataSource = networkDataSource;
         mExecutors = executors;
-
         // As long as the repository exists, observe the network LiveData.
         // If that LiveData changes, update the database.
         LiveData<List<Recipe>> networkData = mNetworkDataSource.getRecipes();
         networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(() -> {
             // delete old data
             deleteOldData();
-            Log.d(LOG_TAG, "Old weather deleted");
+            Log.d(LOG_TAG, "Old data deleted");
             // Insert new data
             mRecipeDao.bulkInsert(newRecipes);
             Log.d(LOG_TAG, "New values inserted");
@@ -62,26 +61,23 @@ public class RecipeRepository {
         startFetchRecipeService();
     }
 
+    // get all Recipes
     public LiveData<List<Recipe>> getAllRecipes() {
         initializeData();
         return mRecipeDao.getAllRecipes();
     }
 
-    /**
-     * Deletes old data
-     */
+    // Delete old data
     private void deleteOldData() {
         mRecipeDao.deleteAllRecipes();
     }
 
-
+    // get recipe by Id
     public Recipe getRecipe(int id) {
         return mRecipeDao.getSelectedRecipe(id);
     }
 
-    /**
-     * Fetch recipes in the background
-     */
+    // Fetch recipes in the background
     private void startFetchRecipeService() {
         mExecutors.diskIO().execute(mNetworkDataSource::startFetchRecipeService);
     }

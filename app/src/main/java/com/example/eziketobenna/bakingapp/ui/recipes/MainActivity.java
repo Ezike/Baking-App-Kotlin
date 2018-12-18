@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         }
+
+        // add fragment to activity
         RecipeFragment recipeFragment = new RecipeFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.recipe_fragment, recipeFragment);
