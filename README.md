@@ -40,7 +40,6 @@ To run the project, check the prerequisites below, then clone the repo and build
 <img src="screenshots/main.png" height="350" width="200">
 <img src="screenshots/step.png" height="350" width="200">
 <img src="screenshots/detail.png" height="350" width="200">
-<img src="screenshots/tab_main.png" height=260>
 <img src="screenshots/tab_detail.png" height=260>
 
 ## Author
