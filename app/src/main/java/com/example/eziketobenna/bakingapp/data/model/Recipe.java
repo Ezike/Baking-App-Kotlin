@@ -22,6 +22,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Java class for creating Recipe objects
+ * also database table
+ */
+
 @Entity(tableName = "recipe")
 public class Recipe extends BaseObservable implements Parcelable {
     @SerializedName("image")
@@ -81,6 +86,12 @@ public class Recipe extends BaseObservable implements Parcelable {
         in.readList(steps, Step.class.getClassLoader());
     }
 
+    /**
+     * Method for fetching images from Api using Glide
+     *
+     * @param view     the view that'll hold the image
+     * @param imageUrl the url for the image
+     */
     @BindingAdapter({"image"})
     public static void loadImage(ImageView view, String imageUrl) {
         GlideApp.with(view.getContext())
@@ -104,10 +115,6 @@ public class Recipe extends BaseObservable implements Parcelable {
         return servings;
     }
 
-    public void setServings(int servings) {
-        this.servings = servings;
-    }
-
     @Bindable
     public String getName() {
         return name;
@@ -120,10 +127,6 @@ public class Recipe extends BaseObservable implements Parcelable {
 
     public List<Ingredient> getIngredients() {
         return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 
     public int getId() {

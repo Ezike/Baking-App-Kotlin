@@ -13,6 +13,9 @@ import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.utils.GlideApp;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java class for creating Step objects
+ */
 public class Step extends BaseObservable implements Parcelable {
     @SerializedName("videoURL")
     private String videoURL;
@@ -60,6 +63,12 @@ public class Step extends BaseObservable implements Parcelable {
         thumbnailURL = in.readString();
     }
 
+    /**
+     * Method for fetching images from Api using Glide
+     *
+     * @param view     the view that'll hold the image
+     * @param imageUrl the url for the image
+     */
     @BindingAdapter({"errorImage"})
     public static void loadImage(ImageView view, String imageUrl) {
         GlideApp.with(view.getContext())
@@ -68,14 +77,10 @@ public class Step extends BaseObservable implements Parcelable {
                 .error(R.drawable.error)
                 .into(view);
     }
+
     public String getVideoURL() {
         return videoURL;
     }
-
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-
 
     public String getDescription() {
         return description;

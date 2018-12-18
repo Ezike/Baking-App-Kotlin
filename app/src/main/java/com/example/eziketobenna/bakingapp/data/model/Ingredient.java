@@ -9,6 +9,9 @@ import android.support.annotation.NonNull;
 import com.example.eziketobenna.bakingapp.BR;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java class for creating Ingredient objects
+ */
 public class Ingredient extends BaseObservable implements Parcelable {
     @SerializedName("quantity")
     private Double quantity;
@@ -52,18 +55,6 @@ public class Ingredient extends BaseObservable implements Parcelable {
 
     public Double getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getMeasure() {
-        return measure;
-    }
-
-    public void setMeasure(String measure) {
-        this.measure = measure;
     }
 
     @Bindable
