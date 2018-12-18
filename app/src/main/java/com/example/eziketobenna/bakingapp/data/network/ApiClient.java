@@ -3,12 +3,14 @@ package com.example.eziketobenna.bakingapp.data.network;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+/**
+ * class with fully built Retrofit object
+ */
+class ApiClient {
     private static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
     private static ApiInterface retrofit = null;
 
-    public static ApiInterface getClient() {
-
+    static ApiInterface getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

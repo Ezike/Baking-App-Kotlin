@@ -16,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Provides an API for doing all operations with the api data
+ * Provides an API for doing all operations on network data
  */
 public class NetworkDataSource {
     private static final String LOG_TAG = NetworkDataSource.class.getSimpleName();
@@ -64,7 +64,7 @@ public class NetworkDataSource {
     }
 
     /*
-    fetch recipes from network
+    fetch recipes from api using retrofit
      */
     public void fetchRecipes() {
         Log.d(LOG_TAG, "Fetch recipe started");

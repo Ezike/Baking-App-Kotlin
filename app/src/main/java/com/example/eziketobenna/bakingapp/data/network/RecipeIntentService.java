@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
 
+/**
+ * The intent service class runs the data fetch from api
+ * in a background thread
+ */
 public class RecipeIntentService extends IntentService {
     private static final String LOG_TAG = RecipeIntentService.class.getSimpleName();
 
