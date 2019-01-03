@@ -20,7 +20,7 @@ public class IngredientListConverter {
 
     // returns Ingredient List
     @TypeConverter
-    static List<Ingredient> toList(String string) {
+    public static List<Ingredient> toList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -31,7 +31,7 @@ public class IngredientListConverter {
 
     // returns the String
     @TypeConverter
-    static String toString(List<Ingredient> ingredientList) {
+    public static String toString(List<Ingredient> ingredientList) {
         return ingredientList == null ? null : gson.toJson(ingredientList);
     }
 }

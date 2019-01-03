@@ -20,7 +20,7 @@ public class StepListConverter {
 
     // returns step list
     @TypeConverter
-    static List<Step> StringToStepsList(String string) {
+    public static List<Step> StringToStepsList(String string) {
         if (string == null) {
             return Collections.emptyList();
         }
@@ -31,7 +31,7 @@ public class StepListConverter {
 
     // returns String
     @TypeConverter
-    static String StepListToString(List<Step> stepList) {
+    public static String StepListToString(List<Step> stepList) {
         return stepList == null ? null : gson.toJson(stepList);
     }
 }
