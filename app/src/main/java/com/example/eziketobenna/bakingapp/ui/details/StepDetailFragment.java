@@ -189,7 +189,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                 // In portrait
                 mPlayerView.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
-
             }
         }
     }
