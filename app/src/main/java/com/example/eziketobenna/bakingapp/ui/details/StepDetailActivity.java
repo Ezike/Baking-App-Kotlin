@@ -84,7 +84,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
 
     @Override
     public void onBackPressed() {
-        if (mCurrentPosition > 0) mCurrentPosition--;
+        finish();
         super.onBackPressed();
     }
 
