@@ -86,7 +86,8 @@
                 android:padding="@dimen/sixteen_dp"
                 android:text="@string/prev"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/step_id"
@@ -96,7 +97,8 @@
                 android:gravity="center"
                 android:padding="@dimen/sixteen_dp"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/next_button"
@@ -104,13 +106,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-
                 android:layout_weight="1"
                 android:gravity="end"
                 android:padding="@dimen/sixteen_dp"
                 android:text="@string/next"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 </layout>
