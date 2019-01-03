@@ -44,8 +44,9 @@ import java.util.Objects;
  */
 public class StepDetailFragment extends Fragment implements Player.EventListener, View.OnClickListener {
     public static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
-    private static final String ARG_POSITION = "position";
-    public static final String EXTRA = "step";
+    public static final String EXTRA_STEP = "com.example.eziketobenna.bakingapp.ui.details.step";
+    public static final String EXTRA_STEP_POSITION = "com.example.eziketobenna.bakingapp.ui.details.page.position";
+    public static final int CURRENT_PAGE_POSITION = 0;
     OnStepClickListener mListener;
     private ImageView mImageView;
     private SimpleExoPlayer mExoPlayer;
@@ -53,15 +54,27 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private TextView mDescTv, mDescHeaderTv;
     private long mPlaybackPosition;
     private int orientation;
+    private static final String ARG_POSITION = "com.example.eziketobenna.bakingapp.ui.details.playback.position";
     private boolean isTablet;
+    private int mLastPage;
     Context mContext;
     String videoUrl;
     Step step;
 
+    public static StepDetailFragment newInstance(Step step, int position) {
+        StepDetailFragment fragment = new StepDetailFragment();
+        Bundle b = new Bundle();
+        b.putParcelable(EXTRA_STEP, step);
+        b.putInt(EXTRA_STEP_POSITION, position);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
+    // Constructor for tablet view
     public static StepDetailFragment newInstance(Step step) {
         StepDetailFragment fragment = new StepDetailFragment();
         Bundle b = new Bundle();
-        b.putParcelable(EXTRA, step);
+        b.putParcelable(EXTRA_STEP, step);
         fragment.setArguments(b);
         return fragment;
     }
@@ -70,7 +83,8 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            step = getArguments().getParcelable(EXTRA);
+            step = getArguments().getParcelable(EXTRA_STEP);
+            mLastPage = getArguments().getInt(EXTRA_STEP_POSITION);
         }
         videoUrl = step != null ? step.getVideoURL() : null;
         if (savedInstanceState != null) {
@@ -105,6 +119,11 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             TextView mStepIndicator = binding.stepId;
             String currentStep = "Step  " + String.valueOf(stepId);
             mStepIndicator.setText(currentStep);
+            if (stepId == CURRENT_PAGE_POSITION) {
+                mPrevBtn.setVisibility(View.INVISIBLE);
+            } else if (stepId == mLastPage) {
+                mNextBtn.setText(getString(R.string.finish));
+            }
         }
         return binding.getRoot();
     }
@@ -176,7 +195,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     }
 
     /**
-     * Release exoplayer so it doesn't take up system resources
+     * Release exoPlayer so it doesn't take up system resources
      */
     void releasePlayer() {
         if (mExoPlayer != null) {

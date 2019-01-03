@@ -26,14 +26,17 @@ import java.util.List;
  * in a {@link StepListActivity}.
  */
 public class StepDetailActivity extends AppCompatActivity implements StepDetailFragment.OnStepClickListener {
-    public static final String EXTRA = "step";
-    public static final String EXTRA_LIST = "step_list";
-    public static final String EXTRA_NAME = "recipe name";
+    public static final String TAG = StepDetailActivity.class.getSimpleName();
+    public static final String EXTRA = "com.example.eziketobenna.bakingapp.ui.details.Step";
+    public static final String EXTRA_LIST = "com.example.eziketobenna.bakingapp.ui.details.steplist";
+    public static final String EXTRA_NAME = "com.example.eziketobenna.bakingapp.ui.details.recipeName";
     public static final String STEP_INDEX = "index";
     public static final String STEP_LIST = "current list";
+    public static final String LIST_END = "end of list";
     private List<Step> mStepList;
-    int stepIndex;
-    Step step;
+    private int mCurrentPosition;
+    private Step mStep;
+    private int mEndOfList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +51,19 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         if (savedInstanceState == null) {
-            step = getIntent().getParcelableExtra((EXTRA));
+            mStep = getIntent().getParcelableExtra((EXTRA));
             mStepList = getIntent().getParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST);
+            mEndOfList = mStepList.size() - 1;
             createFragment();
         } else {
             mStepList = savedInstanceState.getParcelableArrayList(STEP_LIST);
-            stepIndex = savedInstanceState.getInt(STEP_INDEX);
+            mCurrentPosition = savedInstanceState.getInt(STEP_INDEX);
+            mEndOfList = savedInstanceState.getInt(LIST_END);
         }
     }
 
     private void createFragment() {
-        StepDetailFragment fragment = StepDetailFragment.newInstance(step);
+        StepDetailFragment fragment = StepDetailFragment.newInstance(mStep, mEndOfList);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.step_detail_container, fragment)
                 .commit();
@@ -78,17 +83,24 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
     }
 
     @Override
+    public void onBackPressed() {
+        if (mCurrentPosition > 0) mCurrentPosition--;
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(STEP_INDEX, stepIndex);
+        outState.putInt(STEP_INDEX, mCurrentPosition);
+        outState.putInt(LIST_END, mEndOfList);
         outState.putParcelableArrayList(STEP_LIST, (ArrayList<? extends Parcelable>) mStepList);
     }
 
     @Override
     public void onPrevStepClick(Step step) {
-        stepIndex = step.getId();
-        if (stepIndex > 0) {
-            gotoStep(mStepList.get(stepIndex - 1));
+        mCurrentPosition = step.getId();
+        if (mCurrentPosition > 0) {
+            gotoStep(mStepList.get(mCurrentPosition - 1));
         } else {
             finish();
         }
@@ -96,19 +108,17 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
 
     @Override
     public void onNextStepClick(Step step) {
-        stepIndex = step.getId();
-        if (stepIndex < mStepList.size() - 1) {
-            gotoStep(mStepList.get(stepIndex + 1));
+        mCurrentPosition = step.getId();
+        if (mCurrentPosition < mStepList.size() - 1) {
+            gotoStep(mStepList.get(mCurrentPosition + 1));
         } else {
             finish();
         }
-
-
     }
 
     private void gotoStep(Step step) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        StepDetailFragment newFragment = StepDetailFragment.newInstance(step);
+        StepDetailFragment newFragment = StepDetailFragment.newInstance(step, mEndOfList);
         transaction.replace(R.id.step_detail_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
