@@ -63,8 +63,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.9.1'
 
     // dagger2
-    implementation 'com.google.dagger:dagger-android-support:2.20'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.20'
+    implementation 'com.google.dagger:dagger:2.20'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.20'
 
     //Espresso
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
