@@ -17,7 +17,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +76,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Setup ViewModel
     private void setUpViewModel() {
-        Log.d(LOG_TAG, "ViewModel setup");
         RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
         RecipeViewModel mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
         mViewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
@@ -90,7 +88,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
             if (mListState != null) {
                 mLayoutManager.onRestoreInstanceState(mListState);
             }
-            Log.d(LOG_TAG, "Displaying recipes");
             showData();
             mShimmer.stopShimmer();
             mShimmer.setVisibility(View.GONE);
@@ -160,7 +157,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         Snackbar snackbar = Snackbar
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
-                    Log.d(LOG_TAG, "Retrying network fetch");
                     if (isSet) {
                         InjectorUtils.provideNetworkDataSource(mContext).fetchRecipes();
                     }
@@ -187,6 +183,5 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         in.putExtra(StepListActivity.INTENT_EXTRA, recipe);
         in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(in);
-        Log.d(LOG_TAG, "Recipe clicked");
     }
 }
