@@ -2,15 +2,17 @@ package com.example.eziketobenna.bakingapp.ui.recipes;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import com.example.eziketobenna.bakingapp.R;
+import com.example.eziketobenna.bakingapp.utils.BaseActivity;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
+    private static final String RECIPE_FRAG = "com.example.eziketobenna.bakingapp.ui.recipes.DETAIL.FRAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +25,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // add fragment to activity
-        RecipeFragment recipeFragment = new RecipeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.recipe_fragment, recipeFragment);
-        transaction.commit();
+        FragmentManager manager = getSupportFragmentManager();
+        RecipeFragment recipeFragment = (RecipeFragment) manager.findFragmentByTag(RECIPE_FRAG);
+
+        if (recipeFragment == null) {
+            recipeFragment = new RecipeFragment();
+        }
+
+        addFragmentToActivity(
+                manager,
+                recipeFragment,
+                R.id.recipe_fragment,
+                RECIPE_FRAG
+        );
+
     }
+
 }
