@@ -6,15 +6,16 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.example.eziketobenna.bakingapp.databinding.ActivityStepDetailBinding;
+import com.example.eziketobenna.bakingapp.utils.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  * item details are presented side-by-side with a list of items
  * in a {@link StepListActivity}.
  */
-public class StepDetailActivity extends AppCompatActivity implements StepDetailFragment.OnStepClickListener {
+public class StepDetailActivity extends BaseActivity implements StepDetailFragment.OnStepClickListener {
     public static final String TAG = StepDetailActivity.class.getSimpleName();
     public static final String EXTRA = "com.example.eziketobenna.bakingapp.ui.details.Step";
     public static final String EXTRA_LIST = "com.example.eziketobenna.bakingapp.ui.details.steplist";
@@ -33,6 +34,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
     public static final String STEP_INDEX = "index";
     public static final String STEP_LIST = "current list";
     public static final String LIST_END = "end of list";
+    private static final String RECIPE_DETAIL_FRAG = "com.example.eziketobenna.bakingapp.ui.details.RECIPE.DETAIL.FRAG";
     private List<Step> mStepList;
     private int mCurrentPosition;
     private Step mStep;
@@ -54,19 +56,29 @@ public class StepDetailActivity extends AppCompatActivity implements StepDetailF
             mStep = getIntent().getParcelableExtra((EXTRA));
             mStepList = getIntent().getParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST);
             mEndOfList = mStepList.size() - 1;
-            createFragment();
         } else {
             mStepList = savedInstanceState.getParcelableArrayList(STEP_LIST);
             mCurrentPosition = savedInstanceState.getInt(STEP_INDEX);
             mEndOfList = savedInstanceState.getInt(LIST_END);
         }
+        createFragment();
     }
 
     private void createFragment() {
-        StepDetailFragment fragment = StepDetailFragment.newInstance(mStep, mEndOfList);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.step_detail_container, fragment)
-                .commit();
+        FragmentManager manager = getSupportFragmentManager();
+
+        StepDetailFragment fragment = (StepDetailFragment) manager.findFragmentByTag(RECIPE_DETAIL_FRAG);
+
+        if (fragment == null) {
+            fragment = StepDetailFragment.newInstance(mStep, mEndOfList);
+        }
+
+        addFragmentToActivity(
+                manager,
+                fragment,
+                R.id.step_detail_container,
+                RECIPE_DETAIL_FRAG
+        );
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
