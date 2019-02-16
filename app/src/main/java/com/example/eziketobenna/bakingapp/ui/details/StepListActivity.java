@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -104,6 +105,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
 
         //update the widget with current recipe details
         RecipeWidgetProvider.updateWidget(this);
+        Snackbar.make(binding.getRoot(), getString(R.string.widget_info, mRecipeName), Snackbar.LENGTH_LONG).show();
     }
 
     private void closeOnError() {
