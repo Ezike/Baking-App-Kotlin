@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = AppModule.class)
+@Module
 public class RoomModule {
     private AppDatabase appDatabase;
 

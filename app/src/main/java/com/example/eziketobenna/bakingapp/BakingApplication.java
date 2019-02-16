@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.example.eziketobenna.bakingapp.di.BakingComponent;
 import com.example.eziketobenna.bakingapp.di.DaggerBakingComponent;
-import com.example.eziketobenna.bakingapp.di.modules.AppModule;
 import com.example.eziketobenna.bakingapp.di.modules.ContextModule;
 import com.example.eziketobenna.bakingapp.di.modules.RoomModule;
 
@@ -22,7 +21,6 @@ public class BakingApplication extends Application {
         super.onCreate();
 
         bakingComponent = DaggerBakingComponent.builder()
-                .appModule(new AppModule(this))
                 .contextModule(new ContextModule(this))
                 .roomModule(new RoomModule(this))
                 .build();
