@@ -35,6 +35,7 @@ public class StepDetailActivity extends BaseActivity implements StepDetailFragme
     public static final String STEP_LIST = "current list";
     public static final String LIST_END = "end of list";
     private static final String RECIPE_DETAIL_FRAG = "com.example.eziketobenna.bakingapp.ui.details.RECIPE.DETAIL.FRAG";
+    private static final String CURRENT_STEP = "com.example.eziketobenna.bakingapp.ui.details.current.step";
     private List<Step> mStepList;
     private int mCurrentPosition;
     private Step mStep;
@@ -57,6 +58,7 @@ public class StepDetailActivity extends BaseActivity implements StepDetailFragme
             mStepList = getIntent().getParcelableArrayListExtra(StepDetailActivity.EXTRA_LIST);
             mEndOfList = mStepList.size() - 1;
         } else {
+            mStep = savedInstanceState.getParcelable(CURRENT_STEP);
             mStepList = savedInstanceState.getParcelableArrayList(STEP_LIST);
             mCurrentPosition = savedInstanceState.getInt(STEP_INDEX);
             mEndOfList = savedInstanceState.getInt(LIST_END);
@@ -105,6 +107,7 @@ public class StepDetailActivity extends BaseActivity implements StepDetailFragme
         super.onSaveInstanceState(outState);
         outState.putInt(STEP_INDEX, mCurrentPosition);
         outState.putInt(LIST_END, mEndOfList);
+        outState.putParcelable(CURRENT_STEP, mStep);
         outState.putParcelableArrayList(STEP_LIST, (ArrayList<? extends Parcelable>) mStepList);
     }
 

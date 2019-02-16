@@ -10,9 +10,10 @@ import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
 import com.example.eziketobenna.bakingapp.data.model.Ingredient;
 import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
-import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class ListWidgetService extends RemoteViewsService {
     @Override
@@ -26,6 +27,9 @@ public class ListWidgetService extends RemoteViewsService {
         private final Context mContext;
         private List<Ingredient> mIngredientList;
         private int recipeId;
+
+        @Inject
+        RecipeRepository recipeRepository;
 
         ListRemoteViewsFactory(Context mContext) {
             this.mContext = mContext;
@@ -44,8 +48,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // Get the recipe from database through repository
             if (recipeId != 0) {
-                RecipeRepository repo = InjectorUtils.provideRepository(mContext);
-                mIngredientList = repo.getRecipe(recipeId).getIngredients();
+                mIngredientList = recipeRepository.getRecipe(recipeId).getIngredients();
             }
         }
 

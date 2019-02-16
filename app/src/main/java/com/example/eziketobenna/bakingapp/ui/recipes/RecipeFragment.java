@@ -22,14 +22,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.example.eziketobenna.bakingapp.BakingApplication;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
+import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
 import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
-import com.example.eziketobenna.bakingapp.utils.InjectorUtils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +51,18 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private GridLayoutManager mLayoutManager;
     private FrameLayout mFrameLayout;
     private FragmentRecipeBinding binding;
+
+    @Inject
+    RecipeViewModelFactory factory;
+
+    @Inject
+    NetworkDataSource networkDataSource;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BakingApplication.getComponent(Objects.requireNonNull(getActivity())).inject(this);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -76,7 +92,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Setup ViewModel
     private void setUpViewModel() {
-        RecipeViewModelFactory factory = InjectorUtils.provideRecipeViewModelFactory(mContext);
         RecipeViewModel mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
         mViewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
     }
@@ -158,7 +173,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
                 .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
                     if (isSet) {
-                        InjectorUtils.provideNetworkDataSource(mContext).fetchRecipes();
+                        networkDataSource.fetchRecipes();
                     }
                     showEmpty();
                 });

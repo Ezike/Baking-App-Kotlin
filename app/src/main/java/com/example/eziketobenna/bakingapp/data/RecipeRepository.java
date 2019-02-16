@@ -1,7 +1,6 @@
 package com.example.eziketobenna.bakingapp.data;
 
 import android.arch.lifecycle.LiveData;
-import android.util.Log;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
 import com.example.eziketobenna.bakingapp.data.database.RecipeDao;
@@ -10,10 +9,15 @@ import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Acts as a mediator between {@link NetworkDataSource}
  * and {@link com.example.eziketobenna.bakingapp.data.database.RecipeDao} to provide data to other modules
  */
+
+@Singleton
 public class RecipeRepository {
     private static final String LOG_TAG = RecipeRepository.class.getSimpleName();
     // For Singleton instantiation
@@ -24,7 +28,8 @@ public class RecipeRepository {
     private AppExecutors mExecutors;
     private boolean mInitialized = false;
 
-    private RecipeRepository(RecipeDao recipeDao, NetworkDataSource networkDataSource, AppExecutors executors) {
+    @Inject
+    public RecipeRepository(RecipeDao recipeDao, NetworkDataSource networkDataSource, AppExecutors executors) {
         mRecipeDao = recipeDao;
         mNetworkDataSource = networkDataSource;
         mExecutors = executors;
@@ -34,20 +39,16 @@ public class RecipeRepository {
         networkData.observeForever(newRecipes -> mExecutors.diskIO().execute(() -> {
             // delete old data
             deleteOldData();
-            Log.d(LOG_TAG, "Old data deleted");
             // Insert new data
             mRecipeDao.bulkInsert(newRecipes);
-            Log.d(LOG_TAG, "New values inserted");
         }));
     }
 
     public synchronized static RecipeRepository getInstance(RecipeDao recipeDao,
                                                             NetworkDataSource networkDataSource, AppExecutors executors) {
-        Log.d(LOG_TAG, "Getting repository");
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = new RecipeRepository(recipeDao, networkDataSource, executors);
-                Log.d(LOG_TAG, "Made new repository");
             }
         }
         return sInstance;

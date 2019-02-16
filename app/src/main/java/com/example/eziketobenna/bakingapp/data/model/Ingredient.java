@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import com.example.eziketobenna.bakingapp.BR;
 import com.google.gson.annotations.SerializedName;
@@ -82,15 +81,5 @@ public class Ingredient extends BaseObservable implements Parcelable {
         }
         dest.writeString(measure);
         dest.writeString(ingredient);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "quantity=" + quantity +
-                ", measure='" + measure + '\'' +
-                ", ingredient='" + ingredient + '\'' +
-                '}';
     }
 }

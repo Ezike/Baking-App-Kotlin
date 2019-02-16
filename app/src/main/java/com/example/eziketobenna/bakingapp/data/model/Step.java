@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.example.eziketobenna.bakingapp.BR;
@@ -132,17 +131,5 @@ public class Step extends BaseObservable implements Parcelable {
         dest.writeInt(id);
         dest.writeString(shortDescription);
         dest.writeString(thumbnailURL);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Step{" +
-                "videoURL='" + videoURL + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", thumbnailURL='" + thumbnailURL + '\'' +
-                '}';
     }
 }

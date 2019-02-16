@@ -3,19 +3,15 @@ package com.example.eziketobenna.bakingapp.data.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.example.eziketobenna.bakingapp.BR;
 import com.example.eziketobenna.bakingapp.R;
-import com.example.eziketobenna.bakingapp.data.database.IngredientListConverter;
-import com.example.eziketobenna.bakingapp.data.database.StepListConverter;
 import com.example.eziketobenna.bakingapp.utils.GlideApp;
 import com.google.gson.annotations.SerializedName;
 
@@ -42,11 +38,9 @@ public class Recipe extends BaseObservable implements Parcelable {
     @SerializedName("id")
     private int id;
 
-    @TypeConverters(IngredientListConverter.class)
     @SerializedName("ingredients")
     private List<Ingredient> ingredients;
 
-    @TypeConverters(StepListConverter.class)
     @SerializedName("steps")
     private List<Step> steps;
 
@@ -158,18 +152,5 @@ public class Recipe extends BaseObservable implements Parcelable {
         dest.writeList(ingredients);
         dest.writeInt(id);
         dest.writeList(steps);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "image='" + image + '\'' +
-                ", servings=" + servings +
-                ", name='" + name + '\'' +
-                ", ingredients=" + ingredients +
-                ", id=" + id +
-                ", steps=" + steps +
-                '}';
     }
 }
