@@ -34,6 +34,7 @@ To run the project, check the prerequisites below, then clone the repo and build
 *   [ShimmerLayout](https://github.com/facebook/shimmer-android)
 *   [Exoplayer](https://github.com/google/ExoPlayer)
 *   [Espresso](https://developer.android.com/training/testing/espresso)
+*   [Dagger2](https://google.github.io/dagger/users-guide)
 
 <h2 align="left">Screenshots</h2>
 <h4 align="center">
