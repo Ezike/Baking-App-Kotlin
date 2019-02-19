@@ -38,10 +38,10 @@ To run the project, check the prerequisites below, then clone the repo and build
 
 <h2 align="left">Screenshots</h2>
 <h4 align="center">
-<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/main.png" height="350" width="200">
-<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/step.png" height="350" width="200">
-<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561234/detail.png" height="350" width="200">
-<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/tab_detail.png" height=260>
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/main.png" width="40%" vspace="20" hspace="20">
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/step.png" width="40%" vspace="20" hspace="20">
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561234/detail.png" width="40%" vspace="20" hspace="20"">
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/tab_detail.png" width="40%" vspace="20" hspace="50">
 
 ## Author
 Ezike Tobenna
