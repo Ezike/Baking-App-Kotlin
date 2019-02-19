@@ -86,7 +86,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(true);
-        mAdapter = new RecipeAdapter(mContext, this);
+        mAdapter = new RecipeAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 

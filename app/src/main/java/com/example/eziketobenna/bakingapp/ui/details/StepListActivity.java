@@ -90,7 +90,7 @@ public class StepListActivity extends AppCompatActivity implements DetailAdapter
 
         RecyclerView mRecyclerView = findViewById(R.id.step_list);
         assert mRecyclerView != null;
-        mAdapter = new DetailAdapter(this, mBakingObjects, mTwoPane, this);
+        mAdapter = new DetailAdapter(mBakingObjects, this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
     }

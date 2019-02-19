@@ -1,6 +1,5 @@
 package com.example.eziketobenna.bakingapp.ui.details;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -23,15 +22,11 @@ import java.util.List;
 public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int INGREDIENT = 0;
     private static final int STEP = 1;
-    private boolean isTwoPane;
     private List<Object> mDataSet;
     private StepClickListener mListener;
-    private Context mContext;
 
-    DetailAdapter(Context context, List<Object> mDataSet, boolean isTwoPane, StepClickListener listener) {
-        mContext = context;
+    DetailAdapter(List<Object> mDataSet, StepClickListener listener) {
         this.mDataSet = mDataSet;
-        this.isTwoPane = isTwoPane;
         mListener = listener;
     }
 

@@ -22,5 +22,4 @@ class RecipeViewModel extends ViewModel {
     LiveData<List<Recipe>> getAllRecipes() {
         return mAllRecipes;
     }
-
 }

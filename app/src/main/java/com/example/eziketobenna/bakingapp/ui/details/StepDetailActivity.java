@@ -27,7 +27,6 @@ import java.util.List;
  * in a {@link StepListActivity}.
  */
 public class StepDetailActivity extends BaseActivity implements StepDetailFragment.OnStepClickListener {
-    public static final String TAG = StepDetailActivity.class.getSimpleName();
     public static final String EXTRA = "com.example.eziketobenna.bakingapp.ui.details.Step";
     public static final String EXTRA_LIST = "com.example.eziketobenna.bakingapp.ui.details.steplist";
     public static final String EXTRA_NAME = "com.example.eziketobenna.bakingapp.ui.details.recipeName";

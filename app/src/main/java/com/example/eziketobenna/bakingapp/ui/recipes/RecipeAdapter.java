@@ -1,6 +1,5 @@
 package com.example.eziketobenna.bakingapp.ui.recipes;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +15,9 @@ import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private List<Recipe> mRecipeList;
-    private Context mContext;
     private RecipeClickListener mListener;
 
-    RecipeAdapter(Context context, RecipeClickListener listener) {
-        mContext = context;
+    RecipeAdapter(RecipeClickListener listener) {
         mListener = listener;
     }
 
