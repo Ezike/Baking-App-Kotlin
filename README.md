@@ -41,7 +41,7 @@ To run the project, check the prerequisites below, then clone the repo and build
 <img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/main.png" width="30%" vspace="10" hspace="10">
 <img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/step.png" width="30%" vspace="10" hspace="10">
 <img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561234/detail.png" width="30%" vspace="10" hspace="10""><br>
-<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/tab_detail.png" width="100%" vspace="70" hspace="80">
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1550561235/tab_detail.png" width="80%" vspace="70" hspace="80">
 
 ## Author
 Ezike Tobenna
