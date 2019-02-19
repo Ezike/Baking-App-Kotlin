@@ -75,7 +75,7 @@ public class Recipe extends BaseObservable implements Parcelable {
      * @param view     the view that'll hold the image
      * @param imageUrl the url for the image
      */
-    @BindingAdapter({"image"})
+    @BindingAdapter({"baking:image"})
     public static void loadImage(ImageView view, String imageUrl) {
         GlideApp.with(view.getContext())
                 .load(imageUrl)
