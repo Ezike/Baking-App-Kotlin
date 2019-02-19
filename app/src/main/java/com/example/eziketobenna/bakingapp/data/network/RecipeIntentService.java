@@ -14,6 +14,7 @@ import javax.inject.Inject;
  * in a background thread
  */
 public class RecipeIntentService extends IntentService {
+
     private static final String LOG_TAG = RecipeIntentService.class.getSimpleName();
 
     @Inject

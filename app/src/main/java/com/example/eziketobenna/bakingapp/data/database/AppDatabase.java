@@ -16,7 +16,6 @@ import com.example.eziketobenna.bakingapp.data.model.Recipe;
 @Database(entities = Recipe.class, version = 2, exportSchema = false)
 @TypeConverters({IngredientListConverter.class, StepListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
-    private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     public static final String DB_NAME = "recipe_db";
 
     public abstract RecipeDao recipeDao();

@@ -73,11 +73,6 @@ public class ListWidgetService extends RemoteViewsService {
             String ingredient = recipeIngredient.getIngredient();
             views.setTextViewText(R.id.appwidget_ingredients, ingredient + "   " + measure);
 
-//            Bundle extras = new Bundle();
-//            extras.putInt(StepListActivity.RECIPE_ID, recipeId);
-//            Intent fillInIntent = new Intent();
-//            fillInIntent.putExtras(extras);
-//            views.setOnClickFillInIntent(R.id.appwidget_ingredients, fillInIntent);
             return views;
         }
 

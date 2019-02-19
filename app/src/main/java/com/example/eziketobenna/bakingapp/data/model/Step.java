@@ -10,25 +10,16 @@ import android.widget.ImageView;
 import com.example.eziketobenna.bakingapp.BR;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.utils.GlideApp;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Java class for creating Step objects
  */
 public class Step extends BaseObservable implements Parcelable {
-    @SerializedName("videoURL")
+
     private String videoURL;
-
-    @SerializedName("description")
     private String description;
-
-    @SerializedName("id")
     private int id;
-
-    @SerializedName("shortDescription")
     private String shortDescription;
-
-    @SerializedName("thumbnailURL")
     private String thumbnailURL;
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {

@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import com.example.eziketobenna.bakingapp.BR;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.utils.GlideApp;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,23 +24,13 @@ import java.util.List;
 
 @Entity(tableName = "recipe")
 public class Recipe extends BaseObservable implements Parcelable {
-    @SerializedName("image")
+
     private String image;
-
-    @SerializedName("servings")
     private int servings;
-
-    @SerializedName("name")
     private String name;
-
     @PrimaryKey
-    @SerializedName("id")
     private int id;
-
-    @SerializedName("ingredients")
     private List<Ingredient> ingredients;
-
-    @SerializedName("steps")
     private List<Step> steps;
 
     @Ignore

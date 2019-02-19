@@ -24,7 +24,6 @@ import retrofit2.Response;
 @Singleton
 public class NetworkDataSource {
     private static final String LOG_TAG = NetworkDataSource.class.getSimpleName();
-    private static final Object LOCK = new Object();
     private final Context mContext;
 
     @Inject

@@ -19,10 +19,6 @@ import javax.inject.Singleton;
 
 @Singleton
 public class RecipeRepository {
-    private static final String LOG_TAG = RecipeRepository.class.getSimpleName();
-    // For Singleton instantiation
-    private static final Object LOCK = new Object();
-    private static RecipeRepository sInstance;
     private final RecipeDao mRecipeDao;
     private final NetworkDataSource mNetworkDataSource;
     private AppExecutors mExecutors;
@@ -42,16 +38,6 @@ public class RecipeRepository {
             // Insert new data
             mRecipeDao.bulkInsert(newRecipes);
         }));
-    }
-
-    public synchronized static RecipeRepository getInstance(RecipeDao recipeDao,
-                                                            NetworkDataSource networkDataSource, AppExecutors executors) {
-        if (sInstance == null) {
-            synchronized (LOCK) {
-                sInstance = new RecipeRepository(recipeDao, networkDataSource, executors);
-            }
-        }
-        return sInstance;
     }
 
     private synchronized void initializeData() {

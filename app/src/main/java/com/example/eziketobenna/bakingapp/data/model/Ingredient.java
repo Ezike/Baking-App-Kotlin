@@ -6,19 +6,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.eziketobenna.bakingapp.BR;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Java class for creating Ingredient objects
  */
 public class Ingredient extends BaseObservable implements Parcelable {
-    @SerializedName("quantity")
+
     private Double quantity;
-
-    @SerializedName("measure")
     private String measure;
-
-    @SerializedName("ingredient")
     private String ingredient;
 
     public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
