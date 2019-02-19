@@ -12,6 +12,7 @@ It also has a home screen widget that displays the ingredients of a recipe that 
 * Homescreen widget
 * Video streaming with Exoplayer
 * UI tests with Espresso
+* Dependency injection with Dagger 2
 
 ## Getting Started
 To run the project, check the prerequisites below, then clone the repo and build
