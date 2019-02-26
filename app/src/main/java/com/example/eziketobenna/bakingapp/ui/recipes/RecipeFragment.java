@@ -169,15 +169,13 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Show SnackBar if there's no network or no data available
     private void showSnackBar() {
-        Snackbar snackbar = Snackbar
-                .make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
                     if (isSet) {
                         networkDataSource.fetchRecipes();
                     }
                     showEmpty();
-                });
-        snackbar.show();
+                }).show();
     }
 
     // Display more items when on Landscape
