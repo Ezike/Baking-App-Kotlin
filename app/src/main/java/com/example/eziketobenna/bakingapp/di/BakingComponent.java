@@ -6,6 +6,7 @@ import com.example.eziketobenna.bakingapp.di.modules.ExecutorsModule;
 import com.example.eziketobenna.bakingapp.di.modules.NetworkModule;
 import com.example.eziketobenna.bakingapp.di.modules.RoomModule;
 import com.example.eziketobenna.bakingapp.ui.recipes.RecipeFragment;
+import com.example.eziketobenna.bakingapp.widget.ListWidgetService;
 
 import javax.inject.Singleton;
 
@@ -18,5 +19,7 @@ public interface BakingComponent {
     void inject(RecipeFragment fragment);
 
     void inject(RecipeIntentService service);
+
+    void inject(ListWidgetService.ListRemoteViewsFactory service);
 
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.example.eziketobenna.bakingapp.BakingApplication;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
 import com.example.eziketobenna.bakingapp.data.model.Ingredient;
@@ -21,7 +22,7 @@ public class ListWidgetService extends RemoteViewsService {
         return new ListRemoteViewsFactory(this.getApplicationContext());
     }
 
-    class ListRemoteViewsFactory implements
+    public class ListRemoteViewsFactory implements
             RemoteViewsService.RemoteViewsFactory {
 
         private final Context mContext;
@@ -37,7 +38,7 @@ public class ListWidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-
+            BakingApplication.getComponent(mContext).inject(this);
         }
 
         @Override
