@@ -31,7 +31,7 @@ To run the project, check the prerequisites below, then clone the repo and build
 *   [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 *   [Room](https://developer.android.com/topic/libraries/architecture/room)
 *   [Glide](https://github.com/bumptech/glide)
-*   [DataBinding 2.0](https://developer.android.com/topic/libraries/data-binding)
+*   [DataBinding](https://developer.android.com/topic/libraries/data-binding)
 *   [ShimmerLayout](https://github.com/facebook/shimmer-android)
 *   [Exoplayer](https://github.com/google/ExoPlayer)
 *   [Espresso](https://developer.android.com/training/testing/espresso)
