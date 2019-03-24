@@ -6,8 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -25,9 +23,9 @@ import android.widget.FrameLayout;
 import com.example.eziketobenna.bakingapp.BakingApplication;
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
-import com.example.eziketobenna.bakingapp.data.network.NetworkDataSource;
 import com.example.eziketobenna.bakingapp.databinding.FragmentRecipeBinding;
 import com.example.eziketobenna.bakingapp.ui.details.StepListActivity;
+import com.example.eziketobenna.bakingapp.utils.Utilities;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
@@ -40,7 +38,6 @@ import javax.inject.Inject;
  */
 public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClickListener {
     public static final String LIST_STATE_KEY = "list_state";
-    private static final String LOG_TAG = RecipeFragment.class.getSimpleName();
     private final int PORT_SPAN = 2;
     private RecipeAdapter mAdapter;
     private Context mContext;
@@ -50,13 +47,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
     private boolean isSet;
     private GridLayoutManager mLayoutManager;
     private FrameLayout mFrameLayout;
+    private RecipeViewModel mViewModel;
     private FragmentRecipeBinding binding;
 
     @Inject
     RecipeViewModelFactory factory;
-
-    @Inject
-    NetworkDataSource networkDataSource;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +87,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Setup ViewModel
     private void setUpViewModel() {
-        RecipeViewModel mViewModel = ViewModelProviders.of(this, factory).get(RecipeViewModel.class);
+        mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()), factory).get(RecipeViewModel.class);
         mViewModel.getAllRecipes().observe((LifecycleOwner) mContext, this::setRecipesToAdapter);
     }
 
@@ -158,13 +153,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
 
     // Check if there is internet connection
     private boolean isConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connectivityManager != null) {
-            networkInfo = connectivityManager.getActiveNetworkInfo();
-        }
-        return networkInfo != null && networkInfo.isConnected();
+        return Utilities.isConnected(Objects.requireNonNull(getActivity()));
     }
 
     // Show SnackBar if there's no network or no data available
@@ -172,7 +161,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.RecipeClic
         Snackbar.make(mFrameLayout, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, view -> {
                     if (isSet) {
-                        networkDataSource.fetchRecipes();
+                        mViewModel.retryFetch();
                     }
                     showEmpty();
                 }).show();

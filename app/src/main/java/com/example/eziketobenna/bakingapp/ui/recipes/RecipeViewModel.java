@@ -7,19 +7,29 @@ import com.example.eziketobenna.bakingapp.data.RecipeRepository;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;
 
 import java.util.List;
+
+import javax.inject.Inject;
+
 /**
  * {@link ViewModel} for {@link RecipeFragment}
  */
 class RecipeViewModel extends ViewModel {
 
+    private RecipeRepository mRecipeRepository;
+
     private final LiveData<List<Recipe>> mAllRecipes;
 
-    RecipeViewModel(RecipeRepository mRepository) {
-        mAllRecipes = mRepository.getAllRecipes();
+    @Inject
+    RecipeViewModel(RecipeRepository repository) {
+        mRecipeRepository = repository;
+        mAllRecipes = repository.getAllRecipes();
     }
 
-    // get all Recipes
     LiveData<List<Recipe>> getAllRecipes() {
         return mAllRecipes;
+    }
+
+    void retryFetch() {
+        mRecipeRepository.retryFetch();
     }
 }

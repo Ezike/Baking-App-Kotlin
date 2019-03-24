@@ -54,6 +54,10 @@ public class RecipeRepository {
         return mRecipeDao.getAllRecipes();
     }
 
+    public void retryFetch() {
+        mNetworkDataSource.fetchRecipes();
+    }
+
     // Delete old data
     private void deleteOldData() {
         mRecipeDao.deleteAllRecipes();
