@@ -33,6 +33,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
@@ -112,12 +113,12 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             fullScreen();
         } else {
-            Button mNextBtn = binding.nextButton;
+            MaterialButton mNextBtn = (MaterialButton) binding.nextButton;
             mNextBtn.setOnClickListener(this);
-            Button mPrevBtn = binding.previousButton;
+            MaterialButton mPrevBtn = (MaterialButton) binding.previousButton;
             mPrevBtn.setOnClickListener(this);
             TextView mStepIndicator = binding.stepId;
-            String currentStep = "Step  " + String.valueOf(stepId);
+            String currentStep = "Step  " + stepId;
             mStepIndicator.setText(currentStep);
             if (stepId == CURRENT_PAGE_POSITION) {
                 mPrevBtn.setVisibility(View.INVISIBLE);
