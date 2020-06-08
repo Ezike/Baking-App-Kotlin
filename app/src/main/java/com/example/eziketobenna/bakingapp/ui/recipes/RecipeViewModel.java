@@ -1,7 +1,7 @@
 package com.example.eziketobenna.bakingapp.ui.recipes;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.eziketobenna.bakingapp.data.RecipeRepository;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;

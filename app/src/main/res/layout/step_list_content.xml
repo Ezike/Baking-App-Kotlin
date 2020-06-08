@@ -10,7 +10,7 @@
     </data>
 
 
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sixteen_dp"
@@ -44,7 +44,7 @@
                 android:layout_marginRight="@dimen/eight_dp"
                 android:src="@drawable/ic_play_arrow_black_24dp" />
         </RelativeLayout>
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </layout>

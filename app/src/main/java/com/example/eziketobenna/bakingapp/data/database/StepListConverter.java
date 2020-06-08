@@ -1,6 +1,6 @@
 package com.example.eziketobenna.bakingapp.data.database;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 import com.example.eziketobenna.bakingapp.data.model.Step;
 import com.google.gson.Gson;

@@ -1,6 +1,6 @@
 package com.example.eziketobenna.bakingapp.data;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.example.eziketobenna.bakingapp.AppExecutors;
 import com.example.eziketobenna.bakingapp.data.database.RecipeDao;

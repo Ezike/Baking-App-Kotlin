@@ -1,7 +1,7 @@
 package com.example.eziketobenna.bakingapp.di.modules;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 
 import com.example.eziketobenna.bakingapp.data.database.AppDatabase;
 import com.example.eziketobenna.bakingapp.data.database.RecipeDao;
