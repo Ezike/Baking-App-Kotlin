@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class FetchRecipes @Inject constructor(
     private val recipeRepository: RecipeRepository,
     postExecutionThread: PostExecutionThread
-) :
-        FlowUseCase<Unit, List<Recipe>>(postExecutionThread) {
+) : FlowUseCase<Unit, List<Recipe>>(postExecutionThread) {
 
     override fun invoke(params: Unit?): Flow<List<Recipe>> {
         return recipeRepository.fetchRecipe()

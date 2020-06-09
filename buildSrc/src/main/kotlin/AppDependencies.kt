@@ -2,7 +2,6 @@ const val kotlinVersion: String = "1.4-M2"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
 const val kotlinKapt: String = "kapt"
-const val spotlessVersion: String = "4.0.1"
 const val ktLintVersion: String = "0.36.0"
 
 object Config {
