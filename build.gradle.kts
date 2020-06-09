@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     repositories.applyDefault()
     dependencies {
@@ -6,12 +8,9 @@ buildscript {
 }
 
 allprojects {
+    applySpotless
     repositories.applyDefault()
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }

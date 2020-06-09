@@ -3,7 +3,7 @@ import Dependencies.Kotlin
 import Dependencies.View
 
 plugins {
-    androidLibrary
+    androidApplication
     kotlin(kotlinAndroid)
     kotlin(kotlinAndroidExtension)
     kotlin(kotlinKapt)
@@ -24,11 +24,6 @@ android {
 
     androidExtensions {
         isExperimental = true
-    }
-
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
     }
 
     kotlinOptions {
@@ -58,6 +53,6 @@ dependencies {
     implementation(DI.daggerHiltViewModel)
 
     kapt(DI.AnnotationProcessor.daggerHilt)
-    kapt(DI.AnnotationProcessor.daggerProcessor)
+    kapt(DI.AnnotationProcessor.dagger)
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 }
