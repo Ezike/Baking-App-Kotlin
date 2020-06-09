@@ -1,7 +1,12 @@
+import Dependencies.Coroutines
+import Dependencies.DI
 import Dependencies.Kotlin
+import Dependencies.Network
+import ProjectLib.data
 
 plugins {
     kotlin
+    kotlin(kotlinKapt)
 }
 
 java {
@@ -10,5 +15,12 @@ java {
 }
 
 dependencies {
+    implementation(project(data))
     implementation(Kotlin.stdlib)
+    implementAll(Network.components)
+    implementation(DI.dagger)
+    implementation(Coroutines.core)
+
+    kapt(DI.AnnotationProcessor.dagger)
+    kapt(Network.AnnotationProcessor.moshi)
 }

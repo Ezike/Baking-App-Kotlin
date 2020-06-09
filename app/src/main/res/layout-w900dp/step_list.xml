@@ -15,7 +15,7 @@
     <!--
     This layout is a two-pane layout for the Step
     master/detail flow.
-    
+
     -->
 
     <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"

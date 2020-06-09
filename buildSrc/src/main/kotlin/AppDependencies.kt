@@ -2,7 +2,7 @@ const val kotlinVersion: String = "1.4-M2"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
 const val kotlinKapt: String = "kapt"
-const val ktlintVersion: String = "8.2.0"
+const val ktLintVersion: String = "0.36.0"
 
 object Config {
     object Version {
@@ -12,7 +12,7 @@ object Config {
         const val versionName: String = "1.0"
         const val versionCode: Int = 1
         const val navigation: String = "2.3.0-beta01"
-        const val gradle: String = "4.1.0-alpha10"
+        const val androidGradle: String = "4.1.0-alpha10"
         const val daggerHiltAndroid: String = "2.28-alpha"
     }
 
@@ -24,15 +24,15 @@ object Config {
     }
 
     object Plugin : Libraries {
-        private const val kotlin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        private const val navigation: String =
+        const val kotlinGradle: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        const val navigation: String =
                 "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigation}"
-        private const val gradle: String = "com.android.tools.build:gradle:${Version.gradle}"
-        private const val ktlint: String = "org.jlleitschuh.gradle:ktlint-gradle:$ktlintVersion"
-        private const val daggerHilt: String = "com.google.dagger:hilt-android-gradle-plugin:${Version.daggerHiltAndroid}"
-
+        const val androidGradle: String =
+                "com.android.tools.build:gradle:${Version.androidGradle}"
+        const val daggerHilt: String =
+                "com.google.dagger:hilt-android-gradle-plugin:${Version.daggerHiltAndroid}"
         override val components: List<String>
-            get() = listOf(kotlin, navigation, gradle, daggerHilt)
+            get() = listOf(kotlinGradle, navigation, androidGradle, daggerHilt)
     }
 }
 
@@ -65,15 +65,14 @@ object Dependencies {
         override val components: List<String>
             get() = listOf(coreKtx, navigationFragmentKtx, navigationUiKtx, multiDex, activity,
                     lifeCycleCommon, liveData, viewModel)
-
     }
 
     object View : Libraries {
         object Version {
             const val materialComponent: String = "1.2.0-alpha04"
             const val shimmerLayout: String = "0.5.0"
-            const val appCompat: String = "1.20-rc01"
-            const val constraintLayout: String = "2.0.0-beta2"
+            const val appCompat: String = "1.2.0-rc01"
+            const val constraintLayout: String = "2.0.0-beta6"
             const val fragment: String = "1.2.4"
             const val cardView: String = "1.0.0"
             const val recyclerView: String = "1.1.0"
@@ -130,21 +129,20 @@ object Dependencies {
         }
 
         object AnnotationProcessor {
-            const val daggerProcessor: String = "com.google.dagger:dagger-compiler:${Version.dagger}"
+            const val dagger: String = "com.google.dagger:dagger-compiler:${Version.dagger}"
             const val daggerHiltAndroid: String =
                     "com.google.dagger:hilt-android-compiler:${Config.Version.daggerHiltAndroid}"
             const val daggerHilt: String = "androidx.hilt:hilt-compiler:${Version.daggerHilt}"
         }
 
-        private const val dagger: String = "com.google.dagger:dagger:${Version.dagger}"
-        private const val daggerHilt: String = "androidx.hilt:hilt-common:${Version.daggerHilt}"
+        const val dagger: String = "com.google.dagger:dagger:${Version.dagger}"
         const val daggerHiltAndroid: String =
                 "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
         const val daggerHiltViewModel: String =
-                "androidx.hilt:hilt-lifecycle-viewmodel:${Config.Version.daggerHiltAndroid}"
+                "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
 
         override val components: List<String>
-            get() = listOf(daggerHilt, dagger)
+            get() = listOf(dagger)
     }
 
     object Persistence {
@@ -202,4 +200,9 @@ object Dependencies {
             get() = listOf(mockk, mockkAndroid, junit, runner, fragmentTesting, testExt,
                     espresso, rules)
     }
+}
+
+object ProjectLib {
+    const val domain: String = ":libraries:domain"
+    const val data: String = ":libraries:data"
 }
