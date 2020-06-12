@@ -10,7 +10,6 @@ repositories {
     jcenter()
     mavenCentral()
     maven("https://dl.bintray.com/kotlin/kotlin-eap")
-    maven("https://androidx.dev/snapshots/builds/6518514/artifacts/repository/")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
 }
 

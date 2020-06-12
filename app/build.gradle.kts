@@ -49,7 +49,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementAll(View.components)
     implementation(Kotlin.stdlib)
-    implementAll(DI.components)
+    implementation(DI.dagger)
     implementation(DI.daggerHiltAndroid)
     implementation(DI.daggerHiltViewModel)
 

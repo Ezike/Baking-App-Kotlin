@@ -136,10 +136,10 @@ object Dependencies {
         )
     }
 
-    object DI : Libraries {
+    object DI {
         object Version {
             const val dagger: String = "2.28"
-            const val daggerHilt: String = "1.0.0-SNAPSHOT"
+            const val daggerHilt: String = "1.0.0-alpha01"
             const val javaxInject: String = "1"
         }
 
@@ -156,9 +156,8 @@ object Dependencies {
                 "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
         const val daggerHiltViewModel: String =
                 "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
-
-        override val components: List<String>
-            get() = listOf(dagger)
+        const val hiltViewModel: String =
+                "androidx.hilt:hilt-lifecycle-viewmodel:${Config.Version.daggerHiltAndroid}"
     }
 
     object Persistence {
