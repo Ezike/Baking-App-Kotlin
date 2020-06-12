@@ -22,6 +22,9 @@ val PluginDependenciesSpec.daggerHilt: PluginDependencySpec
 val Project.applySpotless: Unit
     get() = { apply(plugin = "spotless") }()
 
+val PluginDependenciesSpec.kotlinLibrary: PluginDependencySpec
+    get() = { id("kotlin-library") }()
+
 fun RepositoryHandler.maven(url: String) {
     maven {
         setUrl(url)

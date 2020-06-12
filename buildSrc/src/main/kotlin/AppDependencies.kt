@@ -12,7 +12,7 @@ object Config {
         const val versionName: String = "1.0"
         const val versionCode: Int = 1
         const val navigation: String = "2.3.0-beta01"
-        const val androidGradle: String = "4.1.0-alpha10"
+        const val androidGradle: String = "4.2.0-alpha01"
         const val daggerHiltAndroid: String = "2.28-alpha"
     }
 
@@ -53,18 +53,26 @@ object Dependencies {
         const val coreKtx: String = "androidx.core:core-ktx:${Version.coreKtx}"
         const val navigationFragmentKtx: String =
                 "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
-        const val navigationUiKtx: String = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
+        const val navigationUiKtx: String =
+                "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
 
         const val multiDex: String = "androidx.multidex:multidex:${Version.multidex}"
         const val activity: String = "androidx.activity:activity:${Version.activity}"
 
-        const val lifeCycleCommon: String = "androidx.lifecycle:lifecycle-common-java8:${Version.lifeCycle}"
-        const val liveData: String = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifeCycle}"
-        const val viewModel: String = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.lifeCycle}"
+        const val lifeCycleCommon: String =
+                "androidx.lifecycle:lifecycle-common-java8:${Version.lifeCycle}"
+        const val liveData: String =
+                "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifeCycle}"
+        const val viewModel: String =
+                "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifeCycle}"
+        const val viewModelSavedState: String =
+                "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.lifeCycle}"
 
         override val components: List<String>
-            get() = listOf(coreKtx, navigationFragmentKtx, navigationUiKtx, multiDex, activity,
-                    lifeCycleCommon, liveData, viewModel)
+            get() = listOf(
+                    coreKtx, navigationFragmentKtx, navigationUiKtx, multiDex, activity,
+                    lifeCycleCommon, liveData, viewModelSavedState, viewModel
+            )
     }
 
     object View : Libraries {
@@ -84,11 +92,14 @@ object Dependencies {
         private const val cardView: String = "androidx.cardview:cardview:${Version.cardView}"
         private const val materialComponent: String =
                 "com.google.android.material:material:${Version.materialComponent}"
-        private const val shimmerLayout: String = "com.facebook.shimmer:shimmer:${Version.shimmerLayout}"
+        private const val shimmerLayout: String =
+                "com.facebook.shimmer:shimmer:${Version.shimmerLayout}"
         private const val constraintLayout: String =
                 "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
-        private const val recyclerView: String = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
-        private const val exoPlayer: String = "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
+        private const val recyclerView: String =
+                "androidx.recyclerview:recyclerview:${Version.recyclerView}"
+        private const val exoPlayer: String =
+                "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
 
         override val components: List<String> = listOf(
                 appCompat, fragment, cardView, materialComponent, shimmerLayout, constraintLayout,
@@ -112,20 +123,24 @@ object Dependencies {
         }
 
         private const val okhttp: String = "com.squareup.okhttp3:okhttp:${Version.okhttp}"
-        private const val loggingInterceptor: String = "com.squareup.okhttp3:logging-interceptor:${Version.okhttp}"
+        private const val loggingInterceptor: String =
+                "com.squareup.okhttp3:logging-interceptor:${Version.okhttp}"
         private const val retrofit: String = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
-        private const val retrofitMoshi: String = "com.squareup.retrofit2:converter-moshi:${Version.retrofit}"
+        private const val retrofitMoshi: String =
+                "com.squareup.retrofit2:converter-moshi:${Version.retrofit}"
         private const val moshi: String = "com.squareup.moshi:moshi-kotlin:${Version.moshi}"
 
-        override val components: List<String> = listOf(okhttp, loggingInterceptor, retrofit,
-                retrofitMoshi, moshi)
+        override val components: List<String> = listOf(
+                okhttp, loggingInterceptor, retrofit,
+                retrofitMoshi, moshi
+        )
     }
 
     object DI : Libraries {
         object Version {
-            const val javaxInject: String = "1"
             const val dagger: String = "2.28"
             const val daggerHilt: String = "1.0.0-SNAPSHOT"
+            const val javaxInject: String = "1"
         }
 
         object AnnotationProcessor {
@@ -135,6 +150,7 @@ object Dependencies {
             const val daggerHilt: String = "androidx.hilt:hilt-compiler:${Version.daggerHilt}"
         }
 
+        const val javaxInject: String = "javax.inject:javax.inject:${Version.javaxInject}"
         const val dagger: String = "com.google.dagger:dagger:${Version.dagger}"
         const val daggerHiltAndroid: String =
                 "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
@@ -170,8 +186,10 @@ object Dependencies {
             const val coroutines: String = "1.3.7"
         }
 
-        const val core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
-        const val android: String = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}"
+        const val core: String =
+                "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
+        const val android: String =
+                "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}"
 
         override val components: List<String> = listOf(core, android)
     }
@@ -197,8 +215,10 @@ object Dependencies {
         const val rules: String = "androidx.test:rules:${Version.rules}"
 
         override val components: List<String>
-            get() = listOf(mockk, mockkAndroid, junit, runner, fragmentTesting, testExt,
-                    espresso, rules)
+            get() = listOf(
+                    mockk, mockkAndroid, junit, runner, fragmentTesting, testExt,
+                    espresso, rules
+            )
     }
 }
 
