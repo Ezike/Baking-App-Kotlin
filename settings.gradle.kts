@@ -1,2 +1,2 @@
 include(":app", ":libraries:remote", ":libraries:domain", ":libraries:data",
-        ":core", ":features:recipe", ":presentation")
+        ":core", ":features:recipe", ":presentation", ":common:model")
