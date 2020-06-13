@@ -1,11 +1,12 @@
 package com.example.eziketobenna.bakingapp.ui.recipes;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eziketobenna.bakingapp.R;
 import com.example.eziketobenna.bakingapp.data.model.Recipe;

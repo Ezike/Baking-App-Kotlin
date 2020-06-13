@@ -1,6 +1,9 @@
+import Dependencies.AndroidX
 import Dependencies.DI
+import Dependencies.Google
 import Dependencies.Kotlin
 import Dependencies.View
+import ProjectLib.recipe
 
 plugins {
     androidApplication
@@ -43,17 +46,29 @@ android {
             versionNameSuffix = BuildTypeDebug.versionNameSuffix
         }
     }
+
+    dynamicFeatures = mutableSetOf(recipe)
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementAll(View.components)
     implementation(Kotlin.stdlib)
-    implementation(DI.dagger)
-    implementation(DI.daggerHiltAndroid)
-    implementation(DI.daggerHiltViewModel)
+    implementation(Google.playCore)
 
-    kapt(DI.AnnotationProcessor.daggerHilt)
-    kapt(DI.AnnotationProcessor.dagger)
+    implementation(DI.daggerHiltAndroid)
+
+    AndroidX.run {
+        implementation(activity)
+        implementation(coreKtx)
+        implementation(viewModel)
+        implementation(navigationFragmentKtx)
+        implementation(navigationUiKtx)
+        implementation(navigationDFM)
+        implementation(multiDex)
+        implementation(lifeCycleCommon)
+    }
+
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 }

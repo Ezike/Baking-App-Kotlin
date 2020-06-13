@@ -8,22 +8,25 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 val PluginDependenciesSpec.androidApplication: PluginDependencySpec
-    get() = { id("com.android.application") }()
+    get() = id("com.android.application")
 
 val PluginDependenciesSpec.androidLibrary: PluginDependencySpec
-    get() = { id("com.android.library") }()
+    get() = id("com.android.library")
+
+val PluginDependenciesSpec.dynamicFeature: PluginDependencySpec
+    get() = id("com.android.dynamic-feature")
 
 val PluginDependenciesSpec.kotlin: PluginDependencySpec
-    get() = { id("kotlin") }()
+    get() = id("kotlin")
 
 val PluginDependenciesSpec.daggerHilt: PluginDependencySpec
-    get() = { id("dagger.hilt.android.plugin") }()
+    get() = id("dagger.hilt.android.plugin")
 
-val Project.applySpotless: Unit
-    get() = { apply(plugin = "spotless") }()
+val Project.applySpotless
+    get() = apply(plugin = "spotless")
 
 val PluginDependenciesSpec.kotlinLibrary: PluginDependencySpec
-    get() = { id("kotlin-library") }()
+    get() = id("kotlin-library")
 
 fun RepositoryHandler.maven(url: String) {
     maven {
