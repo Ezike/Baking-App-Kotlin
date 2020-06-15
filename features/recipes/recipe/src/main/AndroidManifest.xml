@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:dist="http://schemas.android.com/apk/distribution"
-        package="com.example.eziketobenna.bakingapp.recipe">
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.example.eziketobenna.bakingapp.recipe">
 
     <dist:module
-            dist:instant="false"
-            dist:title="@string/title_recipe">
+        dist:instant="false"
+        dist:title="@string/title_recipe">
         <dist:delivery>
             <dist:install-time />
         </dist:delivery>

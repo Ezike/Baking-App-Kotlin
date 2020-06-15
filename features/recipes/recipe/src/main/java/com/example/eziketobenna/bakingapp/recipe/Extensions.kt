@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.recipe.ui
+package com.example.eziketobenna.bakingapp.recipe
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,8 +16,17 @@ fun ViewGroup.inflate(layout: Int): View {
     return layoutInflater.inflate(layout, this, false)
 }
 
-inline fun <reified R> Flow<R>.observe(lifecycleOwner: LifecycleOwner, crossinline action: (R) -> Unit) {
+inline fun <reified R> Flow<R>.observe(
+    lifecycleOwner: LifecycleOwner,
+    crossinline action: (R) -> Unit
+) {
     this.onEach {
         action(it)
     }.launchIn(lifecycleOwner.lifecycleScope)
+}
+
+inline fun String.notEmpty(action: (String) -> Unit) {
+    if (this.isNotEmpty()) {
+        action(this)
+    }
 }

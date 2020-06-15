@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
@@ -27,11 +28,11 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/recipe_fragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainNavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
-
+        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
+        app:navGraph="@navigation/nav_main"/>
 
 </LinearLayout>

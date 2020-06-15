@@ -14,6 +14,7 @@ plugins {
     kotlin(kotlinAndroid)
     kotlin(kotlinAndroidExtension)
     kotlin(kotlinKapt)
+    safeArgs
     daggerHilt
 }
 

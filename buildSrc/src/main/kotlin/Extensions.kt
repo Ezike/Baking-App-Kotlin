@@ -28,6 +28,9 @@ val Project.applySpotless
 val PluginDependenciesSpec.kotlinLibrary: PluginDependencySpec
     get() = id("kotlin-library")
 
+val PluginDependenciesSpec.safeArgs: PluginDependencySpec
+    get() = id("androidx.navigation.safeargs.kotlin")
+
 fun RepositoryHandler.maven(url: String) {
     maven {
         setUrl(url)

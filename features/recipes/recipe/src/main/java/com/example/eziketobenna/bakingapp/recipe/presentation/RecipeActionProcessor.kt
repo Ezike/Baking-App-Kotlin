@@ -20,7 +20,8 @@ class RecipeActionProcessor @Inject constructor(
     private val fetchRecipesUseCase: FetchRecipes
 ) : ActionProcessor<RecipeViewAction, RecipeViewResult> {
 
-    private fun fetchRecipes(): Flow<List<Recipe>> = fetchRecipesUseCase()
+    private val recipes: Flow<List<Recipe>>
+        get() = fetchRecipesUseCase()
 
     override fun actionToResultProcessor(viewAction: RecipeViewAction): Flow<RecipeViewResult> {
         return when (viewAction) {
@@ -31,7 +32,7 @@ class RecipeActionProcessor @Inject constructor(
     }
 
     private val refreshData: Flow<RecipeViewResult>
-        get() = fetchRecipes().map { recipes ->
+        get() = recipes.map { recipes ->
             RefreshRecipesResult.Success(recipes = recipes) as RefreshRecipesResult
         }.onStart {
             emit(RefreshRecipesResult.Refreshing)
@@ -41,7 +42,7 @@ class RecipeActionProcessor @Inject constructor(
         }
 
     private val retryFetch: Flow<RecipeViewResult>
-        get() = fetchRecipes().map { recipes ->
+        get() = recipes.map { recipes ->
             RetryFetchResult.Success(recipes) as RetryFetchResult
         }.onStart {
             emit(RetryFetchResult.Loading)
@@ -51,7 +52,7 @@ class RecipeActionProcessor @Inject constructor(
         }
 
     private val loadRecipes: Flow<RecipeViewResult>
-        get() = fetchRecipes().map { recipes ->
+        get() = recipes.map { recipes ->
             LoadInitialResult.Success(recipes = recipes) as LoadInitialResult
         }.onStart {
             emit(LoadInitialResult.Loading)
