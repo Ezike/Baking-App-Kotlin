@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="food_image">Food image</string>
+    <string name="no_internet">Check your internet connection</string>
+    <string name="retry">Retry</string>
+    <string name="title_step_list">Steps</string>
+    <string name="title_step_detail">Step Detail</string>
+    <string name="no_recipe_data">Recipe data unavailable</string>
+    <string name="ingredients_title_text">Ingredients</string>
+    <string name="next">NEXT</string>
+    <string name="prev">PREV</string>
+    <string name="ingredients_and_steps">Ingredients and Steps</string>
+    <string name="no_video">To be displayed if there\'s no video</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="playback_icon">playback icon</string>
+    <string name="empty_view_text">No data available</string>
+    <string name="show_in_widget">Show in widget</string>
+    <string name="step_detail">Step Detail</string>
+    <string name="finish">Finish</string>
+    <string name="error_interface">You must implement the OnStepClickListener interface</string>
+    <string name="step_description">Step Description</string>
+    <string name="widget_info">%1$s will be shown in the widget</string>
+    <string name="title_recipe">Recipes</string>
+</resources>

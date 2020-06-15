@@ -44,7 +44,7 @@ object Dependencies {
     object AndroidX : Libraries {
         object Version {
             const val coreKtx: String = "1.3.0"
-            const val navigation: String = "2.3.0-alpha03"
+            const val navigation: String = "2.3.0-rc01"
             const val multidex: String = "2.0.1"
             const val lifeCycle: String = "2.3.0-alpha03"
             const val activity: String = "1.2.0-alpha05"
@@ -55,23 +55,19 @@ object Dependencies {
                 "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
         const val navigationUiKtx: String =
                 "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
-
+        const val navigationDFM: String =
+                "androidx.navigation:navigation-dynamic-features-fragment:${Version.navigation}"
         const val multiDex: String = "androidx.multidex:multidex:${Version.multidex}"
         const val activity: String = "androidx.activity:activity:${Version.activity}"
-
         const val lifeCycleCommon: String =
                 "androidx.lifecycle:lifecycle-common-java8:${Version.lifeCycle}"
-        const val liveData: String =
-                "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifeCycle}"
         const val viewModel: String =
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifeCycle}"
-        const val viewModelSavedState: String =
-                "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.lifeCycle}"
 
         override val components: List<String>
             get() = listOf(
                     coreKtx, navigationFragmentKtx, navigationUiKtx, multiDex, activity,
-                    lifeCycleCommon, liveData, viewModelSavedState, viewModel
+                    lifeCycleCommon, viewModel
             )
     }
 
@@ -85,26 +81,25 @@ object Dependencies {
             const val cardView: String = "1.0.0"
             const val recyclerView: String = "1.1.0"
             const val exoPlayer: String = "2.9.1"
+            const val coil: String = "0.11.0"
         }
 
-        private const val appCompat: String = "androidx.appcompat:appcompat:${Version.appCompat}"
-        private const val fragment: String = "androidx.fragment:fragment-ktx:${Version.fragment}"
-        private const val cardView: String = "androidx.cardview:cardview:${Version.cardView}"
-        private const val materialComponent: String =
+        const val appCompat: String = "androidx.appcompat:appcompat:${Version.appCompat}"
+        const val fragment: String = "androidx.fragment:fragment-ktx:${Version.fragment}"
+        const val cardView: String = "androidx.cardview:cardview:${Version.cardView}"
+        const val materialComponent: String =
                 "com.google.android.material:material:${Version.materialComponent}"
-        private const val shimmerLayout: String =
+        const val shimmerLayout: String =
                 "com.facebook.shimmer:shimmer:${Version.shimmerLayout}"
-        private const val constraintLayout: String =
+        const val constraintLayout: String =
                 "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
-        private const val recyclerView: String =
+        const val recyclerView: String =
                 "androidx.recyclerview:recyclerview:${Version.recyclerView}"
-        private const val exoPlayer: String =
+        const val exoPlayer: String =
                 "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
-
-        override val components: List<String> = listOf(
-                appCompat, fragment, cardView, materialComponent, shimmerLayout, constraintLayout,
-                recyclerView, exoPlayer
-        )
+        const val coil: String = "io.coil-kt:coil:${Version.coil}"
+        override val components: List<String> = listOf(appCompat, fragment, cardView,
+                materialComponent, constraintLayout)
     }
 
     object Kotlin {
@@ -128,7 +123,7 @@ object Dependencies {
         private const val retrofit: String = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
         private const val retrofitMoshi: String =
                 "com.squareup.retrofit2:converter-moshi:${Version.retrofit}"
-        private const val moshi: String = "com.squareup.moshi:moshi-kotlin:${Version.moshi}"
+        const val moshi: String = "com.squareup.moshi:moshi-kotlin:${Version.moshi}"
 
         override val components: List<String> = listOf(
                 okhttp, loggingInterceptor, retrofit,
@@ -136,29 +131,23 @@ object Dependencies {
         )
     }
 
-    object DI : Libraries {
+    object DI {
         object Version {
-            const val dagger: String = "2.28"
-            const val daggerHilt: String = "1.0.0-SNAPSHOT"
+            const val daggerHilt: String = "1.0.0-alpha01"
             const val javaxInject: String = "1"
         }
 
         object AnnotationProcessor {
-            const val dagger: String = "com.google.dagger:dagger-compiler:${Version.dagger}"
             const val daggerHiltAndroid: String =
                     "com.google.dagger:hilt-android-compiler:${Config.Version.daggerHiltAndroid}"
             const val daggerHilt: String = "androidx.hilt:hilt-compiler:${Version.daggerHilt}"
         }
 
         const val javaxInject: String = "javax.inject:javax.inject:${Version.javaxInject}"
-        const val dagger: String = "com.google.dagger:dagger:${Version.dagger}"
         const val daggerHiltAndroid: String =
                 "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
         const val daggerHiltViewModel: String =
                 "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
-
-        override val components: List<String>
-            get() = listOf(dagger)
     }
 
     object Persistence {
@@ -223,6 +212,12 @@ object Dependencies {
 }
 
 object ProjectLib {
+    const val app: String = ":app"
+    const val core: String = ":core"
+    const val presentation: String = ":presentation"
     const val domain: String = ":libraries:domain"
     const val data: String = ":libraries:data"
+    const val remote: String = ":libraries:remote"
+    const val recipe: String = ":features:recipes:recipe"
+    const val recipeModel: String = ":features:recipes:model"
 }

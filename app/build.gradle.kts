@@ -1,6 +1,13 @@
+import Dependencies.AndroidX
 import Dependencies.DI
 import Dependencies.Kotlin
+import Dependencies.Network
 import Dependencies.View
+import ProjectLib.core
+import ProjectLib.data
+import ProjectLib.domain
+import ProjectLib.recipe
+import ProjectLib.remote
 
 plugins {
     androidApplication
@@ -43,17 +50,31 @@ android {
             versionNameSuffix = BuildTypeDebug.versionNameSuffix
         }
     }
+
+    dynamicFeatures = mutableSetOf(recipe)
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(core))
+    implementation(project(data))
+    implementation(project(domain))
+    implementation(project(remote))
+
     implementAll(View.components)
     implementation(Kotlin.stdlib)
-    implementAll(DI.components)
+    implementation(Network.moshi)
     implementation(DI.daggerHiltAndroid)
-    implementation(DI.daggerHiltViewModel)
 
-    kapt(DI.AnnotationProcessor.daggerHilt)
-    kapt(DI.AnnotationProcessor.dagger)
+    AndroidX.run {
+        implementation(activity)
+        implementation(coreKtx)
+        implementation(navigationFragmentKtx)
+        implementation(navigationUiKtx)
+        implementation(navigationDFM)
+        implementation(multiDex)
+        implementation(lifeCycleCommon)
+    }
+
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 }
