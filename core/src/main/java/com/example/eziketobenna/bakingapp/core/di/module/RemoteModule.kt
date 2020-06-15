@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.core.di.module
 
+import com.example.eziketobenna.bakingapp.core.BuildConfig
 import com.example.eziketobenna.bakingapp.data.contract.RecipeRemote
 import com.example.eziketobenna.bakingapp.remote.ApiService
 import com.example.eziketobenna.bakingapp.remote.ApiServiceFactory
@@ -18,14 +19,16 @@ import javax.inject.Singleton
 interface RemoteModule {
 
     @get:[Binds Singleton]
-    val RecipeRemoteImpl.bindRemote: RecipeRemote
+    abstract val RecipeRemoteImpl.bindRemote: RecipeRemote
 
-    @get:[Provides Singleton]
-    val provideMoshi: Moshi
-        get() = Moshi.Builder()
+    companion object {
+        @get:[Provides Singleton]
+        val provideMoshi: Moshi
+            get() = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory()).build()
 
-    @[Provides Singleton]
-    fun provideApiService(moshi: Moshi): ApiService =
+        @[Provides Singleton]
+        fun provideApiService(moshi: Moshi): ApiService =
             ApiServiceFactory.makeAPiService(BuildConfig.DEBUG, moshi)
+    }
 }

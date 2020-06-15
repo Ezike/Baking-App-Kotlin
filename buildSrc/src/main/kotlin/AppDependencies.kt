@@ -61,17 +61,13 @@ object Dependencies {
         const val activity: String = "androidx.activity:activity:${Version.activity}"
         const val lifeCycleCommon: String =
                 "androidx.lifecycle:lifecycle-common-java8:${Version.lifeCycle}"
-        const val liveData: String =
-                "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifeCycle}"
         const val viewModel: String =
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifeCycle}"
-        const val viewModelSavedState: String =
-                "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.lifeCycle}"
 
         override val components: List<String>
             get() = listOf(
                     coreKtx, navigationFragmentKtx, navigationUiKtx, multiDex, activity,
-                    lifeCycleCommon, liveData, viewModelSavedState, viewModel
+                    lifeCycleCommon, viewModel
             )
     }
 
@@ -85,6 +81,7 @@ object Dependencies {
             const val cardView: String = "1.0.0"
             const val recyclerView: String = "1.1.0"
             const val exoPlayer: String = "2.9.1"
+            const val coil: String = "0.11.0"
         }
 
         const val appCompat: String = "androidx.appcompat:appcompat:${Version.appCompat}"
@@ -100,7 +97,7 @@ object Dependencies {
                 "androidx.recyclerview:recyclerview:${Version.recyclerView}"
         const val exoPlayer: String =
                 "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
-
+        const val coil: String = "io.coil-kt:coil:${Version.coil}"
         override val components: List<String> = listOf(appCompat, fragment, cardView,
                 materialComponent, constraintLayout)
     }
@@ -218,9 +215,9 @@ object ProjectLib {
     const val app: String = ":app"
     const val core: String = ":core"
     const val presentation: String = ":presentation"
-    const val model: String = ":common:model"
     const val domain: String = ":libraries:domain"
     const val data: String = ":libraries:data"
     const val remote: String = ":libraries:remote"
-    const val recipe: String = ":features:recipe"
+    const val recipe: String = ":features:recipes:recipe"
+    const val recipeModel: String = ":features:recipes:model"
 }

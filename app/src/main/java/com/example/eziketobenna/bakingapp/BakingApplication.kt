@@ -5,6 +5,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class BakingApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
     }

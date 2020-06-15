@@ -1,9 +1,13 @@
 import Dependencies.AndroidX
 import Dependencies.DI
-import Dependencies.Google
 import Dependencies.Kotlin
+import Dependencies.Network
 import Dependencies.View
+import ProjectLib.core
+import ProjectLib.data
+import ProjectLib.domain
 import ProjectLib.recipe
+import ProjectLib.remote
 
 plugins {
     androidApplication
@@ -52,17 +56,19 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(core))
+    implementation(project(data))
+    implementation(project(domain))
+    implementation(project(remote))
 
     implementAll(View.components)
     implementation(Kotlin.stdlib)
-    implementation(Google.playCore)
-
+    implementation(Network.moshi)
     implementation(DI.daggerHiltAndroid)
 
     AndroidX.run {
         implementation(activity)
         implementation(coreKtx)
-        implementation(viewModel)
         implementation(navigationFragmentKtx)
         implementation(navigationUiKtx)
         implementation(navigationDFM)

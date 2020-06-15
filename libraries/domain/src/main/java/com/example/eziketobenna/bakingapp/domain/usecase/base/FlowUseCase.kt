@@ -4,7 +4,7 @@ import com.example.eziketobenna.bakingapp.domain.executor.PostExecutionThread
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 
-abstract class FlowUseCase<in Params, out T> constructor(
+abstract class FlowUseCase<in Params, out T>(
     private val postExecutionThread: PostExecutionThread
 ) {
 
@@ -12,10 +12,10 @@ abstract class FlowUseCase<in Params, out T> constructor(
      * Function which builds Flow instance based on given arguments
      * @param params initial use case arguments
      */
-    abstract operator fun invoke(params: Params? = null): Flow<T>
+    abstract fun execute(params: Params? = null): Flow<T>
 
-    protected fun execute(params: Params? = null): Flow<T> {
+    operator fun invoke(params: Params? = null): Flow<T> {
         return this(params)
-                .flowOn(postExecutionThread.io)
+            .flowOn(postExecutionThread.io)
     }
 }

@@ -12,7 +12,7 @@ class FetchRecipes @Inject constructor(
     postExecutionThread: PostExecutionThread
 ) : FlowUseCase<Unit, List<Recipe>>(postExecutionThread) {
 
-    override fun invoke(params: Unit?): Flow<List<Recipe>> {
+    override fun execute(params: Unit?): Flow<List<Recipe>> {
         return recipeRepository.fetchRecipe()
     }
 }
