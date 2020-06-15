@@ -1,7 +1,6 @@
 package com.example.eziketobenna.bakingapp.core.imageLoader
 
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import coil.api.load
 import coil.size.Scale
 import coil.size.ViewSizeResolver
@@ -10,13 +9,14 @@ import javax.inject.Singleton
 
 @Singleton
 class ImageLoaderImpl @Inject constructor() : ImageLoader {
-    override fun loadImage(view: ImageView, url: String, @DrawableRes fallBack: Int) {
+    override fun loadImage(view: ImageView, url: String) {
         view.load(url) {
             crossfade(true)
-            placeholder(fallBack)
-            error(fallBack)
-            size(ViewSizeResolver.invoke(view, false))
+            size(ViewSizeResolver(view, false))
             scale(Scale.FIT)
+            listener(onError = { _, throwable ->
+                throwable.printStackTrace()
+            })
         }
     }
 }

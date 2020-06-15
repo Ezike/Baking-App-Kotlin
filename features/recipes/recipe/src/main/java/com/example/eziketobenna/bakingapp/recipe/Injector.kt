@@ -8,10 +8,9 @@ import dagger.hilt.android.EntryPointAccessors
 fun injector(fragment: RecipeFragment) {
     DaggerRecipeComponent
         .factory()
-        .create(
-            EntryPointAccessors.fromApplication(
-                fragment.requireContext().applicationContext,
-                CoreComponent::class.java
-            )
-        ).inject(fragment)
+        .create(EntryPointAccessors.fromApplication(
+            fragment.requireContext().applicationContext,
+            CoreComponent::class.java
+        ), fragment)
+        .inject(fragment)
 }

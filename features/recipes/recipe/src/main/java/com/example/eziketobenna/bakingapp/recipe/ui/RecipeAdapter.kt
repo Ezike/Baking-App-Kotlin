@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eziketobenna.bakingapp.core.imageLoader.ImageLoader
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.databinding.ContentMainBinding
+import com.example.eziketobenna.bakingapp.recipe.inflate
+import com.example.eziketobenna.bakingapp.recipe.notEmpty
 import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import javax.inject.Inject
 
@@ -23,8 +25,12 @@ class RecipeAdapter @Inject constructor(private val imageLoader: ImageLoader) :
 
     class RecipeViewHolder(private val binding: ContentMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(model: RecipeModel, imageLoader: ImageLoader) {
-            imageLoader.loadImage(binding.recipeImage, model.image, R.drawable.cheese_cake)
+            binding.supportingText.text = model.name
+            model.image.notEmpty { url ->
+                imageLoader.loadImage(binding.recipeImage, url)
+            }
         }
     }
 
