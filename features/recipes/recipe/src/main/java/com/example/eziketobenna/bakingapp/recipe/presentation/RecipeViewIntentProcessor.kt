@@ -8,7 +8,7 @@ import javax.inject.Inject
 class RecipeViewIntentProcessor @Inject constructor() :
     IntentProcessor<RecipeViewIntent, RecipeViewAction> {
 
-    override fun actionFromIntent(intent: RecipeViewIntent): RecipeViewAction {
+    override fun intentToAction(intent: RecipeViewIntent): RecipeViewAction {
         return when (intent) {
             RecipeViewIntent.LoadInitial -> RecipeViewAction.LoadInitialAction
             RecipeViewIntent.Retry -> RecipeViewAction.RetryFetchAction

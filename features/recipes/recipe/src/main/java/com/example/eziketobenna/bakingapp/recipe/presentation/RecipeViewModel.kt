@@ -19,21 +19,25 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel(), MVIViewModel<RecipeViewIntent, RecipeViewState> {
 
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
-        MutableStateFlow(RecipeViewState.IDLE)
+        MutableStateFlow(RecipeViewState.Initial)
 
     private val actionFlow: MutableStateFlow<RecipeViewAction> =
         MutableStateFlow(RecipeViewAction.LoadInitialAction)
 
+    init {
+        processActions()
+    }
+
     override fun processIntent(intents: Flow<RecipeViewIntent>) {
         intents.onEach { intent ->
-            actionFlow.value = recipeViewIntentProcessor.actionFromIntent(intent)
+            actionFlow.value = recipeViewIntentProcessor.intentToAction(intent)
         }.launchIn(viewModelScope)
     }
 
-    fun processActions() {
+    private fun processActions() {
         actionFlow.flatMapMerge { action ->
             recipeActionProcessor.actionToResultProcessor(action)
-        }.scan(RecipeViewState.IDLE) { previous: RecipeViewState, result: RecipeViewResult ->
+        }.scan(RecipeViewState.Initial) { previous: RecipeViewState, result: RecipeViewResult ->
             recipeViewStateReducer.reduce(previous, result)
         }.distinctUntilChanged().onEach { recipeViewState ->
             _recipeViewState.value = recipeViewState

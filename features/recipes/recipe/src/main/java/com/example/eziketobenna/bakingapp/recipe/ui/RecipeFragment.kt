@@ -14,13 +14,14 @@ import com.example.eziketobenna.bakingapp.recipe.observe
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewModel
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewState
+import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.merge
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe),
-    MVIView<RecipeViewIntent, RecipeViewState> {
+    MVIView<RecipeViewIntent, RecipeViewState>, RecipeClickListener {
 
     @Inject
     lateinit var recipeAdapter: RecipeAdapter
@@ -30,18 +31,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
 
     private val binding: FragmentRecipeBinding by viewBinding(FragmentRecipeBinding::bind)
 
+    override fun invoke(model: RecipeModel) {
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.processIntent(intents)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.processActions()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recipeAdapter.clickListener
         binding.mainRv.adapter = recipeAdapter
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
@@ -55,17 +55,27 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         when (state) {
             is RecipeViewState.Success -> {
                 recipeAdapter.submitList(state.recipes)
-                binding.shimmer.stopShimmer()
-                binding.shimmer.isVisible = false
+                stopShimmer()
             }
-            is RecipeViewState.Error -> TODO()
-            RecipeViewState.IDLE -> {
+            is RecipeViewState.Error -> {
+                stopShimmer()
             }
+            RecipeViewState.Initial -> { }
             RecipeViewState.Loading -> {
-                binding.shimmer.startShimmer()
+                startShimmer()
             }
             RecipeViewState.Refreshing -> TODO()
         }
+    }
+
+    private fun startShimmer() {
+        binding.shimmer.isVisible = true
+        binding.shimmer.startShimmer()
+    }
+
+    private fun stopShimmer() {
+        binding.shimmer.stopShimmer()
+        binding.shimmer.isVisible = false
     }
 
     override val intents: Flow<RecipeViewIntent>
