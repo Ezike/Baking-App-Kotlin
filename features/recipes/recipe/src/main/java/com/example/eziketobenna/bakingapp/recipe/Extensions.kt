@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.example.eziketobenna.bakingapp.views.SimpleEmptyStateView
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -30,3 +34,13 @@ inline fun String.notEmpty(action: (String) -> Unit) {
         action(this)
     }
 }
+
+val SimpleEmptyStateView.clicks: Flow<Unit>
+    get() = callbackFlow {
+        val listener: () -> Unit = {
+            offer(Unit)
+            Unit
+        }
+        buttonClickListener = listener
+        awaitClose { buttonClickListener = null }
+    }.conflate()

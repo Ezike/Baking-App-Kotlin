@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/sixteen_dp"
+    android:layout_marginHorizontal="@dimen/forty_eight_dp"
+    android:layout_marginTop="@dimen/twenty_eight_dp"
     app:cardCornerRadius="@dimen/four_dp"
     app:cardElevation="@dimen/four_dp"
     app:cardPreventCornerOverlap="true">
@@ -25,11 +25,12 @@
             android:scaleType="centerCrop"
             android:src="@drawable/cheese_cake"
             app:layout_constraintBottom_toTopOf="@+id/supporting_text"
-            app:layout_constraintDimensionRatio="H, 1:1"
+            app:layout_constraintDimensionRatio="h, 1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cut" />
 
         <TextView
             android:id="@+id/supporting_text"
@@ -37,9 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/sixteen_dp"
             android:gravity="center"
-            android:lineSpacingExtra="@dimen/four_dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

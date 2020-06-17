@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleEmptyStateView">
+        <attr name="emptyStateImageSrc" format="reference" />
+        <attr name="emptyStateTitleText" format="reference" />
+        <attr name="emptyStateCaptionText" format="reference" />
+        <attr name="emptyStateButtonText" format="reference" />
+
+        <attr name="isButtonVisible" format="boolean" />
+        <attr name="isTitleVisible" format="boolean" />
+    </declare-styleable>
+</resources>

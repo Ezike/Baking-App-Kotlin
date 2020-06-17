@@ -23,4 +23,12 @@
     <string name="step_description">Step Description</string>
     <string name="widget_info">%1$s will be shown in the widget</string>
     <string name="title_recipe">Recipes</string>
+    <string name="no_data">No recipes available at the moment</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string-array name="images">
+        <item>"https://cdn.pixabay.com/photo/2018/08/30/10/30/plum-cake-3641849_1280.jpg"</item>
+        <item>"https://bakingamoment.com/wp-content/uploads/2016/10/IMG_8205-brownie-recipe-720x720.jpg"</item>
+        <item>"https://cdn.pixabay.com/photo/2016/11/29/11/38/blur-1869227_1280.jpg"</item>
+        <item>"https://cdn.pixabay.com/photo/2016/08/08/16/20/cheesecake-1578691_1280.jpg"</item>
+    </string-array>
 </resources>

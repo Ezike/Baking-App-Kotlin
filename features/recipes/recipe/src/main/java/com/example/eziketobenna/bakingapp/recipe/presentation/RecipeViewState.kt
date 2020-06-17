@@ -4,7 +4,7 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.ViewState
 import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 
 sealed class RecipeViewState : ViewState {
-    object IDLE : RecipeViewState()
+    object Initial : RecipeViewState()
     object Loading : RecipeViewState()
     object Refreshing : RecipeViewState()
     data class Success(val recipes: List<RecipeModel>) : RecipeViewState()

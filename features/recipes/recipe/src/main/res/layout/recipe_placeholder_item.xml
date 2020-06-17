@@ -1,26 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-    <View
-        android:id="@+id/first_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/twenty_four_dp"
-        android:layout_marginVertical="@dimen/sixteen_dp"
-        android:layout_weight="1"
-        android:background="@color/placeholder_bg" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <View
-        android:id="@+id/second_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/twenty_four_dp"
-        android:layout_marginBottom="@dimen/sixteen_dp"
-        android:layout_weight="1"
-        android:background="@color/placeholder_bg" />
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/forty_eight_dp"
+            android:layout_marginTop="@dimen/thirty_two_dp"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/four_dp"
+            app:cardPreventCornerOverlap="true">
 
-</LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/recipe_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/placeholder_bg"
+                    app:layout_constraintBottom_toTopOf="@+id/supporting_text"
+                    app:layout_constraintDimensionRatio="h, 1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cut" />
+
+                <TextView
+                    android:id="@+id/supporting_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/sixteen_dp"
+                    android:background="@color/placeholder_bg"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_image" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/forty_eight_dp"
+            android:layout_marginTop="@dimen/thirty_two_dp"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/four_dp"
+            app:cardPreventCornerOverlap="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/recipe_imagee"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/placeholder_bg"
+                    app:layout_constraintBottom_toTopOf="@+id/supporting_textt"
+                    app:layout_constraintDimensionRatio="h, 1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cut" />
+
+                <TextView
+                    android:id="@+id/supporting_textt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/sixteen_dp"
+                    android:background="@color/placeholder_bg"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_imagee" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/forty_eight_dp"
+            android:layout_marginTop="@dimen/thirty_two_dp"
+            app:cardCornerRadius="@dimen/four_dp"
+            app:cardElevation="@dimen/four_dp"
+            app:cardPreventCornerOverlap="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/recipe_iimage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/placeholder_bg"
+                    app:layout_constraintBottom_toTopOf="@+id/supporting_ttext"
+                    app:layout_constraintDimensionRatio="h, 1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Cut" />
+
+                <TextView
+                    android:id="@+id/supporting_ttext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/sixteen_dp"
+                    android:background="@color/placeholder_bg"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_iimage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
