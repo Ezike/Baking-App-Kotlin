@@ -7,5 +7,6 @@ include(
     ":features:recipes:recipe",
     ":presentation",
     ":features:recipes:model",
-    ":common:views"
+    ":common:views",
+    ":features:recipes:recipeDetail"
 )

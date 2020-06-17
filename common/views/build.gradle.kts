@@ -1,3 +1,4 @@
+import Dependencies.AndroidX
 import Dependencies.Kotlin
 import Dependencies.View
 
@@ -38,5 +39,8 @@ dependencies {
         implementation(materialComponent)
         implementation(appCompat)
     }
-    implementation(Dependencies.AndroidX.coreKtx)
+    AndroidX.run {
+        implementation(coreKtx)
+        implementation(lifeCycleCommon)
+    }
 }

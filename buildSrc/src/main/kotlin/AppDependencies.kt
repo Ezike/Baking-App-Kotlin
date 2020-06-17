@@ -116,6 +116,8 @@ object Dependencies {
             "io.github.reactivecircus.flowbinding:flowbinding-core:$flowBindingVersion"
         const val swipeRefresh: String =
             "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
+        const val lifecycle: String =
+            "io.github.reactivecircus.flowbinding:flowbinding-lifecycle:$flowBindingVersion"
         override val components: List<String>
             get() = listOf(appcompat, core, swipeRefresh)
     }
@@ -217,6 +219,7 @@ object ProjectLib {
     const val data: String = ":libraries:data"
     const val remote: String = ":libraries:remote"
     const val recipe: String = ":features:recipes:recipe"
+    const val recipeDetail: String = ":features:recipes:recipeDetail"
     const val recipeModel: String = ":features:recipes:model"
     const val views: String = ":common:views"
 }

@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.common
+package com.example.eziketobenna.bakingapp.views
 
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -62,4 +62,7 @@ class ViewBindingDelegate<T : ViewBinding>(
 }
 
 fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T): ViewBindingDelegate<T> =
-        ViewBindingDelegate(fragment = this, viewBindingFactory = viewBindingFactory)
+    ViewBindingDelegate(
+        fragment = this,
+        viewBindingFactory = viewBindingFactory
+    )
