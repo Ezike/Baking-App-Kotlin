@@ -7,7 +7,13 @@ import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailItem
 class StepViewHolder(private val binding: StepListContentBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(stepDetailItem: StepDetailItem) {
+    fun bind(
+        stepDetailItem: StepDetailItem,
+        stepClickListener: StepClickListener?
+    ) {
         binding.shortDescription.text = stepDetailItem.shortDescription
+        binding.root.setOnClickListener {
+            stepClickListener?.invoke(stepDetailItem, adapterPosition)
+        }
     }
 }

@@ -8,4 +8,7 @@ sealed class RecipeDetailResult : ViewResult {
     object IdleResult : RecipeDetailResult()
     data class LoadedData(val ingredients: List<Ingredient>, val steps: List<Step>) :
         RecipeDetailResult()
+
+    data class OpenStepInfo(val step: Step, val index: Int, val steps: List<Step>) :
+        RecipeDetailResult()
 }

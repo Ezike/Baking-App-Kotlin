@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipe.R
-import com.example.eziketobenna.bakingapp.recipe.actionBarTitle
 import com.example.eziketobenna.bakingapp.recipe.clicks
 import com.example.eziketobenna.bakingapp.recipe.databinding.FragmentRecipeBinding
 import com.example.eziketobenna.bakingapp.recipe.inject
@@ -48,7 +47,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        actionBarTitle = getString(R.string.app_name)
         recipeAdapter.clickListener = this
         binding.mainRv.adapter = recipeAdapter
 

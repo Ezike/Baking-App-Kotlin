@@ -15,8 +15,12 @@ import com.example.eziketobenna.bakingapp.recipedetail.model.RecipeDetailModel
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailItem
 import javax.inject.Inject
 
+typealias StepClickListener = (StepDetailItem, Int) -> Unit
+
 class IngredientStepAdapter @Inject constructor() :
     ListAdapter<RecipeDetailModel, RecyclerView.ViewHolder>(diffUtilCallback) {
+
+    var stepClickListener: StepClickListener? = null
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -55,7 +59,7 @@ class IngredientStepAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is IngredientViewHolder -> holder.bind(getItem(position) as IngredientDetailItem)
-            is StepViewHolder -> holder.bind(getItem(position) as StepDetailItem)
+            is StepViewHolder -> holder.bind(getItem(position) as StepDetailItem, stepClickListener)
             is HeaderViewHolder -> holder.bind(getItem(position) as HeaderItem)
         }
     }
