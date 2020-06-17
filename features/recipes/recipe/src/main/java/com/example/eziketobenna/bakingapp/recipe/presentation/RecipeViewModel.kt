@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.launchIn
@@ -21,8 +23,11 @@ class RecipeViewModel @Inject constructor(
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
         MutableStateFlow(RecipeViewState.Initial)
 
-    private val actionFlow: MutableStateFlow<RecipeViewAction> =
-        MutableStateFlow(RecipeViewAction.LoadInitialAction)
+    /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
+    private val actionsChannel =
+        ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
+    private val actionFlow: Flow<RecipeViewAction>
+        get() = actionsChannel.asFlow()
 
     init {
         processActions()
@@ -30,18 +35,20 @@ class RecipeViewModel @Inject constructor(
 
     override fun processIntent(intents: Flow<RecipeViewIntent>) {
         intents.onEach { intent ->
-            actionFlow.value = recipeViewIntentProcessor.intentToAction(intent)
+            actionsChannel.offer(recipeViewIntentProcessor.intentToAction(intent))
         }.launchIn(viewModelScope)
     }
 
     private fun processActions() {
-        actionFlow.flatMapMerge { action ->
-            recipeActionProcessor.actionToResultProcessor(action)
-        }.scan(RecipeViewState.Initial) { previous: RecipeViewState, result: RecipeViewResult ->
-            recipeViewStateReducer.reduce(previous, result)
-        }.distinctUntilChanged().onEach { recipeViewState ->
-            _recipeViewState.value = recipeViewState
-        }.launchIn(viewModelScope)
+        actionFlow
+            .flatMapMerge { action ->
+                recipeActionProcessor.actionToResultProcessor(action)
+            }.scan(RecipeViewState.Initial) { previous: RecipeViewState, result: RecipeViewResult ->
+                recipeViewStateReducer.reduce(previous, result)
+            }.distinctUntilChanged()
+            .onEach { recipeViewState ->
+                _recipeViewState.value = recipeViewState
+            }.launchIn(viewModelScope)
     }
 
     override val viewState: Flow<RecipeViewState>

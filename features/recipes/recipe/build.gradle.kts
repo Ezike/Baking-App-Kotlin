@@ -1,6 +1,7 @@
 import Dependencies.AndroidX
 import Dependencies.Coroutines
 import Dependencies.DI
+import Dependencies.FlowBinding
 import Dependencies.Kotlin
 import Dependencies.View
 import ProjectLib.app
@@ -8,6 +9,7 @@ import ProjectLib.core
 import ProjectLib.domain
 import ProjectLib.presentation
 import ProjectLib.recipeModel
+import ProjectLib.views
 
 plugins {
     dynamicFeature
@@ -47,11 +49,14 @@ dependencies {
     implementation(project(presentation))
     implementation(project(recipeModel))
     implementation(project(domain))
+    implementation(project(views))
 
     implementAll(View.components)
     implementation(View.recyclerView)
     implementation(View.shimmerLayout)
+    implementation(View.swipeRefreshLayout)
 
+    implementAll(FlowBinding.components)
     implementation(DI.daggerHiltAndroid)
 
     implementation(Kotlin.stdlib)

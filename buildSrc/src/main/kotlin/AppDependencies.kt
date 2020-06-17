@@ -82,6 +82,7 @@ object Dependencies {
             const val recyclerView: String = "1.1.0"
             const val exoPlayer: String = "2.9.1"
             const val coil: String = "0.11.0"
+            const val swipeRefreshLayout: String = "1.1.0-rc01"
         }
 
         const val appCompat: String = "androidx.appcompat:appcompat:${Version.appCompat}"
@@ -98,10 +99,25 @@ object Dependencies {
         const val exoPlayer: String =
             "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
         const val coil: String = "io.coil-kt:coil:${Version.coil}"
+        const val swipeRefreshLayout: String =
+            "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
+
         override val components: List<String> = listOf(
             appCompat, fragment, cardView,
             materialComponent, constraintLayout
         )
+    }
+
+    object FlowBinding : Libraries {
+        private const val flowBindingVersion: String = "0.12.0"
+        const val appcompat: String =
+            "io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion"
+        const val core =
+            "io.github.reactivecircus.flowbinding:flowbinding-core:$flowBindingVersion"
+        const val swipeRefresh: String =
+            "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
+        override val components: List<String>
+            get() = listOf(appcompat, core, swipeRefresh)
     }
 
     object Kotlin {
@@ -150,26 +166,6 @@ object Dependencies {
             "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
         const val daggerHiltViewModel: String =
             "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
-    }
-
-    object Persistence {
-        object Version {
-            const val roomVersion: String = "2.2.5"
-        }
-
-        object AnnotationProcessor {
-            const val roomCompiler: String = "androidx.room:room-compiler:${Version.roomVersion}"
-        }
-
-        const val room: String = "androidx.room:room-ktx:${Version.roomVersion}"
-    }
-
-    object Google {
-        object Version {
-            const val playCore: String = "1.6.4"
-        }
-
-        const val playCore: String = "com.google.android.play:core:${Version.playCore}"
     }
 
     object Coroutines : Libraries {
@@ -222,4 +218,5 @@ object ProjectLib {
     const val remote: String = ":libraries:remote"
     const val recipe: String = ":features:recipes:recipe"
     const val recipeModel: String = ":features:recipes:model"
+    const val views: String = ":common:views"
 }

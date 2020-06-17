@@ -1,6 +1,5 @@
 package com.example.eziketobenna.bakingapp.common
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -33,7 +32,6 @@ class ViewBindingDelegate<T : ViewBinding>(
             }
 
     private fun disposeValue() {
-        Log.d("disposed", "auto disposed: value = $_value")
         _value = null
     }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MaterialButton.BaseRounded" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearance">@style/BaseShapeAppearance</item>
+    </style>
+
+    <style name="MaterialButton.UnElevatedStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="shapeAppearance">@style/BaseShapeAppearance</item>
+    </style>
+
+    <style name="MaterialButton.BaseStyle" parent="MaterialButton.BaseRounded">
+        <item name="backgroundTint">@android:color/holo_blue_dark</item>
+    </style>
+
+    <style name="BaseShapeAppearance">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
