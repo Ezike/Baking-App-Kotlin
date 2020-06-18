@@ -62,11 +62,7 @@ class SimpleEmptyStateView : LinearLayout {
             title.visibility = View.INVISIBLE
         }
 
-        if (emptyStateImageSrc != null) {
-            image.setImageDrawable(emptyStateImageSrc)
-        } else {
-            image.visibility = View.INVISIBLE
-        }
+        setImage(emptyStateImageSrc)
 
         setCaption(emptyStateCaption)
 
@@ -91,6 +87,14 @@ class SimpleEmptyStateView : LinearLayout {
         actionBtnBounceAnim.repeatMode = ValueAnimator.RESTART
         actionBtnBounceAnim.repeatCount = ValueAnimator.INFINITE
         actionBtnBounceAnim.start()
+    }
+
+    fun setImage(emptyStateImageSrc: Drawable?) {
+        if (emptyStateImageSrc != null) {
+            image.setImageDrawable(emptyStateImageSrc)
+        } else {
+            image.visibility = View.INVISIBLE
+        }
     }
 
     var isButtonVisible: Boolean = false

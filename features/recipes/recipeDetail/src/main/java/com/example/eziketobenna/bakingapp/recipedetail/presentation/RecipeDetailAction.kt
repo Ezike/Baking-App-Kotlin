@@ -6,8 +6,14 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.ViewAction
 
 sealed class RecipeDetailAction : ViewAction {
     object Idle : RecipeDetailAction()
-    data class LoadRecipeDetailAction(val ingredients: List<Ingredient>, val steps: List<Step>) :
-        RecipeDetailAction()
+    data class LoadRecipeDetailAction(
+        val ingredients: List<Ingredient>,
+        val steps: List<Step>
+    ) : RecipeDetailAction()
 
-    data class OpenStepInfoViewAction(val step: Step, val index: Int, val steps: List<Step>) : RecipeDetailAction()
+    data class OpenStepInfoViewAction(
+        val step: Step,
+        val index: Int,
+        val steps: List<Step>
+    ) : RecipeDetailAction()
 }

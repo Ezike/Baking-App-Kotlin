@@ -36,22 +36,12 @@ class RecipeAdapter @Inject constructor(private val imageLoader: ImageLoader) :
             clickListener: RecipeClickListener?
         ) {
             binding.supportingText.text = model.name
-            val imageUrl: String = getImageURL(model)
-            imageUrl.notEmpty { url ->
+            model.image.notEmpty { url ->
                 imageLoader.loadImage(binding.recipeImage, url)
             }
+
             binding.root.setOnClickListener {
                 clickListener?.invoke(model)
-            }
-        }
-
-        private fun getImageURL(model: RecipeModel): String {
-            val imageURLs: Array<String> =
-                binding.root.context.resources.getStringArray(R.array.images)
-            return when {
-                model.image.isNotEmpty() -> model.image
-                adapterPosition <= imageURLs.lastIndex -> imageURLs[adapterPosition]
-                else -> ""
             }
         }
     }

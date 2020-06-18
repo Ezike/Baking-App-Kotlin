@@ -1,12 +1,15 @@
 package com.example.eziketobenna.bakingapp.recipe
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -64,3 +67,10 @@ var Fragment.actionBarTitle: String
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = value
     }
     get() = (requireActivity() as? AppCompatActivity)?.supportActionBar?.title.toString()
+
+fun Fragment.getDrawable(@DrawableRes id: Int): Drawable? {
+    return ContextCompat.getDrawable(
+        requireContext(),
+        id
+    )
+}
