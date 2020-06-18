@@ -6,7 +6,10 @@ import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import com.example.eziketobenna.bakkingapp.model.model.StepModel
 
 sealed class RecipeDetailIntent : ViewIntent {
-    data class LoadRecipeDetailIntent(val recipe: RecipeModel) : RecipeDetailIntent()
+    data class LoadRecipeDetailIntent(
+        val recipe: RecipeModel
+    ) : RecipeDetailIntent()
+
     data class OpenStepInfoViewIntent(
         val stepDetailItem: StepDetailItem,
         val index: Int,

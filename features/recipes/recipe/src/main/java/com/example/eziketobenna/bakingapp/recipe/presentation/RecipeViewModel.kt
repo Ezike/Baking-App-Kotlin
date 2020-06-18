@@ -22,7 +22,7 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState> {
 
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
-        MutableStateFlow(RecipeViewState.Initial)
+        MutableStateFlow(RecipeViewState.init)
 
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
@@ -44,7 +44,7 @@ class RecipeViewModel @Inject constructor(
         actionFlow
             .flatMapMerge { action ->
                 recipeActionProcessor.actionToResultProcessor(action)
-            }.scan(RecipeViewState.Initial) { previous: RecipeViewState, result: RecipeViewResult ->
+            }.scan(RecipeViewState.init) { previous, result ->
                 recipeViewStateReducer.reduce(previous, result)
             }.distinctUntilChanged()
             .onEach { recipeViewState ->

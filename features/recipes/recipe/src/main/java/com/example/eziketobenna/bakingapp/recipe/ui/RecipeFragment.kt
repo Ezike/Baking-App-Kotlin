@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.clicks
 import com.example.eziketobenna.bakingapp.recipe.databinding.FragmentRecipeBinding
+import com.example.eziketobenna.bakingapp.recipe.getDrawable
 import com.example.eziketobenna.bakingapp.recipe.inject
 import com.example.eziketobenna.bakingapp.recipe.observe
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
@@ -19,6 +22,7 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewModel
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewState
 import com.example.eziketobenna.bakingapp.views.viewBinding
 import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -32,7 +36,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     lateinit var recipeAdapter: RecipeAdapter
 
     @Inject
-    lateinit var viewModel: RecipeViewModel
+    lateinit var factory: ViewModelProvider.Factory
+
+    private val viewModel: RecipeViewModel by viewModels { factory }
 
     private val binding: FragmentRecipeBinding by viewBinding(FragmentRecipeBinding::bind)
 
@@ -71,23 +77,21 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     }
 
     override fun render(state: RecipeViewState) {
-        when (state) {
-            is RecipeViewState.Success -> {
-                renderSuccessState(state)
-            }
-            is RecipeViewState.Error -> {
-                renderErrorState(state)
-            }
-            RecipeViewState.Initial -> {
-                renderInitialState()
-            }
-            RecipeViewState.Loading -> {
-                renderLoadingState()
-            }
-            RecipeViewState.Refreshing -> {
-                renderRefreshState()
-            }
+        when {
+            state.isDataUnavailable -> renderEmptyState(state)
+            state.isError -> renderErrorState(state)
+            state.isLoading -> renderLoadingState()
+            state.isRefreshing -> renderRefreshState()
+            else -> renderSuccessState(state)
         }
+    }
+
+    private fun renderEmptyState(state: RecipeViewState) {
+        stopShimmer()
+        binding.swipeRefresh.isRefreshing = false
+        binding.emptyState.setImage(getDrawable(R.drawable.ic_empty))
+        binding.emptyState.isVisible = state.recipes.isEmpty()
+        binding.emptyState.setTitle(getString(R.string.no_data))
     }
 
     private fun renderRefreshState() {
@@ -103,32 +107,32 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         binding.mainRv.isVisible = false
     }
 
-    private fun renderInitialState() {
-        toggleSwipeRefresh(false)
-        binding.emptyState.isVisible = false
-    }
-
-    private fun renderErrorState(state: RecipeViewState.Error) {
+    private fun renderErrorState(state: RecipeViewState) {
         stopShimmer()
-        toggleSwipeRefresh(false)
-        binding.emptyState.isVisible = true
-        binding.emptyState.setCaption(state.message)
-        binding.emptyState.setTitle(getString(R.string.an_error_occurred))
+        binding.swipeRefresh.isRefreshing = false
+        if (state.recipes.isNotEmpty()) {
+            Snackbar.make(binding.root, state.errorMessage, Snackbar.LENGTH_SHORT).show()
+        } else {
+            binding.emptyState.setImage(getDrawable(R.drawable.ic_error_page_2))
+            binding.emptyState.isVisible = true
+            binding.emptyState.setCaption(state.error)
+            binding.emptyState.setTitle(getString(R.string.an_error_occurred))
+        }
     }
 
-    private fun renderSuccessState(state: RecipeViewState.Success) {
+    private fun renderSuccessState(state: RecipeViewState) {
         binding.mainRv.isVisible = true
         recipeAdapter.submitList(state.recipes)
         stopShimmer()
         binding.swipeRefresh.isRefreshing = false
         binding.swipeRefresh.isEnabled = true
-        binding.emptyState.isVisible = state.recipes.isEmpty()
-        binding.emptyState.setTitle(getString(R.string.no_data))
+        binding.emptyState.isVisible = false
     }
 
     private fun toggleSwipeRefresh(boolean: Boolean) {
         binding.swipeRefresh.isRefreshing = boolean
         binding.swipeRefresh.isEnabled = boolean
+        binding.emptyState.isVisible = false
     }
 
     private fun startShimmer() {

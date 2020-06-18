@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
@@ -36,7 +38,9 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     private val args by navArgs<RecipeDetailFragmentArgs>()
 
     @Inject
-    lateinit var viewModel: RecipeDetailViewModel
+    lateinit var factory: ViewModelProvider.Factory
+
+    private val viewModel: RecipeDetailViewModel by viewModels { factory }
 
     @Inject
     lateinit var ingredientStepAdapter: IngredientStepAdapter
@@ -78,16 +82,14 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     }
 
     private val loadRecipeDetailIntent: Flow<LoadRecipeDetailIntent>
-        get() = lifecycle.events()
-            .filter {
-                it == Lifecycle.Event.ON_CREATE
-            }.map {
-                LoadRecipeDetailIntent(args.recipe)
-            }
+        get() = lifecycle.events().filter {
+            it == Lifecycle.Event.ON_CREATE
+        }.map {
+            LoadRecipeDetailIntent(args.recipe)
+        }
 
     private val openStepInfoIntent: Flow<OpenStepInfoViewIntent>
-        get() = ingredientStepAdapter
-            .stepClicks
+        get() = ingredientStepAdapter.stepClicks
             .map {
                 OpenStepInfoViewIntent(it.first, it.second, args.recipe.steps)
             }

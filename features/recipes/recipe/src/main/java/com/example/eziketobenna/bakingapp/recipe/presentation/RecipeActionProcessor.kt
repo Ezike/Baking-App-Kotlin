@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
+import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.core.ext.logE
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
+@FeatureScope
 class RecipeActionProcessor @Inject constructor(
     private val fetchRecipesUseCase: FetchRecipes
 ) : ActionProcessor<RecipeViewAction, RecipeViewResult> {
@@ -33,7 +35,11 @@ class RecipeActionProcessor @Inject constructor(
 
     private val refreshData: Flow<RecipeViewResult>
         get() = recipes.map { recipes ->
-            RefreshRecipesResult.Success(recipes = recipes) as RefreshRecipesResult
+            if (recipes.isNotEmpty()) {
+                RefreshRecipesResult.Loaded(recipes = recipes)
+            } else {
+                RefreshRecipesResult.Empty
+            }
         }.onStart {
             emit(RefreshRecipesResult.Refreshing)
         }.catch { cause: Throwable ->
@@ -43,7 +49,11 @@ class RecipeActionProcessor @Inject constructor(
 
     private val retryFetch: Flow<RecipeViewResult>
         get() = recipes.map { recipes ->
-            RetryFetchResult.Success(recipes) as RetryFetchResult
+            if (recipes.isNotEmpty()) {
+                RetryFetchResult.Loaded(recipes)
+            } else {
+                RetryFetchResult.Empty
+            }
         }.onStart {
             emit(RetryFetchResult.Loading)
         }.catch { cause: Throwable ->
@@ -53,7 +63,11 @@ class RecipeActionProcessor @Inject constructor(
 
     private val loadRecipes: Flow<RecipeViewResult>
         get() = recipes.map { recipes ->
-            LoadInitialResult.Success(recipes = recipes) as LoadInitialResult
+            if (recipes.isNotEmpty()) {
+                LoadInitialResult.Loaded(recipes = recipes)
+            } else {
+                LoadInitialResult.Empty
+            }
         }.onStart {
             emit(LoadInitialResult.Loading)
         }.catch { cause: Throwable ->
