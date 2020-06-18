@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ingredients_and_steps">Ingredient and Steps</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+</resources>

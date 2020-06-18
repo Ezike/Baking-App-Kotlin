@@ -2,11 +2,12 @@ package com.example.eziketobenna.bakingapp.recipe.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.MVIViewModel
+import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapMerge
@@ -18,7 +19,7 @@ class RecipeViewModel @Inject constructor(
     private val recipeActionProcessor: RecipeActionProcessor,
     private val recipeViewStateReducer: RecipeViewStateReducer,
     private val recipeViewIntentProcessor: RecipeViewIntentProcessor
-) : ViewModel(), MVIViewModel<RecipeViewIntent, RecipeViewState> {
+) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState> {
 
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
         MutableStateFlow(RecipeViewState.Initial)
@@ -51,6 +52,6 @@ class RecipeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    override val viewState: Flow<RecipeViewState>
+    override val viewState: StateFlow<RecipeViewState>
         get() = _recipeViewState
 }

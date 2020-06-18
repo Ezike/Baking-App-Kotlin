@@ -1,5 +1,9 @@
 package com.example.eziketobenna.bakkingapp.model.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class RecipeModel(
     val id: Int,
     val name: String,
@@ -7,4 +11,4 @@ data class RecipeModel(
     val servings: Int,
     val ingredients: List<IngredientModel>,
     val steps: List<StepModel>
-)
+) : Parcelable

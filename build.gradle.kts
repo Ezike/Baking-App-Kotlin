@@ -15,10 +15,10 @@ subprojects {
     applySpotless
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions.freeCompilerArgs +=
-                "-Xuse-experimental=" +
-                        "kotlin.Experimental," +
-                        "kotlinx.coroutines.ExperimentalCoroutinesApi," +
-                        "kotlinx.coroutines.InternalCoroutinesApi," +
-                        "kotlinx.coroutines.FlowPreview"
+            "-Xuse-experimental=" +
+                "kotlin.Experimental," +
+                "kotlinx.coroutines.ExperimentalCoroutinesApi," +
+                "kotlinx.coroutines.InternalCoroutinesApi," +
+                "kotlinx.coroutines.FlowPreview"
     }
 }

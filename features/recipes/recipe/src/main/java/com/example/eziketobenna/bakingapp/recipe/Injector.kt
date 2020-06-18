@@ -5,7 +5,7 @@ import com.example.eziketobenna.bakingapp.recipe.di.component.DaggerRecipeCompon
 import com.example.eziketobenna.bakingapp.recipe.ui.RecipeFragment
 import dagger.hilt.android.EntryPointAccessors
 
-fun injector(fragment: RecipeFragment) {
+internal fun inject(fragment: RecipeFragment) {
     DaggerRecipeComponent
         .factory()
         .create(EntryPointAccessors.fromApplication(

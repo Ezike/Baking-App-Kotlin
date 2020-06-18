@@ -7,6 +7,8 @@ import ProjectLib.core
 import ProjectLib.data
 import ProjectLib.domain
 import ProjectLib.recipe
+import ProjectLib.recipeDetail
+import ProjectLib.recipeModel
 import ProjectLib.remote
 
 plugins {
@@ -52,12 +54,13 @@ android {
         }
     }
 
-    dynamicFeatures = mutableSetOf(recipe)
+    dynamicFeatures = mutableSetOf(recipe, recipeDetail)
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(core))
+    implementation(project(recipeModel))
     implementation(project(data))
     implementation(project(domain))
     implementation(project(remote))
@@ -74,7 +77,6 @@ dependencies {
         implementation(navigationUiKtx)
         implementation(navigationDFM)
         implementation(multiDex)
-        implementation(lifeCycleCommon)
     }
 
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)

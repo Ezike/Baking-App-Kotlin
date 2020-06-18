@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.eziketobenna.bakingapp.common.viewBinding
+import androidx.navigation.fragment.findNavController
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.clicks
 import com.example.eziketobenna.bakingapp.recipe.databinding.FragmentRecipeBinding
-import com.example.eziketobenna.bakingapp.recipe.injector
+import com.example.eziketobenna.bakingapp.recipe.inject
 import com.example.eziketobenna.bakingapp.recipe.observe
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRefreshViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRetryViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewModel
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewState
+import com.example.eziketobenna.bakingapp.views.viewBinding
 import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +37,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     private val binding: FragmentRecipeBinding by viewBinding(FragmentRecipeBinding::bind)
 
     override fun invoke(model: RecipeModel) {
+        findNavController().navigate(RecipeFragmentDirections.openRecipeDetail(model))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        injector(this)
+        inject(this)
     }
 
     override fun render(state: RecipeViewState) {

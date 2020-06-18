@@ -7,7 +7,28 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.eziketobenna.bakingapp.recipe.ui.RecipeFragment"
-        app:moduleName="recipe"
-        android:label="RecipeFragment" />
+        android:label="RecipeFragment"
+        app:moduleName="recipe">
+        <action
+            android:id="@+id/open_recipe_detail"
+            app:destination="@id/recipeDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.eziketobenna.bakingapp.recipedetail.ui.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        app:moduleName="recipeDetail">
+
+        <argument
+            android:name="recipe"
+            app:argType="com.example.eziketobenna.bakkingapp.model.model.RecipeModel"
+            app:nullable="false" />
+
+    </fragment>
 
 </navigation>

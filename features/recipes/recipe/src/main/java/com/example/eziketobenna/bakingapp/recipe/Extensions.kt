@@ -4,6 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.eziketobenna.bakingapp.views.SimpleEmptyStateView
@@ -44,3 +48,19 @@ val SimpleEmptyStateView.clicks: Flow<Unit>
         buttonClickListener = listener
         awaitClose { buttonClickListener = null }
     }.conflate()
+
+fun Fragment.onBackPress(
+    lifecycleOwner: LifecycleOwner,
+    onBackPressed: OnBackPressedCallback.() -> Unit
+) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        lifecycleOwner,
+        onBackPressed = onBackPressed
+    )
+}
+
+var Fragment.actionBarTitle: String
+    set(value) {
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = value
+    }
+    get() = (requireActivity() as? AppCompatActivity)?.supportActionBar?.title.toString()
