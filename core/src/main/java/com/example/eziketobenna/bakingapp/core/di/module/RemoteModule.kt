@@ -19,7 +19,7 @@ import javax.inject.Singleton
 interface RemoteModule {
 
     @get:[Binds Singleton]
-    abstract val RecipeRemoteImpl.bindRemote: RecipeRemote
+    val RecipeRemoteImpl.bindRemote: RecipeRemote
 
     companion object {
         @get:[Provides Singleton]
