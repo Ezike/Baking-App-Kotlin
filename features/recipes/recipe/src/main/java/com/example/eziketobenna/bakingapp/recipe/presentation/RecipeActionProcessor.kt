@@ -25,7 +25,7 @@ class RecipeActionProcessor @Inject constructor(
     private val recipes: Flow<List<Recipe>>
         get() = fetchRecipesUseCase()
 
-    override fun actionToResultProcessor(viewAction: RecipeViewAction): Flow<RecipeViewResult> {
+    override fun actionToResult(viewAction: RecipeViewAction): Flow<RecipeViewResult> {
         return when (viewAction) {
             LoadInitialAction -> loadRecipes
             RetryFetchAction -> retryFetch

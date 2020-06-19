@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 class RecipeDetailActionProcessor @Inject constructor() :
     ActionProcessor<RecipeDetailAction, RecipeDetailResult> {
 
-    override fun actionToResultProcessor(viewAction: RecipeDetailAction): Flow<RecipeDetailResult> {
+    override fun actionToResult(viewAction: RecipeDetailAction): Flow<RecipeDetailResult> {
         return when (viewAction) {
             RecipeDetailAction.Idle -> flowOf(RecipeDetailResult.IdleResult)
             is LoadRecipeDetailAction -> handleLoadRecipeDetailAction(viewAction)

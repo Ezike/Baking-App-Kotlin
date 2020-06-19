@@ -22,6 +22,8 @@ import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetail
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewModel
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState.NavigateToStepInfo
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState.Success
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.IngredientStepAdapter
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.stepClicks
 import com.example.eziketobenna.bakingapp.views.viewBinding
@@ -72,11 +74,11 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
         when (state) {
             RecipeDetailViewState.Idle -> {
             }
-            is RecipeDetailViewState.Success -> {
+            is Success -> {
                 ingredientStepAdapter.submitList(state.model)
             }
-            is RecipeDetailViewState.NavigateToStepInfo -> {
-                Toast.makeText(requireContext(), "mehh", Toast.LENGTH_SHORT).show()
+            is NavigateToStepInfo -> state.info.consume {
+                Toast.makeText(requireContext(), it.step.description, Toast.LENGTH_SHORT).show()
             }
         }
     }

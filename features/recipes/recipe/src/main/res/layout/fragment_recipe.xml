@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:isButtonVisible="true"
+            android:visibility="gone"
             app:emptyStateImageSrc="@drawable/ic_error_page_2"/>
 
     </FrameLayout>

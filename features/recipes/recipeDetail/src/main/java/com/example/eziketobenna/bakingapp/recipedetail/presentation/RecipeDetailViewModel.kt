@@ -37,7 +37,7 @@ class RecipeDetailViewModel @Inject constructor(
     private fun processActions() {
         actionsFlow
             .flatMapMerge {
-                recipeDetailActionProcessor.actionToResultProcessor(it)
+                recipeDetailActionProcessor.actionToResult(it)
             }
             .scan(RecipeDetailViewState.Idle) { previous: RecipeDetailViewState, result: RecipeDetailResult ->
                 recipeDetailStateReducer.reduce(previous, result)
