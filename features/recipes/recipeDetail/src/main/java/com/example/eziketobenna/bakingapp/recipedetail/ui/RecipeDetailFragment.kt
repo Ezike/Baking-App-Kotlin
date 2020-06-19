@@ -16,7 +16,7 @@ import com.example.eziketobenna.bakingapp.recipe.observe
 import com.example.eziketobenna.bakingapp.recipe.onBackPress
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.FragmentRecipeDetailBinding
-import com.example.eziketobenna.bakingapp.recipedetail.inject
+import com.example.eziketobenna.bakingapp.recipedetail.di.inject
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.LoadRecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent

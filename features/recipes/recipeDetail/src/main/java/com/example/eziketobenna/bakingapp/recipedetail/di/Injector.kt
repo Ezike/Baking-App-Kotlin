@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.recipedetail
+package com.example.eziketobenna.bakingapp.recipedetail.di
 
 import com.example.eziketobenna.bakingapp.core.di.component.CoreComponent
 import com.example.eziketobenna.bakingapp.recipedetail.di.component.DaggerRecipeDetailComponent

@@ -12,8 +12,8 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.clicks
 import com.example.eziketobenna.bakingapp.recipe.databinding.FragmentRecipeBinding
+import com.example.eziketobenna.bakingapp.recipe.di.inject
 import com.example.eziketobenna.bakingapp.recipe.getDrawable
-import com.example.eziketobenna.bakingapp.recipe.inject
 import com.example.eziketobenna.bakingapp.recipe.observe
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRefreshViewIntent
