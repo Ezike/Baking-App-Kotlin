@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
+import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.model.HeaderItem
@@ -37,7 +38,7 @@ class RecipeDetailStateReducer @Inject constructor(
             step = stepModelMapper.mapToModel(result.step),
             steps = stepModelMapper.mapToModelList(result.steps)
         )
-        return RecipeDetailViewState.NavigateToStepInfo(stepInfo)
+        return RecipeDetailViewState.NavigateToStepInfo(ViewEvent(stepInfo))
     }
 
     private fun handleLoadDataResult(result: LoadedData): RecipeDetailViewState {

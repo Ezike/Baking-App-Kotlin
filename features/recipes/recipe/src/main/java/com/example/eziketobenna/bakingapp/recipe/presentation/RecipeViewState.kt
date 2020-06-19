@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
+import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewState
 import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 
@@ -8,18 +9,17 @@ data class RecipeViewState(
     val isRefreshing: Boolean,
     val isDataUnavailable: Boolean,
     val error: String?,
+    val errorEvent: ViewEvent<String>?,
     val recipes: List<RecipeModel>
 ) : ViewState {
-
-    val errorMessage: String
-        get() = error ?: ""
 
     val loadingState: RecipeViewState
         get() = this.copy(
             isLoading = true,
             isRefreshing = false,
             isDataUnavailable = false,
-            error = null
+            error = null,
+            errorEvent = null
         )
 
     val refreshingState: RecipeViewState
@@ -27,7 +27,8 @@ data class RecipeViewState(
             isLoading = false,
             isRefreshing = true,
             isDataUnavailable = false,
-            error = null
+            error = null,
+            errorEvent = null
         )
 
     val emptyState: RecipeViewState
@@ -35,14 +36,24 @@ data class RecipeViewState(
             isLoading = false,
             isRefreshing = false,
             isDataUnavailable = true,
-            error = null
+            error = null,
+            errorEvent = null
         )
 
-    fun errorState(cause: String): RecipeViewState = this.copy(
+    fun noDataErrorState(cause: String): RecipeViewState = this.copy(
         isLoading = false,
         isRefreshing = false,
         isDataUnavailable = false,
-        error = cause
+        error = cause,
+        errorEvent = null
+    )
+
+    fun dataAvailableErrorState(cause: String): RecipeViewState = this.copy(
+        isLoading = false,
+        isRefreshing = false,
+        isDataUnavailable = false,
+        error = null,
+        errorEvent = ViewEvent(cause)
     )
 
     fun loadedState(recipes: List<RecipeModel>): RecipeViewState = this.copy(
@@ -50,11 +61,15 @@ data class RecipeViewState(
         isRefreshing = false,
         isDataUnavailable = false,
         error = null,
+        errorEvent = null,
         recipes = recipes
     )
 
-    val isError: Boolean
+    val isNoDataError: Boolean
         get() = this.error != null
+
+    val isDataAvailableError: Boolean
+        get() = this.errorEvent != null
 
     companion object {
         val init: RecipeViewState
@@ -63,6 +78,7 @@ data class RecipeViewState(
                 isRefreshing = false,
                 error = null,
                 isDataUnavailable = false,
+                errorEvent = null,
                 recipes = emptyList()
             )
     }

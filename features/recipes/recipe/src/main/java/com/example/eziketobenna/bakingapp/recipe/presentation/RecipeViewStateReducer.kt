@@ -34,9 +34,13 @@ class RecipeViewStateReducer @Inject constructor(private val recipeModelMapper: 
     }
 
     private fun handleEmptyState(previous: RecipeViewState): RecipeViewState {
-        return if (previous.recipes.isEmpty()) previous.emptyState else previous.loadedState(
-            previous.recipes
-        )
+        return if (previous.recipes.isEmpty()) previous.emptyState
+        else previous.loadedState(previous.recipes)
+    }
+
+    private fun handleErrorState(previous: RecipeViewState, cause: String): RecipeViewState {
+        return if (previous.recipes.isEmpty()) previous.noDataErrorState(cause)
+        else previous.dataAvailableErrorState(cause)
     }
 
     private fun handleLoadInitialResult(
@@ -50,7 +54,10 @@ class RecipeViewStateReducer @Inject constructor(private val recipeModelMapper: 
                     loadInitialResult.recipes
                 )
             )
-            is LoadInitialResult.Error -> previous.errorState(loadInitialResult.cause.errorMessage)
+            is LoadInitialResult.Error -> handleErrorState(
+                previous,
+                loadInitialResult.cause.errorMessage
+            )
             LoadInitialResult.Empty -> handleEmptyState(previous)
             LoadInitialResult.Loading -> previous.loadingState
         }
@@ -67,7 +74,10 @@ class RecipeViewStateReducer @Inject constructor(private val recipeModelMapper: 
                     retryFetchResult.recipes
                 )
             )
-            is RetryFetchResult.Error -> previous.errorState(retryFetchResult.cause.errorMessage)
+            is RetryFetchResult.Error -> handleErrorState(
+                previous,
+                retryFetchResult.cause.errorMessage
+            )
             RetryFetchResult.Loading -> previous.loadingState
             RetryFetchResult.Empty -> handleEmptyState(previous)
         }
@@ -85,7 +95,8 @@ class RecipeViewStateReducer @Inject constructor(private val recipeModelMapper: 
                 )
             )
 
-            is RefreshRecipesResult.Error -> previous.errorState(
+            is RefreshRecipesResult.Error -> handleErrorState(
+                previous,
                 refreshRecipesResult.cause.errorMessage
             )
             RefreshRecipesResult.Refreshing -> previous.refreshingState

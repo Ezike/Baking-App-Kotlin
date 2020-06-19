@@ -46,6 +46,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         findNavController().navigate(RecipeFragmentDirections.openRecipeDetail(model))
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject(this)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.processIntent(intents)
@@ -53,6 +58,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recipeAdapter.clickListener = this
         binding.mainRv.adapter = recipeAdapter
 
@@ -71,15 +77,14 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
                 RecipeRefreshViewIntent
             }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        inject(this)
-    }
+    override val intents: Flow<RecipeViewIntent>
+        get() = merge(swipeRefreshIntent, emptyStateIntent)
 
     override fun render(state: RecipeViewState) {
         when {
             state.isDataUnavailable -> renderEmptyState(state)
-            state.isError -> renderErrorState(state)
+            state.isDataAvailableError -> renderDataAvailableErrorState(state)
+            state.isNoDataError -> renderNoDataErrorState(state)
             state.isLoading -> renderLoadingState()
             state.isRefreshing -> renderRefreshState()
             else -> renderSuccessState(state)
@@ -89,6 +94,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     private fun renderEmptyState(state: RecipeViewState) {
         stopShimmer()
         binding.swipeRefresh.isRefreshing = false
+        binding.swipeRefresh.isEnabled = true
         binding.emptyState.setImage(getDrawable(R.drawable.ic_empty))
         binding.emptyState.isVisible = state.recipes.isEmpty()
         binding.emptyState.setTitle(getString(R.string.no_data))
@@ -104,24 +110,30 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         startShimmer()
         toggleSwipeRefresh(false)
         binding.emptyState.isVisible = false
-        binding.mainRv.isVisible = false
     }
 
-    private fun renderErrorState(state: RecipeViewState) {
+    private fun renderDataAvailableErrorState(state: RecipeViewState) {
         stopShimmer()
+        recipeAdapter.submitList(state.recipes)
         binding.swipeRefresh.isRefreshing = false
-        if (state.recipes.isNotEmpty()) {
-            Snackbar.make(binding.root, state.errorMessage, Snackbar.LENGTH_SHORT).show()
-        } else {
-            binding.emptyState.setImage(getDrawable(R.drawable.ic_error_page_2))
-            binding.emptyState.isVisible = true
-            binding.emptyState.setCaption(state.error)
-            binding.emptyState.setTitle(getString(R.string.an_error_occurred))
+        binding.swipeRefresh.isEnabled = true
+        binding.emptyState.isVisible = false
+        state.errorEvent?.consume { error ->
+            Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
         }
     }
 
+    private fun renderNoDataErrorState(state: RecipeViewState) {
+        stopShimmer()
+        binding.swipeRefresh.isRefreshing = false
+        binding.swipeRefresh.isEnabled = true
+        binding.emptyState.isVisible = true
+        binding.emptyState.setImage(getDrawable(R.drawable.ic_error_page_2))
+        binding.emptyState.setCaption(state.error)
+        binding.emptyState.setTitle(getString(R.string.an_error_occurred))
+    }
+
     private fun renderSuccessState(state: RecipeViewState) {
-        binding.mainRv.isVisible = true
         recipeAdapter.submitList(state.recipes)
         stopShimmer()
         binding.swipeRefresh.isRefreshing = false
@@ -144,7 +156,4 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         binding.shimmer.stopShimmer()
         binding.shimmer.isVisible = false
     }
-
-    override val intents: Flow<RecipeViewIntent>
-        get() = merge(swipeRefreshIntent, emptyStateIntent)
 }

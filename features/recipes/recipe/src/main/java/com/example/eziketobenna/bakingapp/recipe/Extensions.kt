@@ -18,15 +18,27 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+//region view extensions
 fun ViewGroup.inflate(layout: Int): View {
     val layoutInflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     return layoutInflater.inflate(layout, this, false)
 }
+//endregion
 
+//region String extension
+inline fun String.notEmpty(action: (String) -> Unit) {
+    if (this.isNotEmpty()) {
+        action(this)
+    }
+}
+//endregion
+
+//region Flow extensions
 inline fun <reified R> Flow<R>.observe(
     lifecycleOwner: LifecycleOwner,
     crossinline action: (R) -> Unit
@@ -35,13 +47,9 @@ inline fun <reified R> Flow<R>.observe(
         action(it)
     }.launchIn(lifecycleOwner.lifecycleScope)
 }
+//endregion
 
-inline fun String.notEmpty(action: (String) -> Unit) {
-    if (this.isNotEmpty()) {
-        action(this)
-    }
-}
-
+//region FlowBinding extensions
 val SimpleEmptyStateView.clicks: Flow<Unit>
     get() = callbackFlow {
         val listener: () -> Unit = {
@@ -50,18 +58,10 @@ val SimpleEmptyStateView.clicks: Flow<Unit>
         }
         buttonClickListener = listener
         awaitClose { buttonClickListener = null }
-    }.conflate()
+    }.conflate().debounce(200)
+//endregion
 
-fun Fragment.onBackPress(
-    lifecycleOwner: LifecycleOwner,
-    onBackPressed: OnBackPressedCallback.() -> Unit
-) {
-    requireActivity().onBackPressedDispatcher.addCallback(
-        lifecycleOwner,
-        onBackPressed = onBackPressed
-    )
-}
-
+//region Fragment extensions
 var Fragment.actionBarTitle: String
     set(value) {
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = value
@@ -74,3 +74,14 @@ fun Fragment.getDrawable(@DrawableRes id: Int): Drawable? {
         id
     )
 }
+
+fun Fragment.onBackPress(
+    lifecycleOwner: LifecycleOwner,
+    onBackPressed: OnBackPressedCallback.() -> Unit
+) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        lifecycleOwner,
+        onBackPressed = onBackPressed
+    )
+}
+//endregion

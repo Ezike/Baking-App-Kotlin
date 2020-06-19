@@ -24,6 +24,9 @@ class RecipeViewModel @Inject constructor(
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
         MutableStateFlow(RecipeViewState.init)
 
+    override val viewState: StateFlow<RecipeViewState>
+        get() = _recipeViewState
+
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
         ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
@@ -43,7 +46,7 @@ class RecipeViewModel @Inject constructor(
     private fun processActions() {
         actionFlow
             .flatMapMerge { action ->
-                recipeActionProcessor.actionToResultProcessor(action)
+                recipeActionProcessor.actionToResult(action)
             }.scan(RecipeViewState.init) { previous, result ->
                 recipeViewStateReducer.reduce(previous, result)
             }.distinctUntilChanged()
@@ -51,7 +54,4 @@ class RecipeViewModel @Inject constructor(
                 _recipeViewState.value = recipeViewState
             }.launchIn(viewModelScope)
     }
-
-    override val viewState: StateFlow<RecipeViewState>
-        get() = _recipeViewState
 }
