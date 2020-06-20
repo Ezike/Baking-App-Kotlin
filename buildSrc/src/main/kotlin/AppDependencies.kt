@@ -1,3 +1,5 @@
+import Dependencies.DI.Version.daggerHiltAndroid
+
 const val kotlinVersion: String = "1.4-M2"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
@@ -11,9 +13,6 @@ object Config {
         const val targetSdkVersion: Int = 29
         const val versionName: String = "1.0"
         const val versionCode: Int = 1
-        const val navigation: String = "2.3.0-beta01"
-        const val androidGradle: String = "4.2.0-alpha01"
-        const val daggerHiltAndroid: String = "2.28-alpha"
     }
 
     const val isMultiDexEnabled: Boolean = true
@@ -21,18 +20,6 @@ object Config {
     object Android {
         const val applicationId: String = "com.example.eziketobenna.bakingapp"
         const val testInstrumentationRunner: String = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    object Plugin : Libraries {
-        const val kotlinGradle: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        const val navigation: String =
-            "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigation}"
-        const val androidGradle: String =
-            "com.android.tools.build:gradle:${Version.androidGradle}"
-        const val daggerHilt: String =
-            "com.google.dagger:hilt-android-gradle-plugin:${Version.daggerHiltAndroid}"
-        override val components: List<String>
-            get() = listOf(kotlinGradle, navigation, androidGradle, daggerHilt)
     }
 }
 
@@ -155,17 +142,18 @@ object Dependencies {
         object Version {
             const val daggerHilt: String = "1.0.0-alpha01"
             const val javaxInject: String = "1"
+            const val daggerHiltAndroid: String = "2.28-alpha"
         }
 
         object AnnotationProcessor {
             const val daggerHiltAndroid: String =
-                "com.google.dagger:hilt-android-compiler:${Config.Version.daggerHiltAndroid}"
+                "com.google.dagger:hilt-android-compiler:${Version.daggerHiltAndroid}"
             const val daggerHilt: String = "androidx.hilt:hilt-compiler:${Version.daggerHilt}"
         }
 
         const val javaxInject: String = "javax.inject:javax.inject:${Version.javaxInject}"
         const val daggerHiltAndroid: String =
-            "com.google.dagger:hilt-android:${Config.Version.daggerHiltAndroid}"
+            "com.google.dagger:hilt-android:${Version.daggerHiltAndroid}"
         const val daggerHiltViewModel: String =
             "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
     }
