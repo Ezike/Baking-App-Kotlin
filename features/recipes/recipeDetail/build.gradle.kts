@@ -8,9 +8,8 @@ import ProjectLib.app
 import ProjectLib.core
 import ProjectLib.domain
 import ProjectLib.presentation
-import ProjectLib.recipe
 import ProjectLib.recipeModel
-import ProjectLib.views
+import ProjectLib.stepDetail
 
 plugins {
     dynamicFeature
@@ -50,8 +49,7 @@ dependencies {
     implementation(project(core))
     implementation(project(presentation))
     implementation(project(recipeModel))
-    implementation(project(recipe))
-    implementation(project(views))
+    implementation(project(stepDetail))
     implementation(project(domain))
 
     implementAll(View.components)

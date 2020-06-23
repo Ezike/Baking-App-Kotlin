@@ -30,6 +30,7 @@ class RecipeViewModel @Inject constructor(
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
         ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
+
     private val actionFlow: Flow<RecipeViewAction>
         get() = actionsChannel.asFlow()
 

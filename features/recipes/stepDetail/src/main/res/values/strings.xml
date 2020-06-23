@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prev">PREV</string>
+    <string name="next">NEXT</string>
+    <string name="no_video">Placeholdder</string>
+    <string name="step_description">Step description:</string>
+</resources>

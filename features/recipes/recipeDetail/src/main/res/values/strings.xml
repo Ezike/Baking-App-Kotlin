@@ -3,4 +3,5 @@
     <string name="ingredients_and_steps">Ingredient and Steps</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
+    <string name="playback_icon">playback icon</string>
 </resources>

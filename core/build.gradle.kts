@@ -49,6 +49,7 @@ dependencies {
     implementation(Network.moshi)
     implementation(Coroutines.core)
     implementation(View.coil)
+    implementation(View.fragment)
 
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 }

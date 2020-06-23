@@ -3,20 +3,19 @@ package com.example.eziketobenna.bakingapp.recipedetail.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.eziketobenna.bakingapp.core.ext.observe
+import com.example.eziketobenna.bakingapp.core.ext.onBackPress
+import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
-import com.example.eziketobenna.bakingapp.recipe.actionBarTitle
-import com.example.eziketobenna.bakingapp.recipe.observe
-import com.example.eziketobenna.bakingapp.recipe.onBackPress
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.FragmentRecipeDetailBinding
-import com.example.eziketobenna.bakingapp.recipedetail.inject
+import com.example.eziketobenna.bakingapp.recipedetail.di.inject
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.LoadRecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent
@@ -26,7 +25,6 @@ import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetail
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState.Success
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.IngredientStepAdapter
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.stepClicks
-import com.example.eziketobenna.bakingapp.views.viewBinding
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -62,10 +60,10 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onBackPress(viewLifecycleOwner) {
+        onBackPress {
             findNavController().navigateUp()
         }
-        actionBarTitle = args.recipe.name
+
         binding.detailRv.adapter = ingredientStepAdapter
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
@@ -74,11 +72,12 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
         when (state) {
             RecipeDetailViewState.Idle -> {
             }
-            is Success -> {
-                ingredientStepAdapter.submitList(state.model)
-            }
+            is Success -> ingredientStepAdapter.submitList(state.model)
             is NavigateToStepInfo -> state.info.consume {
-                Toast.makeText(requireContext(), it.step.description, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    RecipeDetailFragmentDirections
+                        .openStepDetail(state.info.value)
+                )
             }
         }
     }
@@ -92,8 +91,8 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
 
     private val openStepInfoIntent: Flow<OpenStepInfoViewIntent>
         get() = ingredientStepAdapter.stepClicks
-            .map {
-                OpenStepInfoViewIntent(it.first, it.second, args.recipe.steps)
+            .map { stepDetailItem ->
+                OpenStepInfoViewIntent(stepDetailItem, args.recipe.steps)
             }
 
     override val intents: Flow<RecipeDetailIntent>

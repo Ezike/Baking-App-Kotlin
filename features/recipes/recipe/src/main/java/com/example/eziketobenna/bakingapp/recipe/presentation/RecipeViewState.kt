@@ -1,8 +1,8 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
+import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewState
-import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 
 data class RecipeViewState(
     val isLoading: Boolean,

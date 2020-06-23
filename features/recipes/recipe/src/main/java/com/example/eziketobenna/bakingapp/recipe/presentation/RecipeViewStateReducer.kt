@@ -2,11 +2,11 @@ package com.example.eziketobenna.bakingapp.recipe.presentation
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.core.ext.errorMessage
+import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.LoadInitialResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RefreshRecipesResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RetryFetchResult
-import com.example.eziketobenna.bakkingapp.model.mapper.RecipeModelMapper
 import javax.inject.Inject
 
 @FeatureScope

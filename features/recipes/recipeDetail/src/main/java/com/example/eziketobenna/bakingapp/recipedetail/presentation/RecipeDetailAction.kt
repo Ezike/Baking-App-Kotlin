@@ -13,7 +13,6 @@ sealed class RecipeDetailAction : ViewAction {
 
     data class OpenStepInfoViewAction(
         val step: Step,
-        val index: Int,
         val steps: List<Step>
     ) : RecipeDetailAction()
 }
