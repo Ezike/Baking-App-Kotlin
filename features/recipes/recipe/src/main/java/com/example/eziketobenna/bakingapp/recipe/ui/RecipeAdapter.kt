@@ -4,12 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eziketobenna.bakingapp.core.ext.inflate
+import com.example.eziketobenna.bakingapp.core.ext.notEmpty
 import com.example.eziketobenna.bakingapp.core.imageLoader.ImageLoader
+import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.databinding.ContentMainBinding
-import com.example.eziketobenna.bakingapp.recipe.inflate
-import com.example.eziketobenna.bakingapp.recipe.notEmpty
-import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import javax.inject.Inject
 
 typealias RecipeClickListener = (RecipeModel) -> Unit

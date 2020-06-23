@@ -13,7 +13,7 @@ class StepViewHolder(private val binding: StepListContentBinding) :
     ) {
         binding.shortDescription.text = stepDetailItem.shortDescription
         binding.root.setOnClickListener {
-            stepClickListener?.invoke(stepDetailItem, adapterPosition)
+            stepClickListener?.invoke(stepDetailItem)
         }
     }
 }

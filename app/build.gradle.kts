@@ -10,6 +10,8 @@ import ProjectLib.recipe
 import ProjectLib.recipeDetail
 import ProjectLib.recipeModel
 import ProjectLib.remote
+import ProjectLib.stepDetail
+import ProjectLib.videoPlayer
 
 plugins {
     androidApplication
@@ -54,7 +56,7 @@ android {
         }
     }
 
-    dynamicFeatures = mutableSetOf(recipe, recipeDetail)
+    dynamicFeatures = mutableSetOf(recipe, recipeDetail, stepDetail, videoPlayer)
 }
 
 dependencies {

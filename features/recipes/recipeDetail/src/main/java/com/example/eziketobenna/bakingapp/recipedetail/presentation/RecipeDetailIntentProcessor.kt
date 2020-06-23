@@ -1,13 +1,13 @@
 package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
+import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
+import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailMapper
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.LoadRecipeDetailAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.OpenStepInfoViewAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.LoadRecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent
-import com.example.eziketobenna.bakkingapp.model.mapper.IngredientModelMapper
-import com.example.eziketobenna.bakkingapp.model.mapper.StepModelMapper
 import javax.inject.Inject
 
 class RecipeDetailIntentProcessor @Inject constructor(
@@ -25,7 +25,6 @@ class RecipeDetailIntentProcessor @Inject constructor(
 
     private fun openStepInfoViewAction(intent: OpenStepInfoViewIntent): OpenStepInfoViewAction {
         return OpenStepInfoViewAction(
-            index = intent.index,
             step = stepDetailMapper.mapToDomain(intent.stepDetailItem),
             steps = stepModelMapper.mapToDomainList(intent.steps)
         )

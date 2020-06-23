@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
     app:startDestination="@id/recipeFragment">
 
@@ -8,7 +9,8 @@
         android:id="@+id/recipeFragment"
         android:name="com.example.eziketobenna.bakingapp.recipe.ui.RecipeFragment"
         android:label="RecipeFragment"
-        app:moduleName="recipe">
+        app:moduleName="recipe"
+        tools:layout="@layout/fragment_recipe">
         <action
             android:id="@+id/open_recipe_detail"
             app:destination="@id/recipeDetailFragment"
@@ -22,13 +24,35 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.eziketobenna.bakingapp.recipedetail.ui.RecipeDetailFragment"
         android:label="RecipeDetailFragment"
-        app:moduleName="recipeDetail">
+        app:moduleName="recipeDetail"
+        tools:layout="@layout/fragment_recipe_detail">
+
+        <action
+            android:id="@+id/open_step_detail"
+            app:destination="@id/stepDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <argument
             android:name="recipe"
-            app:argType="com.example.eziketobenna.bakkingapp.model.model.RecipeModel"
+            app:argType="com.example.eziketobenna.bakingapp.model.RecipeModel"
             app:nullable="false" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/stepDetailFragment"
+        android:name="com.example.eziketobenna.bakingapp.stepdetail.ui.StepDetailFragment"
+        app:moduleName="stepDetail"
+        android:label="StepDetailFragment"
+        tools:layout="@layout/fragment_step_detail">
+
+        <argument
+            android:name="stepInfo"
+            app:argType="com.example.eziketobenna.bakingapp.model.StepInfoModel"
+            app:nullable="false"/>
     </fragment>
 
 </navigation>

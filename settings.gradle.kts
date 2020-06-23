@@ -8,5 +8,7 @@ include(
     ":presentation",
     ":features:recipes:model",
     ":common:views",
-    ":features:recipes:recipeDetail"
+    ":features:recipes:recipeDetail",
+    ":features:recipes:stepDetail",
+    ":features:videoPlayer"
 )

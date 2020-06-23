@@ -20,7 +20,7 @@ class RecipeDetailActionProcessor @Inject constructor() :
     }
 
     private fun openStepInfoResult(viewAction: OpenStepInfoViewAction): Flow<OpenStepInfo> =
-        flowOf(OpenStepInfo(viewAction.step, viewAction.index, viewAction.steps))
+        flowOf(OpenStepInfo(viewAction.step, viewAction.steps))
 
     private fun handleLoadRecipeDetailAction(
         viewAction: LoadRecipeDetailAction

@@ -1,5 +1,7 @@
 package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
+import com.example.eziketobenna.bakingapp.model.StepInfoModel
+import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import com.example.eziketobenna.bakingapp.recipedetail.R
@@ -7,10 +9,8 @@ import com.example.eziketobenna.bakingapp.recipedetail.model.HeaderItem
 import com.example.eziketobenna.bakingapp.recipedetail.model.IngredientDetailMapper
 import com.example.eziketobenna.bakingapp.recipedetail.model.RecipeDetailModel
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailMapper
-import com.example.eziketobenna.bakingapp.recipedetail.model.StepsInfoModel
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailResult.LoadedData
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailResult.OpenStepInfo
-import com.example.eziketobenna.bakkingapp.model.mapper.StepModelMapper
 import javax.inject.Inject
 
 @OptIn(ExperimentalStdlibApi::class)
@@ -33,11 +33,11 @@ class RecipeDetailStateReducer @Inject constructor(
     }
 
     private fun navigateToStepInfo(result: OpenStepInfo): RecipeDetailViewState.NavigateToStepInfo {
-        val stepInfo = StepsInfoModel(
-            index = result.index,
-            step = stepModelMapper.mapToModel(result.step),
-            steps = stepModelMapper.mapToModelList(result.steps)
-        )
+        val stepInfo =
+            StepInfoModel(
+                step = stepModelMapper.mapToModel(result.step),
+                steps = stepModelMapper.mapToModelList(result.steps)
+            )
         return RecipeDetailViewState.NavigateToStepInfo(ViewEvent(stepInfo))
     }
 

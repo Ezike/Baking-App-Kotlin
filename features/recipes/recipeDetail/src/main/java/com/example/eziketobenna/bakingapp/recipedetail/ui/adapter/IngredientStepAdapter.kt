@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.eziketobenna.bakingapp.recipe.inflate
+import com.example.eziketobenna.bakingapp.core.ext.inflate
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.IngredientListContentBinding
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.ItemHeaderLayoutBinding
@@ -15,7 +15,7 @@ import com.example.eziketobenna.bakingapp.recipedetail.model.RecipeDetailModel
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailItem
 import javax.inject.Inject
 
-typealias StepClickListener = (StepDetailItem, Int) -> Unit
+typealias StepClickListener = (StepDetailItem) -> Unit
 
 class IngredientStepAdapter @Inject constructor() :
     ListAdapter<RecipeDetailModel, RecyclerView.ViewHolder>(diffUtilCallback) {

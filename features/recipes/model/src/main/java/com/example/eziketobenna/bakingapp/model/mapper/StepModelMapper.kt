@@ -1,19 +1,19 @@
-package com.example.eziketobenna.bakkingapp.model.mapper
+package com.example.eziketobenna.bakingapp.model.mapper
 
 import com.example.eziketobenna.bakingapp.domain.model.Step
+import com.example.eziketobenna.bakingapp.model.StepModel
 import com.example.eziketobenna.bakingapp.presentation.mapper.ModelMapper
-import com.example.eziketobenna.bakkingapp.model.model.StepModel
 import javax.inject.Inject
 
 class StepModelMapper @Inject constructor() : ModelMapper<StepModel, Step> {
 
     override fun mapToModel(domain: Step): StepModel {
         return StepModel(
-                domain.id,
-                domain.videoURL,
-                domain.description,
-                domain.shortDescription,
-                domain.thumbnailURL
+            domain.id,
+            domain.videoURL,
+            domain.description,
+            domain.shortDescription,
+            domain.thumbnailURL
         )
     }
 

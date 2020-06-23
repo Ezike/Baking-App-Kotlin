@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.views
+package com.example.eziketobenna.bakingapp.core.viewBinding
 
 import android.view.View
 import androidx.fragment.app.Fragment

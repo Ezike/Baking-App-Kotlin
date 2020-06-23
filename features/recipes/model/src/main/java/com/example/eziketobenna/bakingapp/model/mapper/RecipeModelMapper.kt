@@ -1,8 +1,8 @@
-package com.example.eziketobenna.bakkingapp.model.mapper
+package com.example.eziketobenna.bakingapp.model.mapper
 
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
+import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.presentation.mapper.ModelMapper
-import com.example.eziketobenna.bakkingapp.model.model.RecipeModel
 import javax.inject.Inject
 
 class RecipeModelMapper @Inject constructor(
@@ -12,12 +12,12 @@ class RecipeModelMapper @Inject constructor(
 
     override fun mapToModel(domain: Recipe): RecipeModel {
         return RecipeModel(
-                domain.id,
-                domain.name,
-                domain.image,
-                domain.servings,
-                ingredientModelMapper.mapToModelList(domain.ingredients),
-                stepModelMapper.mapToModelList(domain.steps)
+            domain.id,
+            domain.name,
+            domain.image,
+            domain.servings,
+            ingredientModelMapper.mapToModelList(domain.ingredients),
+            stepModelMapper.mapToModelList(domain.steps)
         )
     }
 

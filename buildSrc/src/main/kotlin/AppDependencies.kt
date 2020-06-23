@@ -1,5 +1,3 @@
-import Dependencies.DI.Version.daggerHiltAndroid
-
 const val kotlinVersion: String = "1.4-M2"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
@@ -67,7 +65,7 @@ object Dependencies {
             const val fragment: String = "1.2.4"
             const val cardView: String = "1.0.0"
             const val recyclerView: String = "1.1.0"
-            const val exoPlayer: String = "2.9.1"
+            const val exoPlayer: String = "2.10.5"
             const val coil: String = "0.11.0"
             const val swipeRefreshLayout: String = "1.1.0-rc01"
         }
@@ -83,8 +81,10 @@ object Dependencies {
             "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
         const val recyclerView: String =
             "androidx.recyclerview:recyclerview:${Version.recyclerView}"
-        const val exoPlayer: String =
-            "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
+        const val exoPlayerCore: String =
+            "com.google.android.exoplayer:exoplayer-core:${Version.exoPlayer}"
+        const val exoPlayerUI: String =
+            "com.google.android.exoplayer:exoplayer-ui:${Version.exoPlayer}"
         const val coil: String = "io.coil-kt:coil:${Version.coil}"
         const val swipeRefreshLayout: String =
             "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
@@ -208,6 +208,8 @@ object ProjectLib {
     const val remote: String = ":libraries:remote"
     const val recipe: String = ":features:recipes:recipe"
     const val recipeDetail: String = ":features:recipes:recipeDetail"
+    const val stepDetail: String = ":features:recipes:stepDetail"
     const val recipeModel: String = ":features:recipes:model"
     const val views: String = ":common:views"
+    const val videoPlayer: String = ":features:videoPlayer"
 }

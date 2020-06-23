@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/features/recipes/model" />
             <option value="$PROJECT_DIR$/features/recipes/recipe" />
             <option value="$PROJECT_DIR$/features/recipes/recipeDetail" />
+            <option value="$PROJECT_DIR$/features/recipes/stepDetail" />
+            <option value="$PROJECT_DIR$/features/videoPlayer" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/data" />
             <option value="$PROJECT_DIR$/libraries/domain" />

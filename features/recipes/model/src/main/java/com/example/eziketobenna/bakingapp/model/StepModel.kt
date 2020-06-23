@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakkingapp.model.model
+package com.example.eziketobenna.bakingapp.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

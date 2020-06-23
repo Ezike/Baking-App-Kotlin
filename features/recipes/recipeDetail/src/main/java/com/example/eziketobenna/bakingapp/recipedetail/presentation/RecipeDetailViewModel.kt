@@ -21,6 +21,7 @@ class RecipeDetailViewModel @Inject constructor(
 
     private val recipeDetailViewState: MutableStateFlow<RecipeDetailViewState> =
         MutableStateFlow(RecipeDetailViewState.Idle)
+
     private val actionsFlow: MutableStateFlow<RecipeDetailAction> =
         MutableStateFlow(RecipeDetailAction.Idle)
 

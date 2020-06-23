@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.debounce
 
-val IngredientStepAdapter.stepClicks: Flow<Pair<StepDetailItem, Int>>
+val IngredientStepAdapter.stepClicks: Flow<StepDetailItem>
     get() = callbackFlow {
-        val listener: StepClickListener = { step: StepDetailItem, index: Int ->
-            offer(Pair(step, index))
+        val listener: StepClickListener = { step: StepDetailItem ->
+            offer(step)
             Unit
         }
         stepClickListener = listener

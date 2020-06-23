@@ -12,7 +12,7 @@ internal fun inject(fragment: RecipeFragment) {
             EntryPointAccessors.fromApplication(
                 fragment.requireContext().applicationContext,
                 CoreComponent::class.java
-            ), fragment
+            )
         )
         .inject(fragment)
 }
