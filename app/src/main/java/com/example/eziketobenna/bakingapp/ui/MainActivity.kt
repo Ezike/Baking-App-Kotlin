@@ -3,17 +3,30 @@ package com.example.eziketobenna.bakingapp.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.eziketobenna.bakingapp.R
+import com.example.eziketobenna.bakingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val navController: NavController
+        get() = findNavController(R.id.mainNavHostFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+        setSupportActionBar(binding.toolbar)
+
+        NavigationUI.setupActionBarWithNavController(
+            this,
+            navController,
+            AppBarConfiguration(navController.graph)
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -25,6 +38,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.mainNavHostFragment).navigateUp()
+        return navController.navigateUp()
     }
 }

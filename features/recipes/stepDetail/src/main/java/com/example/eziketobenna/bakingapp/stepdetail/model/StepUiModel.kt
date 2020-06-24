@@ -9,5 +9,6 @@ data class StepUiModel(
     val showNext: Boolean,
     val showVideo: Boolean
 ) {
-    val progressText: String = "$stepIndex/$totalSteps"
+    val progressText: String
+        get() = "$stepIndex/$totalSteps"
 }

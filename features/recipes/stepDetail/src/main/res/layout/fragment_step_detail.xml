@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/twelve_dp"
                 android:layout_weight="1"
                 android:lineSpacingMultiplier="1.5"
-                android:paddingHorizontal="@dimen/four_dp"
+                android:paddingHorizontal="@dimen/eight_dp"
                 android:textColor="@android:color/black"
                 android:textIsSelectable="true"
                 android:textSize="18sp"

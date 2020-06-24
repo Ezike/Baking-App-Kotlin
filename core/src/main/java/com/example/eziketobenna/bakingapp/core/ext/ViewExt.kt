@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
@@ -30,3 +31,10 @@ fun Fragment.onBackPress(onBackPressed: OnBackPressedCallback.() -> Unit) {
         onBackPressed = onBackPressed
     )
 }
+
+val Fragment.actionBar: androidx.appcompat.app.ActionBar?
+    get() = (requireActivity() as AppCompatActivity).supportActionBar
+
+var androidx.appcompat.app.ActionBar.visible: Boolean
+    set(value) = if (value) this.show() else this.hide()
+    get() = this.isShowing

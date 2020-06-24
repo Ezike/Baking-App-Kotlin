@@ -4,4 +4,5 @@
     <string name="next">NEXT</string>
     <string name="no_video">Placeholdder</string>
     <string name="step_description">Step description:</string>
+    <string name="finish">FINISH</string>
 </resources>
