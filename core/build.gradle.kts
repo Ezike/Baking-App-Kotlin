@@ -50,6 +50,7 @@ dependencies {
     implementation(Coroutines.core)
     implementation(View.coil)
     implementation(View.fragment)
+    implementation(View.appCompat)
 
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 }

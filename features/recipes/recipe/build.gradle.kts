@@ -58,7 +58,7 @@ dependencies {
     implementation(View.shimmerLayout)
     implementation(View.swipeRefreshLayout)
 
-    implementAll(FlowBinding.components)
+    implementation(FlowBinding.swipeRefresh)
     implementation(DI.daggerHiltAndroid)
 
     implementation(Kotlin.stdlib)

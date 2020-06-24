@@ -29,7 +29,7 @@ object Dependencies {
     object AndroidX : Libraries {
         object Version {
             const val coreKtx: String = "1.3.0"
-            const val navigation: String = "2.3.0-rc01"
+            const val navigation: String = "2.3.0"
             const val multidex: String = "2.0.1"
             const val lifeCycle: String = "2.3.0-alpha03"
             const val activity: String = "1.2.0-alpha05"
@@ -95,18 +95,14 @@ object Dependencies {
         )
     }
 
-    object FlowBinding : Libraries {
+    object FlowBinding {
         private const val flowBindingVersion: String = "0.12.0"
-        const val appcompat: String =
-            "io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion"
-        const val core =
-            "io.github.reactivecircus.flowbinding:flowbinding-core:$flowBindingVersion"
+        const val android: String =
+            "io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion"
         const val swipeRefresh: String =
             "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
         const val lifecycle: String =
             "io.github.reactivecircus.flowbinding:flowbinding-lifecycle:$flowBindingVersion"
-        override val components: List<String>
-            get() = listOf(appcompat, core, swipeRefresh)
     }
 
     object Kotlin {

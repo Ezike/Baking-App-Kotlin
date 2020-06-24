@@ -53,6 +53,7 @@ dependencies {
     implementation(project(domain))
 
     implementation(FlowBinding.lifecycle)
+    implementation(FlowBinding.android)
 
     implementAll(View.components)
     implementation(DI.daggerHiltAndroid)
