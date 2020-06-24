@@ -8,8 +8,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/navigation_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,9 +45,8 @@
                 android:id="@+id/step_detail"
                 style="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/twelve_dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/twelve_dp"
                 android:lineSpacingMultiplier="1.5"
                 android:paddingHorizontal="@dimen/eight_dp"
                 android:textColor="@android:color/black"
@@ -55,6 +55,7 @@
                 app:layout_constraintEnd_toEndOf="@id/header"
                 app:layout_constraintStart_toStartOf="@id/header"
                 app:layout_constraintTop_toBottomOf="@id/header"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Some text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

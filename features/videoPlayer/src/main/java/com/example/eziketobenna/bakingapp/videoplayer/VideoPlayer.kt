@@ -14,6 +14,7 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attributeSet: Attr
     FrameLayout(context, attributeSet) {
 
     private var binding: VideoPlayerBinding
+    private lateinit var videoComponent: VideoPlayerComponent
 
     init {
         isSaveEnabled = true
@@ -24,8 +25,20 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attributeSet: Attr
     }
 
     fun init(owner: LifecycleOwner, playerState: VideoPlayerState) {
-        VideoPlayerComponent(context, binding.playerView, playerState).let {
-            owner.lifecycle.addObserver(it)
+        initVideoComponent(playerState)
+        if (playerState.videoUrl.isNullOrEmpty()) {
+            binding.playerView.onPause()
+            videoComponent.disposePlayer()
+            owner.lifecycle.removeObserver(videoComponent)
+        } else {
+            owner.lifecycle.removeObserver(videoComponent)
+            owner.lifecycle.addObserver(videoComponent)
+        }
+    }
+
+    private fun initVideoComponent(playerState: VideoPlayerState) {
+        if (!this::videoComponent.isInitialized) {
+            videoComponent = VideoPlayerComponent(context, binding.playerView, playerState)
         }
     }
 

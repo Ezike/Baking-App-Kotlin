@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.example.eziketobenna.bakingapp.core.ext.logD
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -39,7 +38,7 @@ internal class VideoPlayerComponent(
         setPlayerParams(playerState)
     }
 
-    internal fun setPlayerParams(state: VideoPlayerState) {
+    private fun setPlayerParams(state: VideoPlayerState) {
         state.videoUrl?.let {
             val uri: Uri = Uri.parse(it)
             val mediaSource: MediaSource = buildMediaSource(uri)
@@ -54,6 +53,10 @@ internal class VideoPlayerComponent(
 
     private fun releasePlayer() {
         updateStartPosition()
+        disposePlayer()
+    }
+
+    internal fun disposePlayer() {
         player?.release()
         player = null
     }
@@ -77,7 +80,6 @@ internal class VideoPlayerComponent(
         if (Util.SDK_INT > 23) {
             initPlayer()
             playerView.onResume()
-            logD("on start")
         }
     }
 
@@ -86,7 +88,6 @@ internal class VideoPlayerComponent(
         if (Util.SDK_INT <= 23) {
             initPlayer()
             playerView.onResume()
-            logD("on resume")
         }
     }
 
@@ -95,7 +96,6 @@ internal class VideoPlayerComponent(
         if (Util.SDK_INT <= 23) {
             playerView.onPause()
             releasePlayer()
-            logD("on pause")
         }
     }
 
@@ -104,7 +104,6 @@ internal class VideoPlayerComponent(
         if (Util.SDK_INT > 23) {
             playerView.onPause()
             releasePlayer()
-            logD("on stop")
         }
     }
 }

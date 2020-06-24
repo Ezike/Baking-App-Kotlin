@@ -95,18 +95,14 @@ object Dependencies {
         )
     }
 
-    object FlowBinding : Libraries {
+    object FlowBinding {
         private const val flowBindingVersion: String = "0.12.0"
-        const val appcompat: String =
-            "io.github.reactivecircus.flowbinding:flowbinding-appcompat:$flowBindingVersion"
-        const val core =
-            "io.github.reactivecircus.flowbinding:flowbinding-core:$flowBindingVersion"
+        const val android: String =
+            "io.github.reactivecircus.flowbinding:flowbinding-android:$flowBindingVersion"
         const val swipeRefresh: String =
             "io.github.reactivecircus.flowbinding:flowbinding-swiperefreshlayout:$flowBindingVersion"
         const val lifecycle: String =
             "io.github.reactivecircus.flowbinding:flowbinding-lifecycle:$flowBindingVersion"
-        override val components: List<String>
-            get() = listOf(appcompat, core, swipeRefresh)
     }
 
     object Kotlin {

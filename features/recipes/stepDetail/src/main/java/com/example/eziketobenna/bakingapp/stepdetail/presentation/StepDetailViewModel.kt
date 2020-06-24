@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import javax.inject.Inject
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.launchIn
@@ -22,8 +24,9 @@ class StepDetailViewModel @Inject constructor(
     private val stepDetailViewState: MutableStateFlow<StepDetailViewState> =
         MutableStateFlow(StepDetailViewState.Idle)
 
-    private val actionsFlow: MutableStateFlow<StepDetailViewAction> =
-        MutableStateFlow(StepDetailViewAction.Idle)
+    private val actionsChannel =
+        ConflatedBroadcastChannel<StepDetailViewAction>(StepDetailViewAction.Idle)
+    private val actionsFlow: Flow<StepDetailViewAction> = actionsChannel.asFlow()
 
     override val viewState: StateFlow<StepDetailViewState>
         get() = stepDetailViewState
@@ -33,8 +36,8 @@ class StepDetailViewModel @Inject constructor(
     }
 
     override fun processIntent(intents: Flow<StepDetailViewIntent>) {
-        intents.onEach {
-            actionsFlow.value = stepDetailIntentProcessor.intentToAction(it)
+        intents.onEach { intent ->
+            actionsChannel.offer(stepDetailIntentProcessor.intentToAction(intent))
         }.launchIn(viewModelScope)
     }
 

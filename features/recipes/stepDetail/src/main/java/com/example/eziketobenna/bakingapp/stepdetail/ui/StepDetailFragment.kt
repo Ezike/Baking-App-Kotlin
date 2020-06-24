@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
-import com.example.eziketobenna.bakingapp.core.ext.notEmpty
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.ext.onBackPress
 import com.example.eziketobenna.bakingapp.core.ext.visible
@@ -23,6 +22,8 @@ import com.example.eziketobenna.bakingapp.stepdetail.R
 import com.example.eziketobenna.bakingapp.stepdetail.databinding.FragmentStepDetailBinding
 import com.example.eziketobenna.bakingapp.stepdetail.di.inject
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToNextStepViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToPreviousStepViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.LoadInitialViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewModel
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState
@@ -32,6 +33,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import reactivecircus.flowbinding.android.view.clicks
 import reactivecircus.flowbinding.lifecycle.events
 
 class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
@@ -91,23 +93,24 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
             StepDetailViewState.Idle -> {
             }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
+            is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
+                findNavController().navigateUp()
+            }
         }
     }
 
     private fun renderLoadedState(state: StepDetailViewState.Loaded) {
-        binding.stepDetail.text = state.uiModel.stepDescription
-        binding.stepId.text = state.uiModel.progressText
-        binding.previousButton.isInvisible = !state.uiModel.showPrev
+        binding.stepDetail.text = state.stepDescription
+        binding.stepId.text = state.progressText
+        binding.previousButton.isInvisible = !state.showPrev
         binding.nextButton.text = getNextButtonText(state)
-        binding.videoPlayer.isVisible = state.uiModel.showVideo
-        state.uiModel.videoUrl.notEmpty { url ->
-            playerState.videoUrl = url
-            binding.videoPlayer.init(this, playerState)
-        }
+        binding.videoPlayer.isVisible = state.showVideo
+        playerState.videoUrl = state.videoUrl
+        binding.videoPlayer.init(this, playerState)
     }
 
     private fun getNextButtonText(state: StepDetailViewState.Loaded): String =
-        if (state.uiModel.showNext) getString(R.string.next) else getString(R.string.finish)
+        if (state.showNext) getString(R.string.next) else getString(R.string.finish)
 
     private val loadStepInfoIntent: Flow<LoadInitialViewIntent>
         get() = lifecycle.events().filter {
@@ -116,8 +119,18 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
             LoadInitialViewIntent(args.stepInfo)
         }
 
+    private val gotoNextStepIntent: Flow<GoToNextStepViewIntent>
+        get() = binding.nextButton.clicks().map {
+            GoToNextStepViewIntent(args.stepInfo.steps)
+        }
+
+    private val gotoPreviousStepIntent: Flow<GoToPreviousStepViewIntent>
+        get() = binding.previousButton.clicks().map {
+            GoToPreviousStepViewIntent(args.stepInfo.steps)
+        }
+
     override val intents: Flow<StepDetailViewIntent>
-        get() = merge(loadStepInfoIntent)
+        get() = merge(loadStepInfoIntent, gotoNextStepIntent, gotoPreviousStepIntent)
 
     companion object {
         const val PLAYER_STATE_KEY: String = "p"
