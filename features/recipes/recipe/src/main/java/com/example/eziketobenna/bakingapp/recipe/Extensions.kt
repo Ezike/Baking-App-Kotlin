@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.recipe
 
+import com.example.eziketobenna.bakingapp.core.ext.safeOffer
 import com.example.eziketobenna.bakingapp.views.SimpleEmptyStateView
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.debounce
 val SimpleEmptyStateView.clicks: Flow<Unit>
     get() = callbackFlow {
         val listener: () -> Unit = {
-            offer(Unit)
+            safeOffer(Unit)
             Unit
         }
         buttonClickListener = listener

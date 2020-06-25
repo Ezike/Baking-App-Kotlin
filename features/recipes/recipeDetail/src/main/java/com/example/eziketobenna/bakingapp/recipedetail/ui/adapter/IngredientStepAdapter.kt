@@ -22,6 +22,9 @@ class IngredientStepAdapter @Inject constructor() :
 
     var stepClickListener: StepClickListener? = null
 
+    val isEmpty: Boolean
+        get() = itemCount == 0
+
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is IngredientDetailItem -> R.layout.ingredient_list_content

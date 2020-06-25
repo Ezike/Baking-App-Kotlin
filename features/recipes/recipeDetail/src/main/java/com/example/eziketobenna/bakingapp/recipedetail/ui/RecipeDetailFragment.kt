@@ -84,7 +84,12 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
 
     private val loadRecipeDetailIntent: Flow<LoadRecipeDetailIntent>
         get() = lifecycle.events().filter {
-            it == Lifecycle.Event.ON_CREATE
+            /**
+             * filtering by [Lifecycle.Event.ON_CREATE] didn't workout cos
+             * this intent gets emitted always during onBackPress or config change,
+             * and resets the [RecyclerView] scroll state
+             */
+            ingredientStepAdapter.isEmpty
         }.map {
             LoadRecipeDetailIntent(args.recipe)
         }

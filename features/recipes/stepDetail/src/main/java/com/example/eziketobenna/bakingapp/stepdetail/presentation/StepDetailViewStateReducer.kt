@@ -8,6 +8,7 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailView
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.LoadedInitialResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.FinishEvent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Idle
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Loaded
 import javax.inject.Inject
 
@@ -21,23 +22,17 @@ class StepDetailViewStateReducer @Inject constructor() :
     ): StepDetailViewState {
 
         return when (result) {
-            StepDetailViewResult.IdleResult -> StepDetailViewState.Idle
+            StepDetailViewResult.IdleResult -> Idle
             is LoadedInitialResult -> loadInitialViewState(result)
             is GoToNextStepViewResult -> loadNextStepViewState(previous, result)
             is GoToPreviousStepViewResult -> loadPreviousStepViewState(previous, result)
         }
     }
 
-    private fun loadPreviousStepViewState(
-        oldState: StepDetailViewState,
+    private fun makePreviousViewState(
+        oldState: Loaded,
         result: GoToPreviousStepViewResult
-    ): StepDetailViewState {
-        if (oldState is StepDetailViewState.Idle) {
-            return oldState
-        }
-
-        oldState as Loaded
-
+    ): Loaded {
         return if (oldState.stepIndex > 0) {
             val currentPosition: Int = oldState.currentPosition - 1
             val newState: Step = result.steps[oldState.stepIndex - 1]
@@ -54,16 +49,10 @@ class StepDetailViewStateReducer @Inject constructor() :
         } else oldState
     }
 
-    private fun loadNextStepViewState(
-        oldState: StepDetailViewState,
+    private fun makeNextViewState(
+        oldState: Loaded,
         result: GoToNextStepViewResult
     ): StepDetailViewState {
-        if (oldState is StepDetailViewState.Idle) {
-            return oldState
-        }
-
-        oldState as Loaded
-
         return if (oldState.stepIndex < result.steps.lastIndex) {
             val currentPosition: Int = oldState.currentPosition + 1
             val newState: Step = result.steps[oldState.stepIndex + 1]
@@ -78,6 +67,27 @@ class StepDetailViewStateReducer @Inject constructor() :
                 stepIndex = result.steps.indexOf(newState)
             )
         } else FinishEvent(ViewEvent(Unit))
+    }
+
+    private fun loadPreviousStepViewState(
+        oldState: StepDetailViewState,
+        result: GoToPreviousStepViewResult
+    ): StepDetailViewState {
+        return when (oldState) {
+            Idle, is FinishEvent -> oldState
+            is Loaded -> makePreviousViewState(oldState, result)
+        }
+    }
+
+    private fun loadNextStepViewState(
+        oldState: StepDetailViewState,
+        result: GoToNextStepViewResult
+    ): StepDetailViewState {
+
+        return when (oldState) {
+            Idle, is FinishEvent -> oldState
+            is Loaded -> makeNextViewState(oldState, result)
+        }
     }
 
     private fun loadInitialViewState(result: LoadedInitialResult): Loaded {

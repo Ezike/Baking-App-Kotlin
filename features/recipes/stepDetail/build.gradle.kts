@@ -52,7 +52,6 @@ dependencies {
     implementation(project(recipeModel))
     implementation(project(domain))
 
-    implementation(FlowBinding.lifecycle)
     implementation(FlowBinding.android)
 
     implementAll(View.components)
