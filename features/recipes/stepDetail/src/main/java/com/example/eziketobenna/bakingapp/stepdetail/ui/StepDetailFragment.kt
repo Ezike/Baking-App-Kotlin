@@ -103,14 +103,14 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
         binding.stepDetail.text = state.stepDescription
         binding.stepId.text = state.progressText
         binding.previousButton.isInvisible = !state.showPrev
-        binding.nextButton.text = getNextButtonText(state)
+        binding.nextButton.text = getNextButtonText(state.showNext)
         binding.videoPlayer.isVisible = state.showVideo
         playerState.videoUrl = state.videoUrl
         binding.videoPlayer.init(this, playerState)
     }
 
-    private fun getNextButtonText(state: StepDetailViewState.Loaded): String =
-        if (state.showNext) getString(R.string.next) else getString(R.string.finish)
+    private fun getNextButtonText(state: Boolean): String =
+        if (state) getString(R.string.next) else getString(R.string.finish)
 
     private val loadStepInfoIntent: Flow<LoadInitialViewIntent>
         get() = lifecycle.events().filter {

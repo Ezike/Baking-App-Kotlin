@@ -4,24 +4,24 @@ import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToNextStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToPreviousStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.LoadedInitialResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToNextStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.LoadedInitialResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.FinishEvent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Loaded
 import javax.inject.Inject
 
 @FeatureScope
 class StepDetailViewStateReducer @Inject constructor() :
-    ViewStateReducer<StepDetailViewState, StepDetailResult> {
+    ViewStateReducer<StepDetailViewState, StepDetailViewResult> {
 
     override fun reduce(
         previous: StepDetailViewState,
-        result: StepDetailResult
+        result: StepDetailViewResult
     ): StepDetailViewState {
 
         return when (result) {
-            StepDetailResult.IdleResult -> StepDetailViewState.Idle
+            StepDetailViewResult.IdleResult -> StepDetailViewState.Idle
             is LoadedInitialResult -> loadInitialViewState(result)
             is GoToNextStepViewResult -> loadNextStepViewState(previous, result)
             is GoToPreviousStepViewResult -> loadPreviousStepViewState(previous, result)

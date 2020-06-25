@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.stepdetail.di
+package com.example.eziketobenna.bakingapp.stepdetail.di.module
 
 import androidx.lifecycle.ViewModel
 import com.example.eziketobenna.bakingapp.core.di.mapkeys.ViewModelKey

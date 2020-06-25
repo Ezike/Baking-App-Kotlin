@@ -1,22 +1,24 @@
 package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
+import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToNextStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToPreviousStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.LoadedInitialResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToNextStepViewAction
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToPreviousStepViewAction
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.LoadInitialViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToNextStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.LoadedInitialResult
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+@FeatureScope
 class StepDetailActionProcessor @Inject constructor() :
-    ActionProcessor<StepDetailViewAction, StepDetailResult> {
+    ActionProcessor<StepDetailViewAction, StepDetailViewResult> {
 
-    override fun actionToResult(viewAction: StepDetailViewAction): Flow<StepDetailResult> {
+    override fun actionToResult(viewAction: StepDetailViewAction): Flow<StepDetailViewResult> {
         return when (viewAction) {
-            StepDetailViewAction.Idle -> flowOf(StepDetailResult.IdleResult)
+            StepDetailViewAction.Idle -> flowOf(StepDetailViewResult.IdleResult)
             is LoadInitialViewAction -> loadedInitialResult(viewAction)
             is GoToNextStepViewAction -> flowOf(GoToNextStepViewResult(viewAction.steps))
             is GoToPreviousStepViewAction -> flowOf(GoToPreviousStepViewResult(viewAction.steps))

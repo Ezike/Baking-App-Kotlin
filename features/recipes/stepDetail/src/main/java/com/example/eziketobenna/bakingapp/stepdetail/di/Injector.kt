@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.stepdetail.di
 
+import com.example.eziketobenna.bakingapp.stepdetail.di.component.DaggerStepDetailComponent
 import com.example.eziketobenna.bakingapp.stepdetail.ui.StepDetailFragment
 
 fun inject(fragment: StepDetailFragment) {
