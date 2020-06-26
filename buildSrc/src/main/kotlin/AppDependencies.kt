@@ -111,7 +111,7 @@ object Dependencies {
 
     object Network : Libraries {
         object Version {
-            const val okhttp: String = "4.3.1"
+            const val okhttp: String = "4.7.2"
             const val retrofit: String = "2.9.0"
             const val moshi: String = "1.9.2"
         }
@@ -136,7 +136,6 @@ object Dependencies {
 
     object DI {
         object Version {
-            const val daggerHilt: String = "1.0.0-alpha01"
             const val javaxInject: String = "1"
             const val daggerHiltAndroid: String = "2.28-alpha"
         }
@@ -144,14 +143,11 @@ object Dependencies {
         object AnnotationProcessor {
             const val daggerHiltAndroid: String =
                 "com.google.dagger:hilt-android-compiler:${Version.daggerHiltAndroid}"
-            const val daggerHilt: String = "androidx.hilt:hilt-compiler:${Version.daggerHilt}"
         }
 
         const val javaxInject: String = "javax.inject:javax.inject:${Version.javaxInject}"
         const val daggerHiltAndroid: String =
             "com.google.dagger:hilt-android:${Version.daggerHiltAndroid}"
-        const val daggerHiltViewModel: String =
-            "androidx.hilt:hilt-lifecycle-viewmodel:${Version.daggerHilt}"
     }
 
     object Coroutines : Libraries {
@@ -167,7 +163,7 @@ object Dependencies {
         override val components: List<String> = listOf(core, android)
     }
 
-    object Test : Libraries {
+    object Test {
         object Version {
             const val mockk: String = "1.9.3"
             const val junit: String = "4.13"
@@ -176,6 +172,9 @@ object Dependencies {
             const val testExt: String = "1.1.1"
             const val espresso: String = "3.2.0"
             const val fragment: String = "1.1.0-rc04"
+            const val truth: String = "1.0.1"
+            const val mockWebServer: String = "4.7.2"
+            const val coroutineTest: String = "1.2.1"
         }
 
         const val mockk: String = "io.mockk:mockk:${Version.mockk}"
@@ -186,12 +185,11 @@ object Dependencies {
         const val testExt: String = "androidx.test.ext:junit:${Version.testExt}"
         const val espresso: String = "androidx.test.espresso:espresso-core:${Version.espresso}"
         const val rules: String = "androidx.test:rules:${Version.rules}"
-
-        override val components: List<String>
-            get() = listOf(
-                mockk, mockkAndroid, junit, runner, fragmentTesting, testExt,
-                espresso, rules
-            )
+        const val truth: String = "com.google.truth:truth:${Version.truth}"
+        const val mockWebServer: String =
+            "com.squareup.okhttp3:mockwebserver:${Version.mockWebServer}"
+        const val coroutinesTest: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutineTest}"
     }
 }
 
