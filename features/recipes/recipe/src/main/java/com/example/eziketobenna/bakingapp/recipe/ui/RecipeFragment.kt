@@ -82,69 +82,69 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
 
     override fun render(state: RecipeViewState) {
         when {
-            state.isDataUnavailable -> renderEmptyState(state)
-            state.isDataAvailableError -> renderDataAvailableErrorState(state)
-            state.isNoDataError -> renderNoDataErrorState(state)
-            state.isLoading -> renderLoadingState()
-            state.isRefreshing -> renderRefreshState()
-            else -> renderSuccessState(state)
+            state.isDataUnavailable -> binding.renderEmptyState(state)
+            state.isDataAvailableError -> binding.renderDataAvailableErrorState(state)
+            state.isNoDataError -> binding.renderNoDataErrorState(state)
+            state.isLoading -> binding.renderLoadingState()
+            state.isRefreshing -> binding.renderRefreshState()
+            else -> binding.renderSuccessState(state)
         }
     }
 
-    private fun renderEmptyState(state: RecipeViewState) {
+    private fun FragmentRecipeBinding.renderEmptyState(state: RecipeViewState) {
         stopShimmer()
-        binding.swipeRefresh.isRefreshing = false
-        binding.swipeRefresh.isEnabled = true
-        binding.emptyState.setImage(getDrawable(R.drawable.ic_empty))
-        binding.emptyState.isVisible = state.recipes.isEmpty()
-        binding.emptyState.setTitle(getString(R.string.no_data))
+        swipeRefresh.isRefreshing = false
+        swipeRefresh.isEnabled = true
+        emptyState.setImage(getDrawable(R.drawable.ic_empty))
+        emptyState.isVisible = state.recipes.isEmpty()
+        emptyState.setTitle(getString(R.string.no_data))
     }
 
-    private fun renderRefreshState() {
+    private fun FragmentRecipeBinding.renderRefreshState() {
         toggleSwipeRefresh(true)
-        binding.emptyState.isVisible = false
+        emptyState.isVisible = false
         stopShimmer()
     }
 
-    private fun renderLoadingState() {
+    private fun FragmentRecipeBinding.renderLoadingState() {
         startShimmer()
         toggleSwipeRefresh(false)
-        binding.emptyState.isVisible = false
+        emptyState.isVisible = false
     }
 
-    private fun renderDataAvailableErrorState(state: RecipeViewState) {
+    private fun FragmentRecipeBinding.renderDataAvailableErrorState(state: RecipeViewState) {
         stopShimmer()
         recipeAdapter.submitList(state.recipes)
-        binding.swipeRefresh.isRefreshing = false
-        binding.swipeRefresh.isEnabled = true
-        binding.emptyState.isVisible = false
+        swipeRefresh.isRefreshing = false
+        swipeRefresh.isEnabled = true
+        emptyState.isVisible = false
         state.errorEvent?.consume { error ->
-            Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(root, error, Snackbar.LENGTH_SHORT).show()
         }
     }
 
-    private fun renderNoDataErrorState(state: RecipeViewState) {
+    private fun FragmentRecipeBinding.renderNoDataErrorState(state: RecipeViewState) {
         stopShimmer()
-        binding.swipeRefresh.isRefreshing = false
-        binding.swipeRefresh.isEnabled = true
-        binding.emptyState.isVisible = true
-        binding.emptyState.setImage(getDrawable(R.drawable.ic_error_page_2))
-        binding.emptyState.setCaption(state.error)
-        binding.emptyState.setTitle(getString(R.string.an_error_occurred))
+        swipeRefresh.isRefreshing = false
+        swipeRefresh.isEnabled = true
+        emptyState.isVisible = true
+        emptyState.setImage(getDrawable(R.drawable.ic_error_page_2))
+        emptyState.setCaption(state.error)
+        emptyState.setTitle(getString(R.string.an_error_occurred))
     }
 
-    private fun renderSuccessState(state: RecipeViewState) {
+    private fun FragmentRecipeBinding.renderSuccessState(state: RecipeViewState) {
         recipeAdapter.submitList(state.recipes)
         stopShimmer()
-        binding.swipeRefresh.isRefreshing = false
-        binding.swipeRefresh.isEnabled = true
-        binding.emptyState.isVisible = false
+        swipeRefresh.isRefreshing = false
+        swipeRefresh.isEnabled = true
+        emptyState.isVisible = false
     }
 
-    private fun toggleSwipeRefresh(boolean: Boolean) {
-        binding.swipeRefresh.isRefreshing = boolean
-        binding.swipeRefresh.isEnabled = boolean
-        binding.emptyState.isVisible = false
+    private fun FragmentRecipeBinding.toggleSwipeRefresh(boolean: Boolean) {
+        swipeRefresh.isRefreshing = boolean
+        swipeRefresh.isEnabled = boolean
+        emptyState.isVisible = false
     }
 
     private fun startShimmer() {

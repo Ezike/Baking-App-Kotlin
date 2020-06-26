@@ -4,40 +4,35 @@ import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToNextStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.GoToPreviousStepViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailResult.LoadedInitialResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToNextStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.LoadedInitialResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.FinishEvent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Idle
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Loaded
 import javax.inject.Inject
 
 @FeatureScope
 class StepDetailViewStateReducer @Inject constructor() :
-    ViewStateReducer<StepDetailViewState, StepDetailResult> {
+    ViewStateReducer<StepDetailViewState, StepDetailViewResult> {
 
     override fun reduce(
         previous: StepDetailViewState,
-        result: StepDetailResult
+        result: StepDetailViewResult
     ): StepDetailViewState {
 
         return when (result) {
-            StepDetailResult.IdleResult -> StepDetailViewState.Idle
+            StepDetailViewResult.IdleResult -> Idle
             is LoadedInitialResult -> loadInitialViewState(result)
             is GoToNextStepViewResult -> loadNextStepViewState(previous, result)
             is GoToPreviousStepViewResult -> loadPreviousStepViewState(previous, result)
         }
     }
 
-    private fun loadPreviousStepViewState(
-        oldState: StepDetailViewState,
+    private fun makePreviousViewState(
+        oldState: Loaded,
         result: GoToPreviousStepViewResult
-    ): StepDetailViewState {
-        if (oldState is StepDetailViewState.Idle) {
-            return oldState
-        }
-
-        oldState as Loaded
-
+    ): Loaded {
         return if (oldState.stepIndex > 0) {
             val currentPosition: Int = oldState.currentPosition - 1
             val newState: Step = result.steps[oldState.stepIndex - 1]
@@ -54,16 +49,10 @@ class StepDetailViewStateReducer @Inject constructor() :
         } else oldState
     }
 
-    private fun loadNextStepViewState(
-        oldState: StepDetailViewState,
+    private fun makeNextViewState(
+        oldState: Loaded,
         result: GoToNextStepViewResult
     ): StepDetailViewState {
-        if (oldState is StepDetailViewState.Idle) {
-            return oldState
-        }
-
-        oldState as Loaded
-
         return if (oldState.stepIndex < result.steps.lastIndex) {
             val currentPosition: Int = oldState.currentPosition + 1
             val newState: Step = result.steps[oldState.stepIndex + 1]
@@ -78,6 +67,27 @@ class StepDetailViewStateReducer @Inject constructor() :
                 stepIndex = result.steps.indexOf(newState)
             )
         } else FinishEvent(ViewEvent(Unit))
+    }
+
+    private fun loadPreviousStepViewState(
+        oldState: StepDetailViewState,
+        result: GoToPreviousStepViewResult
+    ): StepDetailViewState {
+        return when (oldState) {
+            Idle, is FinishEvent -> oldState
+            is Loaded -> makePreviousViewState(oldState, result)
+        }
+    }
+
+    private fun loadNextStepViewState(
+        oldState: StepDetailViewState,
+        result: GoToNextStepViewResult
+    ): StepDetailViewState {
+
+        return when (oldState) {
+            Idle, is FinishEvent -> oldState
+            is Loaded -> makeNextViewState(oldState, result)
+        }
     }
 
     private fun loadInitialViewState(result: LoadedInitialResult): Loaded {

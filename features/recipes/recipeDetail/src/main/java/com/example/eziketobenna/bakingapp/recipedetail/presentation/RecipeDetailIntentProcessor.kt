@@ -1,22 +1,24 @@
 package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
+import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailMapper
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.LoadRecipeDetailAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.OpenStepInfoViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.LoadRecipeDetailIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.LoadRecipeDetailIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.OpenStepInfoViewIntent
 import javax.inject.Inject
 
+@FeatureScope
 class RecipeDetailIntentProcessor @Inject constructor(
     private val stepModelMapper: StepModelMapper,
     private val ingredientModelMapper: IngredientModelMapper,
     private val stepDetailMapper: StepDetailMapper
-) : IntentProcessor<RecipeDetailIntent, RecipeDetailAction> {
+) : IntentProcessor<RecipeDetailViewIntent, RecipeDetailViewAction> {
 
-    override fun intentToAction(intent: RecipeDetailIntent): RecipeDetailAction {
+    override fun intentToAction(intent: RecipeDetailViewIntent): RecipeDetailViewAction {
         return when (intent) {
             is LoadRecipeDetailIntent -> loadRecipeDetailAction(intent)
             is OpenStepInfoViewIntent -> openStepInfoViewAction(intent)

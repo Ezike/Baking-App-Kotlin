@@ -8,7 +8,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -29,12 +28,12 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailView
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState
 import com.example.eziketobenna.bakingapp.videoplayer.VideoPlayerState
 import javax.inject.Inject
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.android.view.clicks
-import reactivecircus.flowbinding.lifecycle.events
 
 class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
     MVIView<StepDetailViewIntent, StepDetailViewState> {
@@ -57,6 +56,15 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        /**
+         * Making sure this doesn't emit again on config change.
+         * Replaced old impl for emitting [LoadInitialViewIntent] that used
+         * FlowBinding for lifecycle, cos twas emitting each time the fragment got created,
+         * and resets the view state to the initial clicked step
+         */
+        if (savedInstanceState == null) {
+            loadStepInfoIntent.offer(LoadInitialViewIntent(args.stepInfo))
+        }
         viewModel.processIntent(intents)
     }
 
@@ -103,21 +111,16 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
         binding.stepDetail.text = state.stepDescription
         binding.stepId.text = state.progressText
         binding.previousButton.isInvisible = !state.showPrev
-        binding.nextButton.text = getNextButtonText(state)
+        binding.nextButton.text = getNextButtonText(state.showNext)
         binding.videoPlayer.isVisible = state.showVideo
         playerState.videoUrl = state.videoUrl
         binding.videoPlayer.init(this, playerState)
     }
 
-    private fun getNextButtonText(state: StepDetailViewState.Loaded): String =
-        if (state.showNext) getString(R.string.next) else getString(R.string.finish)
+    private fun getNextButtonText(state: Boolean): String =
+        if (state) getString(R.string.next) else getString(R.string.finish)
 
-    private val loadStepInfoIntent: Flow<LoadInitialViewIntent>
-        get() = lifecycle.events().filter {
-            it == Lifecycle.Event.ON_CREATE
-        }.map {
-            LoadInitialViewIntent(args.stepInfo)
-        }
+    private val loadStepInfoIntent = ConflatedBroadcastChannel<LoadInitialViewIntent>()
 
     private val gotoNextStepIntent: Flow<GoToNextStepViewIntent>
         get() = binding.nextButton.clicks().map {
@@ -130,7 +133,7 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
         }
 
     override val intents: Flow<StepDetailViewIntent>
-        get() = merge(loadStepInfoIntent, gotoNextStepIntent, gotoPreviousStepIntent)
+        get() = merge(loadStepInfoIntent.asFlow(), gotoNextStepIntent, gotoPreviousStepIntent)
 
     companion object {
         const val PLAYER_STATE_KEY: String = "p"

@@ -16,9 +16,9 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.FragmentRecipeDetailBinding
 import com.example.eziketobenna.bakingapp.recipedetail.di.inject
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.LoadRecipeDetailIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntent.OpenStepInfoViewIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.LoadRecipeDetailIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.OpenStepInfoViewIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewModel
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState.NavigateToStepInfo
@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.lifecycle.events
 
 class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
-    MVIView<RecipeDetailIntent, RecipeDetailViewState> {
+    MVIView<RecipeDetailViewIntent, RecipeDetailViewState> {
 
     private val args by navArgs<RecipeDetailFragmentArgs>()
 
@@ -84,7 +84,12 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
 
     private val loadRecipeDetailIntent: Flow<LoadRecipeDetailIntent>
         get() = lifecycle.events().filter {
-            it == Lifecycle.Event.ON_CREATE
+            /**
+             * filtering by [Lifecycle.Event.ON_CREATE] didn't workout cos
+             * this intent gets emitted always during onBackPress or config change,
+             * and resets the [RecyclerView] scroll state
+             */
+            ingredientStepAdapter.isEmpty
         }.map {
             LoadRecipeDetailIntent(args.recipe)
         }
@@ -95,6 +100,6 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
                 OpenStepInfoViewIntent(stepDetailItem, args.recipe.steps)
             }
 
-    override val intents: Flow<RecipeDetailIntent>
+    override val intents: Flow<RecipeDetailViewIntent>
         get() = merge(loadRecipeDetailIntent, openStepInfoIntent)
 }

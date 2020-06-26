@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
+import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToNextStepViewAction
@@ -10,6 +11,7 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailView
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.LoadInitialViewIntent
 import javax.inject.Inject
 
+@FeatureScope
 class StepDetailIntentProcessor @Inject constructor(private val stepModelMapper: StepModelMapper) :
     IntentProcessor<StepDetailViewIntent, StepDetailViewAction> {
 

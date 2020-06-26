@@ -1,19 +1,21 @@
 package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
+import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.LoadRecipeDetailAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailAction.OpenStepInfoViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailResult.OpenStepInfo
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult.OpenStepInfo
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+@FeatureScope
 class RecipeDetailActionProcessor @Inject constructor() :
-    ActionProcessor<RecipeDetailAction, RecipeDetailResult> {
+    ActionProcessor<RecipeDetailViewAction, RecipeDetailViewResult> {
 
-    override fun actionToResult(viewAction: RecipeDetailAction): Flow<RecipeDetailResult> {
+    override fun actionToResult(viewAction: RecipeDetailViewAction): Flow<RecipeDetailViewResult> {
         return when (viewAction) {
-            RecipeDetailAction.Idle -> flowOf(RecipeDetailResult.IdleResult)
+            RecipeDetailViewAction.Idle -> flowOf(RecipeDetailViewResult.IdleResult)
             is LoadRecipeDetailAction -> handleLoadRecipeDetailAction(viewAction)
             is OpenStepInfoViewAction -> openStepInfoResult(viewAction)
         }
@@ -24,9 +26,9 @@ class RecipeDetailActionProcessor @Inject constructor() :
 
     private fun handleLoadRecipeDetailAction(
         viewAction: LoadRecipeDetailAction
-    ): Flow<RecipeDetailResult> {
+    ): Flow<RecipeDetailViewResult> {
         return flowOf(
-            RecipeDetailResult.LoadedData(viewAction.ingredients, viewAction.steps)
+            RecipeDetailViewResult.LoadedData(viewAction.ingredients, viewAction.steps)
         )
     }
 }
