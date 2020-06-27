@@ -1,16 +1,12 @@
 package com.example.eziketobenna.bakingapp.recipe.di.module
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeActionProcessor
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntentProcessor
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewState
+import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeIntentProcessor
+import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeStateReducer
+import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewActionProcessor
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewStateReducer
+import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeActionProcessor
+import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeViewIntentProcessor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.migration.DisableInstallInCheck
@@ -20,11 +16,11 @@ import dagger.hilt.migration.DisableInstallInCheck
 interface PresentationModule {
 
     @get:[Binds FeatureScope]
-    val RecipeActionProcessor.actionProcessor: ActionProcessor<RecipeViewAction, RecipeViewResult>
+    val RecipeActionProcessor.actionProcessor: RecipeViewActionProcessor
 
     @get:[Binds FeatureScope]
-    val RecipeViewIntentProcessor.intentProcessor: IntentProcessor<RecipeViewIntent, RecipeViewAction>
+    val RecipeViewIntentProcessor.intentProcessor: RecipeIntentProcessor
 
     @get:[Binds FeatureScope]
-    val RecipeViewStateReducer.reducer: ViewStateReducer<RecipeViewState, RecipeViewResult>
+    val RecipeViewStateReducer.reducer: RecipeStateReducer
 }

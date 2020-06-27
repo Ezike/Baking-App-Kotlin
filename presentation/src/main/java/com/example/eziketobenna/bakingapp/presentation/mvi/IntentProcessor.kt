@@ -1,5 +1,5 @@
 package com.example.eziketobenna.bakingapp.presentation.mvi
 
-interface IntentProcessor<I : ViewIntent, A : ViewAction> {
+interface IntentProcessor<in I : ViewIntent, out A : ViewAction> {
     fun intentToAction(intent: I): A
 }

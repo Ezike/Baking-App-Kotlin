@@ -1,9 +1,11 @@
-package com.example.eziketobenna.bakingapp.recipedetail.presentation
+package com.example.eziketobenna.bakingapp.recipedetail.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult.OpenStepInfo
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +17,9 @@ class RecipeDetailActionProcessor @Inject constructor() :
 
     override fun actionToResult(viewAction: RecipeDetailViewAction): Flow<RecipeDetailViewResult> {
         return when (viewAction) {
-            RecipeDetailViewAction.Idle -> flowOf(RecipeDetailViewResult.IdleResult)
+            RecipeDetailViewAction.Idle -> flowOf(
+                RecipeDetailViewResult.IdleResult
+            )
             is LoadRecipeDetailAction -> handleLoadRecipeDetailAction(viewAction)
             is OpenStepInfoViewAction -> openStepInfoResult(viewAction)
         }
@@ -28,7 +32,10 @@ class RecipeDetailActionProcessor @Inject constructor() :
         viewAction: LoadRecipeDetailAction
     ): Flow<RecipeDetailViewResult> {
         return flowOf(
-            RecipeDetailViewResult.LoadedData(viewAction.ingredients, viewAction.steps)
+            RecipeDetailViewResult.LoadedData(
+                viewAction.ingredients,
+                viewAction.steps
+            )
         )
     }
 }

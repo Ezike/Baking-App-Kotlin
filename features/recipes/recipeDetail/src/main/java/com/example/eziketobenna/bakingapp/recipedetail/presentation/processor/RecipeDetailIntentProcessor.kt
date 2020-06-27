@@ -1,12 +1,14 @@
-package com.example.eziketobenna.bakingapp.recipedetail.presentation
+package com.example.eziketobenna.bakingapp.recipedetail.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailMapper
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.LoadRecipeDetailIntent
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.OpenStepInfoViewIntent
 import javax.inject.Inject

@@ -1,16 +1,12 @@
 package com.example.eziketobenna.bakingapp.stepdetail.di.module
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailActionProcessor
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailIntentProcessor
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepActionProcessor
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewStateReducer
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepIntentProcessor
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepViewStateReducer
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.processor.StepDetailActionProcessor
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.processor.StepDetailIntentProcessor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.migration.DisableInstallInCheck
@@ -20,11 +16,11 @@ import dagger.hilt.migration.DisableInstallInCheck
 interface PresentationModule {
 
     @get:[Binds FeatureScope]
-    val StepDetailActionProcessor.actionProcessor: ActionProcessor<StepDetailViewAction, StepDetailViewResult>
+    val StepDetailActionProcessor.actionProcessor: StepActionProcessor
 
     @get:[Binds FeatureScope]
-    val StepDetailIntentProcessor.intentProcessor: IntentProcessor<StepDetailViewIntent, StepDetailViewAction>
+    val StepDetailIntentProcessor.intentProcessor: StepIntentProcessor
 
     @get:[Binds FeatureScope]
-    val StepDetailViewStateReducer.reducer: ViewStateReducer<StepDetailViewState, StepDetailViewResult>
+    val StepDetailViewStateReducer.reducer: StepViewStateReducer
 }

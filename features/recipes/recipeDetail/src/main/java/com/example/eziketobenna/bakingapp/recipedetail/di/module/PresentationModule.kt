@@ -1,16 +1,12 @@
 package com.example.eziketobenna.bakingapp.recipedetail.di.module
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailActionProcessor
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailIntentProcessor
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewState
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.DetailActionProcessor
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.DetailIntentProcessor
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.DetailViewStateReducer
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewStateReducer
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.processor.RecipeDetailActionProcessor
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.processor.RecipeDetailIntentProcessor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.migration.DisableInstallInCheck
@@ -20,11 +16,11 @@ import dagger.hilt.migration.DisableInstallInCheck
 interface PresentationModule {
 
     @get:[Binds FeatureScope]
-    val RecipeDetailActionProcessor.actionProcessor: ActionProcessor<RecipeDetailViewAction, RecipeDetailViewResult>
+    val RecipeDetailActionProcessor.actionProcessor: DetailActionProcessor
 
     @get:[Binds FeatureScope]
-    val RecipeDetailIntentProcessor.intentProcessor: IntentProcessor<RecipeDetailViewIntent, RecipeDetailViewAction>
+    val RecipeDetailIntentProcessor.intentProcessor: DetailIntentProcessor
 
     @get:[Binds FeatureScope]
-    val RecipeDetailViewStateReducer.reducer: ViewStateReducer<RecipeDetailViewState, RecipeDetailViewResult>
+    val RecipeDetailViewStateReducer.reducer: DetailViewStateReducer
 }

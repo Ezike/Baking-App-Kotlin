@@ -1,10 +1,12 @@
-package com.example.eziketobenna.bakingapp.stepdetail.presentation
+package com.example.eziketobenna.bakingapp.stepdetail.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToNextStepViewAction
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToPreviousStepViewAction
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.LoadInitialViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToNextStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.LoadedInitialResult

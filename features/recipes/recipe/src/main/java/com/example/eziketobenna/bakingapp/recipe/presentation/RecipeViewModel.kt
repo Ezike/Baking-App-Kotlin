@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
@@ -21,9 +18,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 
 class RecipeViewModel @Inject constructor(
-    private val recipeActionProcessor: ActionProcessor<RecipeViewAction, RecipeViewResult>,
-    private val recipeViewStateReducer: ViewStateReducer<RecipeViewState, RecipeViewResult>,
-    private val recipeViewIntentProcessor: IntentProcessor<RecipeViewIntent, RecipeViewAction>,
+    private val recipeActionProcessor: RecipeViewActionProcessor,
+    private val recipeViewStateReducer: RecipeStateReducer,
+    private val recipeViewIntentProcessor: RecipeIntentProcessor,
     private val navigationDispatcher: NavigationDispatcher
 ) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState> {
 
