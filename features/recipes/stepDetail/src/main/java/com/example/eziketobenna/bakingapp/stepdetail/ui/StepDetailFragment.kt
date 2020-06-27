@@ -9,11 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.ext.observe
-import com.example.eziketobenna.bakingapp.core.ext.onBackPress
 import com.example.eziketobenna.bakingapp.core.ext.visible
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
@@ -78,10 +76,6 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
 
         checkScreenOrientation()
 
-        onBackPress {
-            findNavController().navigateUp()
-        }
-
         savedInstanceState?.getParcelable<VideoPlayerState>(PLAYER_STATE_KEY)?.let { state ->
             playerState = state
         }
@@ -102,7 +96,7 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
             }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
             is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
-                findNavController().navigateUp()
+                viewModel.navigateBack()
             }
         }
     }

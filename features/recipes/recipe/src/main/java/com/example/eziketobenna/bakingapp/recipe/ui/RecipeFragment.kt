@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.eziketobenna.bakingapp.core.ext.getDrawable
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
@@ -43,7 +42,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     private val binding: FragmentRecipeBinding by viewBinding(FragmentRecipeBinding::bind)
 
     override fun invoke(model: RecipeModel) {
-        findNavController().navigate(RecipeFragmentDirections.openRecipeDetail(model))
+        viewModel.openRecipeDetail(model)
     }
 
     override fun onAttach(context: Context) {
