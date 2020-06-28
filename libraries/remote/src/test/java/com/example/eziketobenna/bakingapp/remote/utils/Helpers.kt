@@ -7,7 +7,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.File
 import java.net.URL
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -15,15 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 const val REQUEST_PATH: String = "/baking.json"
 
 private val okHttpClient: OkHttpClient
-    get() {
-        val loggingInterceptor: HttpLoggingInterceptor =
-            HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-    }
+    get() = OkHttpClient.Builder().build()
 
 private val moshi: Moshi
     get() = Moshi.Builder()

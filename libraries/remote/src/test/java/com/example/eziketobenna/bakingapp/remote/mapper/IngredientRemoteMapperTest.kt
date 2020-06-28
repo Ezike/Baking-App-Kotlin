@@ -2,7 +2,7 @@ package com.example.eziketobenna.bakingapp.remote.mapper
 
 import com.example.eziketobenna.bakingapp.data.model.IngredientEntity
 import com.example.eziketobenna.bakingapp.remote.model.IngredientRemoteModel
-import com.example.eziketobenna.bakingapp.remote.utils.ingredientRemoteModel
+import com.example.eziketobenna.bakingapp.remote.utils.DummyData
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -26,8 +26,8 @@ class IngredientRemoteMapperTest {
     }
 
     private fun testData(action: (IngredientEntity, IngredientRemoteModel) -> Unit) {
-        val model: IngredientRemoteModel = ingredientRemoteModel
-        val entity: IngredientEntity = ingredientRemoteMapper.mapFromModel(ingredientRemoteModel)
+        val model: IngredientRemoteModel = DummyData.ingredientRemoteModel
+        val entity: IngredientEntity = ingredientRemoteMapper.mapFromModel(model)
         action(entity, model)
     }
 }

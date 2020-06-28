@@ -2,7 +2,7 @@ package com.example.eziketobenna.bakingapp.remote.mapper
 
 import com.example.eziketobenna.bakingapp.data.model.StepEntity
 import com.example.eziketobenna.bakingapp.remote.model.StepRemoteModel
-import com.example.eziketobenna.bakingapp.remote.utils.stepRemoteModel
+import com.example.eziketobenna.bakingapp.remote.utils.DummyData
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -38,7 +38,7 @@ class StepRemoteMapperTest {
     }
 
     private fun testData(action: (StepEntity, StepRemoteModel) -> Unit) {
-        val model: StepRemoteModel = stepRemoteModel
+        val model: StepRemoteModel = DummyData.stepRemoteModel
         val entity: StepEntity = stepRemoteMapper.mapFromModel(model)
         action(entity, model)
     }
