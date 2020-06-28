@@ -2,7 +2,6 @@ package com.example.eziketobenna.bakingapp.recipe.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import javax.inject.Inject
@@ -22,7 +21,8 @@ class RecipeViewModel @Inject constructor(
     private val recipeViewStateReducer: RecipeStateReducer,
     private val recipeViewIntentProcessor: RecipeIntentProcessor,
     private val navigationDispatcher: NavigationDispatcher
-) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState> {
+) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState>,
+    NavigationDispatcher by navigationDispatcher {
 
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
         MutableStateFlow(RecipeViewState.init)
@@ -57,9 +57,5 @@ class RecipeViewModel @Inject constructor(
             .onEach { recipeViewState ->
                 _recipeViewState.value = recipeViewState
             }.launchIn(viewModelScope)
-    }
-
-    fun openRecipeDetail(recipeModel: RecipeModel) {
-        navigationDispatcher.openRecipeDetail(recipeModel)
     }
 }

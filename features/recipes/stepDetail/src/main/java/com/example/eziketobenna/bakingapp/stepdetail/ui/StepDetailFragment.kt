@@ -96,7 +96,7 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
             }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
             is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
-                viewModel.navigateBack()
+                viewModel.goBack()
             }
         }
     }
