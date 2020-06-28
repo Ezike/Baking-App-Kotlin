@@ -67,8 +67,8 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
             RecipeDetailViewState.Idle -> {
             }
             is Success -> ingredientStepAdapter.submitList(state.model)
-            is NavigateToStepInfo -> state.openStepInfoEvent.consume {
-                viewModel.openStepDetail(state.openStepInfoEvent.value)
+            is NavigateToStepInfo -> state.openStepInfoEvent.consume { stepInfoModel ->
+                viewModel.openStepDetail(stepInfoModel)
             }
         }
     }

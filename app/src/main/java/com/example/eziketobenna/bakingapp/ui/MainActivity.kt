@@ -14,6 +14,12 @@ import javax.inject.Provider
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    /**
+     * Using [Provider] to enable lazy retrieval of the [NavController]
+     * This is cause the id used to get the [NavController] instance
+     * will be looked up before the call to setContentView cos in the [Hilt_MainActivity],
+     * inject() is called before super.onCreate(), which is normal.
+     */
     @Inject
     lateinit var _navController: Provider<NavController>
 
