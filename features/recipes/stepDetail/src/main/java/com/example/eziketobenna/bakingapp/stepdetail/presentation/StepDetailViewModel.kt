@@ -21,7 +21,8 @@ class StepDetailViewModel @Inject constructor(
     private val stepDetailActionProcessor: StepActionProcessor,
     private val viewStateReducer: StepViewStateReducer,
     private val navigationDispatcher: NavigationDispatcher
-) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState> {
+) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState>,
+    NavigationDispatcher by navigationDispatcher {
 
     private val stepDetailViewState: MutableStateFlow<StepDetailViewState> =
         MutableStateFlow(StepDetailViewState.Idle)
@@ -53,9 +54,5 @@ class StepDetailViewModel @Inject constructor(
             .onEach { viewState ->
                 stepDetailViewState.value = viewState
             }.launchIn(viewModelScope)
-    }
-
-    fun navigateBack() {
-        navigationDispatcher.goBack()
     }
 }
