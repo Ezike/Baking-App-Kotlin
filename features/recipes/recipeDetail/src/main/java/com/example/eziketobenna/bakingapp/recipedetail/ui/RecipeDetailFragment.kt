@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.observe
-import com.example.eziketobenna.bakingapp.core.ext.onBackPress
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipedetail.R
@@ -60,10 +58,6 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onBackPress {
-            findNavController().navigateUp()
-        }
-
         binding.detailRv.adapter = ingredientStepAdapter
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
@@ -73,11 +67,8 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
             RecipeDetailViewState.Idle -> {
             }
             is Success -> ingredientStepAdapter.submitList(state.model)
-            is NavigateToStepInfo -> state.info.consume {
-                findNavController().navigate(
-                    RecipeDetailFragmentDirections
-                        .openStepDetail(state.info.value)
-                )
+            is NavigateToStepInfo -> state.openStepInfoEvent.consume {
+                viewModel.openStepDetail(state.openStepInfoEvent.value)
             }
         }
     }

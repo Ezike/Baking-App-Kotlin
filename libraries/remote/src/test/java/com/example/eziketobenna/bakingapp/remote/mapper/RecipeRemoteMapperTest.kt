@@ -1,53 +1,59 @@
 package com.example.eziketobenna.bakingapp.remote.mapper
 
+import com.example.eziketobenna.bakingapp.data.model.IngredientEntity
 import com.example.eziketobenna.bakingapp.data.model.RecipeEntity
+import com.example.eziketobenna.bakingapp.data.model.StepEntity
 import com.example.eziketobenna.bakingapp.remote.model.IngredientRemoteModel
 import com.example.eziketobenna.bakingapp.remote.model.RecipeRemoteModel
 import com.example.eziketobenna.bakingapp.remote.model.StepRemoteModel
-import com.example.eziketobenna.bakingapp.remote.utils.recipeRemoteModel
+import com.example.eziketobenna.bakingapp.remote.utils.DummyData
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class RecipeRemoteMapperTest {
 
-    private val recipeMapper = RecipeRemoteMapper(IngredientRemoteMapper(), StepRemoteMapper())
+    private val ingredientRemoteMapper = IngredientRemoteMapper()
+
+    private val stepRemoteMapper = StepRemoteMapper()
+
+    private val recipeMapper = RecipeRemoteMapper(ingredientRemoteMapper, stepRemoteMapper)
 
     @Test
-    fun `check stepEntity list is equal to StepRemoteModel list in size`() =
-        testData { recipeEntity, model ->
-            assertThat(recipeEntity.steps.size).isEqualTo(model.steps.size)
-        }
-
-    @Test
-    fun `check stepEntity list has same content as StepRemoteModel list`() {
-        testData { recipeEntity, model ->
-            recipeEntity.steps.forEachIndexed { index, stepEntity ->
-                val stepRemoteModel: StepRemoteModel = model.steps[index]
-                assertThat(stepEntity.id).isEqualTo(stepRemoteModel.id)
-                assertThat(stepEntity.description).isEqualTo(stepRemoteModel.description)
-                assertThat(stepEntity.shortDescription).isEqualTo(stepRemoteModel.shortDescription)
-                assertThat(stepEntity.videoURL).isEqualTo(stepRemoteModel.videoURL)
-                assertThat(stepEntity.thumbnailURL).isEqualTo(stepRemoteModel.thumbnailURL)
-            }
-        }
+    fun `check stepEntity list is equal to StepRemoteModel list in size`() {
+        val stepRemoteModel: List<StepRemoteModel> = DummyData.recipeRemoteModel.steps
+        val stepsEntity: List<StepEntity> = stepRemoteMapper.mapModelList(stepRemoteModel)
+        assertThat(stepRemoteModel.size).isEqualTo(stepsEntity.size)
     }
 
     @Test
-    fun `check ingredientEntity list is equal to IngredientRemoteModel in size`() =
-        testData { recipeEntity, model ->
-            assertThat(recipeEntity.ingredients.size).isEqualTo(model.ingredients.size)
-        }
+    fun `check stepEntity list has same content as StepRemoteModel list`() {
+        val stepRemoteModel: List<StepRemoteModel> = DummyData.recipeRemoteModel.steps
+        val stepsEntity: List<StepEntity> = stepRemoteMapper.mapModelList(stepRemoteModel)
+        assertThat(stepRemoteModel.first().id).isEqualTo(stepsEntity.first().id)
+        assertThat(stepRemoteModel.first().description).isEqualTo(stepsEntity.first().description)
+        assertThat(stepRemoteModel.first().shortDescription).isEqualTo(stepsEntity.first().shortDescription)
+        assertThat(stepRemoteModel.first().videoURL).isEqualTo(stepsEntity.first().videoURL)
+        assertThat(stepRemoteModel.first().thumbnailURL).isEqualTo(stepsEntity.first().thumbnailURL)
+    }
+
+    @Test
+    fun `check ingredientEntity list is equal to IngredientRemoteModel in size`() {
+        val ingredientRemoteModel: List<IngredientRemoteModel> =
+            DummyData.recipeRemoteModel.ingredients
+        val ingredientsEntity: List<IngredientEntity> =
+            ingredientRemoteMapper.mapModelList(ingredientRemoteModel)
+        assertThat(ingredientRemoteModel.size).isEqualTo(ingredientsEntity.size)
+    }
 
     @Test
     fun `check ingredientEntity list has same content as IngredientRemoteModel list`() {
-        testData { recipeEntity, model ->
-            recipeEntity.ingredients.forEachIndexed { index, ingredientEntity ->
-                val ingredientRemoteModel: IngredientRemoteModel = model.ingredients[index]
-                assertThat(ingredientEntity.ingredient).isEqualTo(ingredientRemoteModel.ingredient)
-                assertThat(ingredientEntity.measure).isEqualTo(ingredientRemoteModel.measure)
-                assertThat(ingredientEntity.quantity).isEqualTo(ingredientRemoteModel.quantity)
-            }
-        }
+        val ingredientRemoteModel: List<IngredientRemoteModel> =
+            DummyData.recipeRemoteModel.ingredients
+        val ingredientsEntity: List<IngredientEntity> =
+            ingredientRemoteMapper.mapModelList(ingredientRemoteModel)
+        assertThat(ingredientRemoteModel.first().ingredient).isEqualTo(ingredientsEntity.first().ingredient)
+        assertThat(ingredientRemoteModel.first().measure).isEqualTo(ingredientsEntity.first().measure)
+        assertThat(ingredientRemoteModel.first().quantity).isEqualTo(ingredientsEntity.first().quantity)
     }
 
     @Test
@@ -71,7 +77,7 @@ class RecipeRemoteMapperTest {
     }
 
     private fun testData(action: (RecipeEntity, RecipeRemoteModel) -> Unit) {
-        val model: RecipeRemoteModel = recipeRemoteModel
+        val model: RecipeRemoteModel = DummyData.recipeRemoteModel
         val recipeEntity: RecipeEntity = recipeMapper.mapFromModel(model)
         action(recipeEntity, model)
     }

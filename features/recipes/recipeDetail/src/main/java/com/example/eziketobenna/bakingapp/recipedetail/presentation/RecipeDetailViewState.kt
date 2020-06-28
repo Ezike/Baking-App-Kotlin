@@ -8,5 +8,5 @@ import com.example.eziketobenna.bakingapp.recipedetail.model.RecipeDetailModel
 sealed class RecipeDetailViewState : ViewState {
     object Idle : RecipeDetailViewState()
     data class Success(val model: List<RecipeDetailModel>) : RecipeDetailViewState()
-    data class NavigateToStepInfo(val info: ViewEvent<StepInfoModel>) : RecipeDetailViewState()
+    data class NavigateToStepInfo(val openStepInfoEvent: ViewEvent<StepInfoModel>) : RecipeDetailViewState()
 }

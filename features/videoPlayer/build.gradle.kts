@@ -5,7 +5,6 @@ import Dependencies.View.constraintLayout
 import Dependencies.View.exoPlayerCore
 import Dependencies.View.exoPlayerUI
 import ProjectLib.app
-import ProjectLib.core
 
 plugins {
     dynamicFeature
@@ -40,7 +39,6 @@ android {
 
 dependencies {
     implementation(project(app))
-    implementation(project(core))
 
     implementation(appCompat)
     implementation(exoPlayerCore)

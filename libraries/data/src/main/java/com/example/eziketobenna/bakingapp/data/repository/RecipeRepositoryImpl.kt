@@ -14,7 +14,7 @@ class RecipeRepositoryImpl @Inject constructor(
     private val recipeMapper: RecipeEntityMapper
 ) : RecipeRepository {
 
-    override fun fetchRecipe(): Flow<List<Recipe>> {
+    override fun fetchRecipes(): Flow<List<Recipe>> {
         return flow {
             val recipes: List<RecipeEntity> = recipeRemote.fetchRecipes()
             emit(recipeMapper.mapFromEntityList(recipes))

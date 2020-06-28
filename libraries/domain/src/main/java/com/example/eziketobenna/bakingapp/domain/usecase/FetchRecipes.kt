@@ -13,6 +13,6 @@ class FetchRecipes @Inject constructor(
 ) : FlowUseCase<Unit, List<Recipe>>(postExecutionThread) {
 
     override fun execute(params: Unit?): Flow<List<Recipe>> {
-        return recipeRepository.fetchRecipe()
+        return recipeRepository.fetchRecipes()
     }
 }

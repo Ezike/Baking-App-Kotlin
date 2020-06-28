@@ -2,10 +2,8 @@ package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
+import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
@@ -19,9 +17,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 
 class StepDetailViewModel @Inject constructor(
-    private val stepDetailIntentProcessor: IntentProcessor<StepDetailViewIntent, StepDetailViewAction>,
-    private val stepDetailActionProcessor: ActionProcessor<StepDetailViewAction, StepDetailViewResult>,
-    private val viewStateReducer: ViewStateReducer<StepDetailViewState, StepDetailViewResult>
+    private val stepDetailIntentProcessor: StepIntentProcessor,
+    private val stepDetailActionProcessor: StepActionProcessor,
+    private val viewStateReducer: StepViewStateReducer,
+    private val navigationDispatcher: NavigationDispatcher
 ) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState> {
 
     private val stepDetailViewState: MutableStateFlow<StepDetailViewState> =
@@ -54,5 +53,9 @@ class StepDetailViewModel @Inject constructor(
             .onEach { viewState ->
                 stepDetailViewState.value = viewState
             }.launchIn(viewModelScope)
+    }
+
+    fun navigateBack() {
+        navigationDispatcher.goBack()
     }
 }

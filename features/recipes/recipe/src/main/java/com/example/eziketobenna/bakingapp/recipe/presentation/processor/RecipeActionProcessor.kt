@@ -1,13 +1,15 @@
-package com.example.eziketobenna.bakingapp.recipe.presentation
+package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.core.ext.logE
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
+import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.LoadInitialAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RefreshRecipesAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RetryFetchAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.LoadInitialResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RefreshRecipesResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RetryFetchResult

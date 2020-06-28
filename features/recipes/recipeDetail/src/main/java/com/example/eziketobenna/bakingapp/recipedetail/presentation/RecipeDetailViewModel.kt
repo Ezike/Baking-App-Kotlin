@@ -2,10 +2,9 @@ package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
+import com.example.eziketobenna.bakingapp.model.StepInfoModel
+import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
-import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,16 +16,20 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 
 class RecipeDetailViewModel @Inject constructor(
-    private val recipeDetailActionProcessor: ActionProcessor<RecipeDetailViewAction, RecipeDetailViewResult>,
-    private val recipeDetailIntentProcessor: IntentProcessor<RecipeDetailViewIntent, RecipeDetailViewAction>,
-    private val recipeDetailStateReducer: ViewStateReducer<RecipeDetailViewState, RecipeDetailViewResult>
+    private val recipeDetailActionProcessor: DetailActionProcessor,
+    private val recipeDetailIntentProcessor: DetailIntentProcessor,
+    private val recipeDetailStateReducer: DetailViewStateReducer,
+    private val navigationDispatcher: NavigationDispatcher
 ) : ViewModel(), MVIPresenter<RecipeDetailViewIntent, RecipeDetailViewState> {
+
+    private val actionsFlow: MutableStateFlow<RecipeDetailViewAction> =
+        MutableStateFlow(RecipeDetailViewAction.Idle)
 
     private val recipeDetailViewState: MutableStateFlow<RecipeDetailViewState> =
         MutableStateFlow(RecipeDetailViewState.Idle)
 
-    private val actionsFlow: MutableStateFlow<RecipeDetailViewAction> =
-        MutableStateFlow(RecipeDetailViewAction.Idle)
+    override val viewState: StateFlow<RecipeDetailViewState>
+        get() = recipeDetailViewState
 
     init {
         processActions()
@@ -51,6 +54,7 @@ class RecipeDetailViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    override val viewState: StateFlow<RecipeDetailViewState>
-        get() = recipeDetailViewState
+    fun openStepDetail(stepInfoModel: StepInfoModel) {
+        navigationDispatcher.openStepDetail(stepInfoModel)
+    }
 }

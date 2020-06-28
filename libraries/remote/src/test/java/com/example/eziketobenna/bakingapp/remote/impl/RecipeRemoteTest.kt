@@ -36,6 +36,12 @@ class RecipeRemoteTest {
     }
 
     @Test
+    fun `check that calling fetchRecipes returns correct data`() = runBlocking {
+        val recipes: List<RecipeEntity> = recipeRemote.fetchRecipes()
+        assertThat(recipes.first().name).isEqualTo("Nutella Pie")
+    }
+
+    @Test
     fun `check that calling fetchRecipes makes request to given path`() = runBlocking {
         recipeRemote.fetchRecipes()
         assertThat(REQUEST_PATH).isEqualTo(mockWebServer.takeRequest().path)
