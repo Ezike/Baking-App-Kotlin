@@ -14,8 +14,6 @@ abstract class FlowUseCase<in Params, out T>(
      */
     abstract fun execute(params: Params? = null): Flow<T>
 
-    operator fun invoke(params: Params? = null): Flow<T> {
-        return execute(params)
-            .flowOn(postExecutionThread.io)
-    }
+    operator fun invoke(params: Params? = null): Flow<T> = execute(params)
+        .flowOn(postExecutionThread.io)
 }
