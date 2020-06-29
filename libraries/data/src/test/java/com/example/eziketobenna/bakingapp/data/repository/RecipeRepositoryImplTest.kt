@@ -1,5 +1,6 @@
 package com.example.eziketobenna.bakingapp.data.repository
 
+import com.example.eziketobenna.bakingapp.data.fake.DummyData
 import com.example.eziketobenna.bakingapp.data.fake.FakeRecipeRemoteImpl
 import com.example.eziketobenna.bakingapp.data.mapper.IngredientEntityMapper
 import com.example.eziketobenna.bakingapp.data.mapper.RecipeEntityMapper
@@ -26,10 +27,10 @@ class RecipeRepositoryImplTest {
     @Test
     fun `check that FetchRecipes returns correct data`() = runBlockingTest {
         testData { recipe ->
-            assertThat(recipe.name).isEqualTo("Eba")
-            assertThat(recipe.id).isEqualTo(1)
-            assertThat(recipe.image).isEqualTo("imgurl.com")
-            assertThat(recipe.servings).isEqualTo(3)
+            assertThat(recipe.name).isEqualTo(DummyData.recipe.name)
+            assertThat(recipe.id).isEqualTo(DummyData.recipe.id)
+            assertThat(recipe.image).isEqualTo(DummyData.recipe.image)
+            assertThat(recipe.servings).isEqualTo(DummyData.recipe.servings)
         }
     }
 
