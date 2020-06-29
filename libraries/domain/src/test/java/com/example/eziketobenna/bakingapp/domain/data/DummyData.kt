@@ -5,6 +5,7 @@ import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.model.Step
 
 internal object DummyData {
+
     val recipe = Recipe(
         id = 3,
         name = "Burritos",
@@ -20,6 +21,7 @@ internal object DummyData {
             measure = "3",
             ingredient = "salt"
         )
+
     val step: Step
         get() = Step(
             id = 1,

@@ -34,7 +34,7 @@ class FetchRecipesTest {
     }
 
     @Test
-    fun `check that calling fetchRecipes last item returns correct data `() = runBlockingTest {
+    fun `check that calling fetchRecipes last item returns correct data`() = runBlockingTest {
         val recipes: List<Recipe> = fetchRecipesUseCase().first()
         val recipe: Recipe = recipes.last()
         assertThat(recipe.id).isEqualTo(2)
