@@ -10,6 +10,8 @@ The Baking App displays a list of recipes, ingredients required to make it, and 
 * Dynamic Feature Modules
 * Video streaming with Exoplayer
 * Dagger Hilt
+* Kotlin Gradle DSL
+
 
 ## Libraries
 *   [FlowBinding](https://github.com/ReactiveCircus/FlowBinding)
@@ -22,6 +24,7 @@ The Baking App displays a list of recipes, ingredients required to make it, and 
 *   [Exoplayer](https://github.com/google/ExoPlayer)
 *   [Truth](https://github.com/google/truth)
 *   [Dagger Hilt](https://dagger.dev/hilt)
+*   [Kotlin Gradle DSL](https://kotlinlang.org/docs/reference/using-gradle.html)
 
 <h2 align="left">Screenshots</h2>
 <h4 align="center">
