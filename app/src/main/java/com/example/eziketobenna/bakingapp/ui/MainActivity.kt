@@ -16,9 +16,12 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Using [Provider] to enable lazy retrieval of the [NavController]
-     * This is cause the id used to get the [NavController] instance
-     * will be looked up before the call to setContentView cos in the [Hilt_MainActivity],
+     * The id used to get the [NavController] instance will be looked up
+     * before the call to setContentView cos in the [Hilt_MainActivity],
      * inject() is called before super.onCreate(), which is normal.
+     *
+     * Using [Provider] or [Lazy] will prevent it from throwing an error,
+     * since they offer lazy retrieval and or initialization.
      */
     @Inject
     lateinit var _navController: Provider<NavController>
