@@ -15,17 +15,14 @@ import dagger.hilt.android.scopes.ActivityScoped
 
 @InstallIn(ActivityComponent::class)
 @Module
-object NavigationModule {
-
-    @[Provides ActivityScoped]
-    fun provideNavController(activity: Activity): NavController =
-        activity.findNavController(R.id.mainNavHostFragment)
-}
-
-@InstallIn(ActivityComponent::class)
-@Module
-interface NavigationBindingModule {
+interface NavigationModule {
 
     @get:[Binds ActivityScoped]
     val NavigationDispatcherImpl.navigationDispatcher: NavigationDispatcher
+
+    companion object {
+        @[Provides ActivityScoped]
+        fun provideNavController(activity: Activity): NavController =
+            activity.findNavController(R.id.mainNavHostFragment)
+    }
 }
