@@ -6,7 +6,7 @@ import com.example.eziketobenna.bakingapp.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeRecipeRepository : RecipeRepository {
+internal class FakeRecipeRepository : RecipeRepository {
 
     override fun fetchRecipes(): Flow<List<Recipe>> {
         return flowOf(

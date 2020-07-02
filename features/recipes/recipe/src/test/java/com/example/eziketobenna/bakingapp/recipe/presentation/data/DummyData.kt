@@ -1,10 +1,11 @@
-package com.example.eziketobenna.bakingapp.domain.data
+package com.example.eziketobenna.bakingapp.recipe.presentation.data
 
 import com.example.eziketobenna.bakingapp.domain.model.Ingredient
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.model.Step
 
 internal object DummyData {
+
     val recipe = Recipe(
         id = 3,
         name = "Burritos",
@@ -14,13 +15,14 @@ internal object DummyData {
         steps = listOf(step)
     )
 
-    val ingredient: Ingredient
+    private val ingredient: Ingredient
         get() = Ingredient(
             quantity = 1.4,
             measure = "3",
             ingredient = "salt"
         )
-    val step: Step
+
+    private val step: Step
         get() = Step(
             id = 1,
             description = "pour stuff",

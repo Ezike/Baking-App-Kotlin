@@ -1,8 +1,6 @@
 package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
-import com.example.eziketobenna.bakingapp.domain.model.Step
-import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToNextStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewResult.GoToPreviousStepViewResult
@@ -10,11 +8,13 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailView
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.FinishEvent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Idle
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState.Loaded
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.factory.StepDetailViewStateFactory
 import javax.inject.Inject
 
 @FeatureScope
-class StepDetailViewStateReducer @Inject constructor() :
-    ViewStateReducer<StepDetailViewState, StepDetailViewResult> {
+class StepDetailViewStateReducer @Inject constructor(
+    private val stepDetailViewStateFactory: StepDetailViewStateFactory
+) : ViewStateReducer<StepDetailViewState, StepDetailViewResult> {
 
     override fun reduce(
         previous: StepDetailViewState,
@@ -29,53 +29,13 @@ class StepDetailViewStateReducer @Inject constructor() :
         }
     }
 
-    private fun makePreviousViewState(
-        oldState: Loaded,
-        result: GoToPreviousStepViewResult
-    ): Loaded {
-        return if (oldState.stepIndex > 0) {
-            val currentPosition: Int = oldState.currentPosition - 1
-            val newState: Step = result.steps[oldState.stepIndex - 1]
-            Loaded(
-                stepDescription = newState.description,
-                videoUrl = newState.videoURL,
-                totalSteps = result.steps.size,
-                currentPosition = currentPosition,
-                showPrev = currentPosition > 1,
-                showNext = currentPosition < result.steps.size,
-                showVideo = newState.videoURL.isNotEmpty(),
-                stepIndex = result.steps.indexOf(newState)
-            )
-        } else oldState
-    }
-
-    private fun makeNextViewState(
-        oldState: Loaded,
-        result: GoToNextStepViewResult
-    ): StepDetailViewState {
-        return if (oldState.stepIndex < result.steps.lastIndex) {
-            val currentPosition: Int = oldState.currentPosition + 1
-            val newState: Step = result.steps[oldState.stepIndex + 1]
-            Loaded(
-                stepDescription = newState.description,
-                videoUrl = newState.videoURL,
-                totalSteps = result.steps.size,
-                currentPosition = currentPosition,
-                showPrev = currentPosition > 1,
-                showNext = currentPosition < result.steps.size,
-                showVideo = newState.videoURL.isNotEmpty(),
-                stepIndex = result.steps.indexOf(newState)
-            )
-        } else FinishEvent(ViewEvent(Unit))
-    }
-
     private fun loadPreviousStepViewState(
         oldState: StepDetailViewState,
         result: GoToPreviousStepViewResult
     ): StepDetailViewState {
         return when (oldState) {
             Idle, is FinishEvent -> oldState
-            is Loaded -> makePreviousViewState(oldState, result)
+            is Loaded -> stepDetailViewStateFactory.makePreviousStep(oldState, result)
         }
     }
 
@@ -86,21 +46,10 @@ class StepDetailViewStateReducer @Inject constructor() :
 
         return when (oldState) {
             Idle, is FinishEvent -> oldState
-            is Loaded -> makeNextViewState(oldState, result)
+            is Loaded -> stepDetailViewStateFactory.makeNextStep(oldState, result)
         }
     }
 
-    private fun loadInitialViewState(result: LoadedInitialResult): Loaded {
-        val currentPosition: Int = result.stepIndex + 1
-        return Loaded(
-            stepDescription = result.step.description,
-            videoUrl = result.step.videoURL,
-            totalSteps = result.steps.size,
-            currentPosition = currentPosition,
-            showPrev = currentPosition > 1,
-            showNext = currentPosition < result.steps.size,
-            showVideo = result.step.videoURL.isNotEmpty(),
-            stepIndex = result.stepIndex
-        )
-    }
+    private fun loadInitialViewState(result: LoadedInitialResult): Loaded =
+        stepDetailViewStateFactory.createInitialViewState(result)
 }

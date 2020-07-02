@@ -3,6 +3,7 @@ import Dependencies.Coroutines
 import Dependencies.DI
 import Dependencies.FlowBinding
 import Dependencies.Kotlin
+import Dependencies.Test
 import Dependencies.View
 import ProjectLib.app
 import ProjectLib.core
@@ -66,4 +67,8 @@ dependencies {
     implementAll(Coroutines.components)
 
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
+
+    testImplementation(Test.junit)
+    testImplementation(Test.truth)
+    testImplementation(Test.coroutinesTest)
 }
