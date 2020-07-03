@@ -1,7 +1,6 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
-import com.example.eziketobenna.bakingapp.core.ext.logE
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
@@ -45,7 +44,6 @@ class RecipeActionProcessor @Inject constructor(
         }.onStart {
             emit(RefreshRecipesResult.Refreshing)
         }.catch { cause: Throwable ->
-            logE(cause)
             emit(RefreshRecipesResult.Error(cause))
         }
 
@@ -59,7 +57,6 @@ class RecipeActionProcessor @Inject constructor(
         }.onStart {
             emit(RetryFetchResult.Loading)
         }.catch { cause: Throwable ->
-            logE(cause)
             emit(RetryFetchResult.Error(cause))
         }
 
@@ -73,7 +70,6 @@ class RecipeActionProcessor @Inject constructor(
         }.onStart {
             emit(LoadInitialResult.Loading)
         }.catch { cause: Throwable ->
-            logE(cause)
             emit(LoadInitialResult.Error(cause))
         }
 }
