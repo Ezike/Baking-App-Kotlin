@@ -2,14 +2,14 @@ package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.LoadInitialAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RefreshRecipesAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RetryFetchAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.LoadInitialViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRefreshViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRetryViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.LoadInitialAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RefreshRecipesAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RetryFetchAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.LoadInitialViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRefreshViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRetryViewIntent
 import javax.inject.Inject
 
 @FeatureScope

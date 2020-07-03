@@ -11,12 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 class FakeRecipeRepository : RecipeRepository {
 
     override fun fetchRecipes(): Flow<List<Recipe>> {
-        return flowOf(
-            listOf(
-                DummyData.recipe,
-                DummyData.recipe.copy(id = 2, steps = listOf(), image = "")
-            )
-        )
+        return flowOf(listOf(DummyData.recipe))
     }
 }
 

@@ -4,9 +4,11 @@ import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.core.ext.errorMessage
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.LoadInitialResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RefreshRecipesResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RetryFetchResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.LoadInitialResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RefreshRecipesResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RetryFetchResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import javax.inject.Inject
 
 @FeatureScope

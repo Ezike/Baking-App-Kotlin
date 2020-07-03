@@ -16,11 +16,11 @@ import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.clicks
 import com.example.eziketobenna.bakingapp.recipe.databinding.FragmentRecipeBinding
 import com.example.eziketobenna.bakingapp.recipe.di.inject
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRefreshViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewIntent.RecipeRetryViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewModel
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewState
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRefreshViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRetryViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

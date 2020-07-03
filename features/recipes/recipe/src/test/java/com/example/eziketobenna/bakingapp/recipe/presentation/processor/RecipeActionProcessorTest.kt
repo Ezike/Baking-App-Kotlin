@@ -1,18 +1,18 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.LoadInitialAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RefreshRecipesAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewAction.RetryFetchAction
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.LoadInitialResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RefreshRecipesResult
-import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewResult.RetryFetchResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.executor.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.RepoType
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.makeFakeRecipeRepository
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.LoadInitialAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RefreshRecipesAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RetryFetchAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.LoadInitialResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RefreshRecipesResult
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RetryFetchResult
 import com.google.common.truth.Truth.assertThat
 import java.net.SocketTimeoutException
 import kotlinx.coroutines.flow.Flow
@@ -44,7 +44,8 @@ class RecipeActionProcessorTest {
         val value: RecipeViewResult = testData(LoadInitialAction, RepoType.ERROR).last()
         assertThat(value).isInstanceOf(LoadInitialResult.Error::class.java)
         assertThat((value as LoadInitialResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java)
+            SocketTimeoutException::class.java
+        )
         assertThat(value.cause.message).isEqualTo(ERROR_MSG)
     }
 
@@ -67,7 +68,8 @@ class RecipeActionProcessorTest {
         val value: RecipeViewResult = testData(RetryFetchAction, RepoType.ERROR).last()
         assertThat(value).isInstanceOf(RetryFetchResult.Error::class.java)
         assertThat((value as RetryFetchResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java)
+            SocketTimeoutException::class.java
+        )
         assertThat(value.cause.message).isEqualTo(ERROR_MSG)
     }
 
@@ -90,7 +92,8 @@ class RecipeActionProcessorTest {
         val value: RecipeViewResult = testData(RefreshRecipesAction, RepoType.ERROR).last()
         assertThat(value).isInstanceOf(RefreshRecipesResult.Error::class.java)
         assertThat((value as RefreshRecipesResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java)
+            SocketTimeoutException::class.java
+        )
         assertThat(value.cause.message).isEqualTo(ERROR_MSG)
     }
 

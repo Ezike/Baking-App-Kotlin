@@ -4,7 +4,7 @@ import com.example.eziketobenna.bakingapp.domain.executor.PostExecutionThread
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 
-internal class TestPostExecutionThread : PostExecutionThread {
+class TestPostExecutionThread : PostExecutionThread {
 
     override val main: CoroutineDispatcher
         get() = TestCoroutineDispatcher()
