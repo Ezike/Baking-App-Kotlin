@@ -3,6 +3,8 @@ package com.example.eziketobenna.bakingapp.recipe.presentation.data
 import com.example.eziketobenna.bakingapp.domain.model.Ingredient
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.model.Step
+import com.example.eziketobenna.bakingapp.model.RecipeModel
+import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 
 internal object DummyData {
 
@@ -30,4 +32,7 @@ internal object DummyData {
             videoURL = "url.com",
             thumbnailURL = "thumb.com"
         )
+
+    fun recipeModelList(recipeModelMapper: RecipeModelMapper): List<RecipeModel> =
+        recipeModelMapper.mapToModelList(listOf(recipe))
 }

@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +35,8 @@ class RecipeViewModel @Inject constructor(
 
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
-        ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
+        ConflatedBroadcastChannel<RecipeViewAction>(
+            RecipeViewAction.LoadInitialAction)
 
     private val actionFlow: Flow<RecipeViewAction>
         get() = actionsChannel.asFlow()
