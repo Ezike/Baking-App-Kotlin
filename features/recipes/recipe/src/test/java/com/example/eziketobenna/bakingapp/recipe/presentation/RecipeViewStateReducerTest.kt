@@ -23,7 +23,7 @@ class RecipeViewStateReducerTest {
     private val recipeViewStateReducer = RecipeViewStateReducer(recipeModelMapper)
 
     @Test
-    fun `check that loadingViewState is returned for Loading LoadInitialResult`() =
+    fun `check that loadingViewState is returned when LoadInitialResult is Loading`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.loadInitialRecipeResultData.toList().first()
@@ -39,7 +39,7 @@ class RecipeViewStateReducerTest {
         }
 
     @Test
-    fun `check that loadingViewState is returned for Loading RetryFetchResult`() =
+    fun `check that loadingViewState is returned when RetryFetchResult is Loading`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.retryRecipeResultData.toList().first()
@@ -55,7 +55,7 @@ class RecipeViewStateReducerTest {
         }
 
     @Test
-    fun `check that refreshingViewState is returned for Refreshing ReFreshRecipesResult`() =
+    fun `check that refreshingViewState is returned when ReFreshRecipesResult is Refreshing`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.refreshRecipeResultData.toList().first()
@@ -71,7 +71,7 @@ class RecipeViewStateReducerTest {
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded LoadInitialResult`() =
+    fun `check that loadedViewState is returned when LoadInitialResult is Loaded`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.loadInitialRecipeResultData.toList().last()
@@ -87,7 +87,7 @@ class RecipeViewStateReducerTest {
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded RetryFetchResult`() =
+    fun `check that loadedViewState is returned when RetryFetchResult is Loaded`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.retryRecipeResultData.toList().last()
@@ -103,7 +103,7 @@ class RecipeViewStateReducerTest {
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded RefreshRecipesResult`() =
+    fun `check that loadedViewState is returned when RefreshRecipesResult is Loaded`() =
         runBlockingTest {
             val result: RecipeViewResult =
                 FakeActionProcessor.refreshRecipeResultData.toList().last()

@@ -165,7 +165,6 @@ object Dependencies {
 
     object Test {
         object Version {
-            const val mockk: String = "1.9.3"
             const val junit: String = "4.13"
             const val runner: String = "1.1.0"
             const val rules: String = "1.3.0"
@@ -177,8 +176,6 @@ object Dependencies {
             const val coroutineTest: String = "1.2.1"
         }
 
-        const val mockk: String = "io.mockk:mockk:${Version.mockk}"
-        const val mockkAndroid: String = "io.mockk:mockk-android:${Version.mockk}"
         const val junit: String = "junit:junit:${Version.junit}"
         const val runner: String = "androidx.test:runner:${Version.runner}"
         const val fragmentTesting: String = "androidx.fragment:fragment-testing:${Version.fragment}"
