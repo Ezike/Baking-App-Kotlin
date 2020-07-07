@@ -60,8 +60,7 @@ class RecipeEntityMapperTest {
     @Test
     fun `check that Step mapFromDomainList maps data correctly`() {
         val steps: List<Step> = DummyData.recipe.steps
-        val stepsEntity: List<StepEntity> =
-            stepEntityMapper.mapFromDomainList(steps)
+        val stepsEntity: List<StepEntity> = stepEntityMapper.mapFromDomainList(steps)
         assertThat(steps.first().id).isEqualTo(stepsEntity.first().id)
         assertThat(steps.first().description).isEqualTo(stepsEntity.first().description)
         assertThat(steps.first().shortDescription).isEqualTo(stepsEntity.first().shortDescription)
@@ -98,8 +97,7 @@ class RecipeEntityMapperTest {
     @Test
     fun ` check that Step mapFromEntityList maps data correctly`() {
         val stepsEntity: List<StepEntity> = DummyData.recipeEntity.steps
-        val steps: List<Step> =
-            stepEntityMapper.mapFromEntityList(stepsEntity)
+        val steps: List<Step> = stepEntityMapper.mapFromEntityList(stepsEntity)
         assertThat(stepsEntity.first().id).isEqualTo(steps.first().id)
         assertThat(stepsEntity.first().description).isEqualTo(steps.first().description)
         assertThat(stepsEntity.first().shortDescription).isEqualTo(steps.first().shortDescription)
@@ -110,8 +108,7 @@ class RecipeEntityMapperTest {
     @Test
     fun ` check that Step mapFromEntityList returns same sized list`() {
         val stepsEntity: List<StepEntity> = DummyData.recipeEntity.steps
-        val steps: List<Step> =
-            stepEntityMapper.mapFromEntityList(stepsEntity)
+        val steps: List<Step> = stepEntityMapper.mapFromEntityList(stepsEntity)
         assertThat(stepsEntity.size).isEqualTo(steps.size)
     }
 }
