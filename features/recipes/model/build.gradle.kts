@@ -1,5 +1,6 @@
 import Dependencies.DI
 import Dependencies.Kotlin
+import Dependencies.Test
 import ProjectLib.domain
 import ProjectLib.presentation
 
@@ -39,4 +40,7 @@ dependencies {
     implementation(project(presentation))
     implementation(Kotlin.stdlib)
     implementation(DI.javaxInject)
+
+    testImplementation(Test.junit)
+    testImplementation(Test.truth)
 }

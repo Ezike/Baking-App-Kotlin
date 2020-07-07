@@ -19,7 +19,7 @@ class FlowRecorder<T>(internal val coroutineScope: CoroutineScope) {
 
     private val values: MutableList<T> = mutableListOf()
 
-    operator fun plusAssign(t: T) {
+    internal operator fun plusAssign(t: T) {
         values += t
     }
 
@@ -38,17 +38,6 @@ class FlowRecorder<T>(internal val coroutineScope: CoroutineScope) {
             drainedValues += values.removeFirst()
         }
         return drainedValues
-    }
-
-    /**
-     * returns the item at the given [index]
-     * throws [IndexOutOfBoundsException] for unknown index
-     */
-    operator fun get(index: Int): T {
-        if ((index in 0..values.lastIndex).not()) {
-            throw IndexOutOfBoundsException()
-        }
-        return values[index]
     }
 
     /**
