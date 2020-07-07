@@ -10,5 +10,6 @@ include(
     ":common:views",
     ":features:recipes:recipeDetail",
     ":features:recipes:stepDetail",
-    ":features:videoPlayer"
+    ":features:videoPlayer",
+    ":common:common-test"
 )

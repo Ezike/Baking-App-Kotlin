@@ -21,15 +21,13 @@ class StepDetailViewModel @Inject constructor(
     private val stepDetailActionProcessor: StepActionProcessor,
     private val viewStateReducer: StepViewStateReducer,
     private val navigationDispatcher: NavigationDispatcher
-) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState>,
-    NavigationDispatcher by navigationDispatcher {
+) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState> {
 
     private val stepDetailViewState: MutableStateFlow<StepDetailViewState> =
         MutableStateFlow(StepDetailViewState.Idle)
 
     private val actionsChannel =
         ConflatedBroadcastChannel<StepDetailViewAction>(StepDetailViewAction.Idle)
-    private val actionsFlow: Flow<StepDetailViewAction> = actionsChannel.asFlow()
 
     override val viewState: StateFlow<StepDetailViewState>
         get() = stepDetailViewState
@@ -45,14 +43,18 @@ class StepDetailViewModel @Inject constructor(
     }
 
     private fun processActions() {
-        actionsFlow
-            .flatMapMerge {
-                stepDetailActionProcessor.actionToResult(it)
+        actionsChannel.asFlow()
+            .flatMapMerge { viewAction ->
+                stepDetailActionProcessor.actionToResult(viewAction)
             }.scan(StepDetailViewState.Idle) { previous: StepDetailViewState, result ->
                 viewStateReducer.reduce(previous, result)
             }.distinctUntilChanged()
             .onEach { viewState ->
                 stepDetailViewState.value = viewState
             }.launchIn(viewModelScope)
+    }
+
+    fun goBack() {
+        navigationDispatcher.goBack()
     }
 }

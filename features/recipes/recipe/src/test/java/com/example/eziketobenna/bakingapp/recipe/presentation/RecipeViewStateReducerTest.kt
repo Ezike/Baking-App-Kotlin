@@ -3,9 +3,8 @@ package com.example.eziketobenna.bakingapp.recipe.presentation
 import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
-import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyData
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeActionProcessor
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeActionProcessor
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.LoadInitialResult
@@ -23,319 +22,237 @@ class RecipeViewStateReducerTest {
     private val recipeViewStateReducer = RecipeViewStateReducer(recipeModelMapper)
 
     @Test
-    fun `check that loadingViewState is returned for Loading LoadInitialResult`() =
+    fun `check that loadingViewState is returned when LoadInitialResult is Loading`() {
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultData.toList().first()
+                FakeRecipeActionProcessor.loadInitialRecipeResultData.toList().first()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Loading::class.java)
-            assertThat(viewState.isLoading).isTrue()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.loadingState)
         }
+    }
 
     @Test
-    fun `check that loadingViewState is returned for Loading RetryFetchResult`() =
+    fun `check that loadingViewState is returned when RetryFetchResult is Loading`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultData.toList().first()
+                FakeRecipeActionProcessor.retryRecipeResultData.toList().first()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Loading::class.java)
-            assertThat(viewState.isLoading).isTrue()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.loadingState)
         }
 
     @Test
-    fun `check that refreshingViewState is returned for Refreshing ReFreshRecipesResult`() =
+    fun `check that refreshingViewState is returned when ReFreshRecipesResult is Refreshing`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultData.toList().first()
+                FakeRecipeActionProcessor.refreshRecipeResultData.toList().first()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Refreshing::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isTrue()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.refreshingState)
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded LoadInitialResult`() =
+    fun `check that loadedViewState is returned when LoadInitialResult is Loaded`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultData.toList().last()
+                FakeRecipeActionProcessor.loadInitialRecipeResultData.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Loaded::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded RetryFetchResult`() =
+    fun `check that loadedViewState is returned when RetryFetchResult is Loaded`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultData.toList().last()
+                FakeRecipeActionProcessor.retryRecipeResultData.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Loaded::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
 
     @Test
-    fun `check that loadedViewState is returned for Loaded RefreshRecipesResult`() =
+    fun `check that loadedViewState is returned when RefreshRecipesResult is Loaded`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultData.toList().last()
+                FakeRecipeActionProcessor.refreshRecipeResultData.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Loaded::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
 
     @Test
     fun `check that emptyViewState is returned when LoadInitialResult is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultEmpty.toList().last()
+                FakeRecipeActionProcessor.loadInitialRecipeResultEmpty.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isTrue()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.emptyState)
         }
 
     @Test
     fun `check that emptyViewState is returned when RetryFetchResult is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultEmpty.toList().last()
+                FakeRecipeActionProcessor.retryRecipeResultEmpty.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isTrue()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.emptyState)
         }
 
     @Test
     fun `check that emptyViewState is returned when RefreshRecipesResult is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultEmpty.toList().last()
+                FakeRecipeActionProcessor.refreshRecipeResultEmpty.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isTrue()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.emptyState)
         }
 
     @Test
-    fun `check that noDataErrorState is returned when LoadInitialResult is Error`() =
+    fun `check that noDataErrorState is returned when LoadInitialResult is Error and recipes is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultError.toList().last()
+                FakeRecipeActionProcessor.loadInitialRecipeResultError.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNotNull()
-            assertThat(viewState.error).isEqualTo(ERROR_MSG)
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.noDataErrorState(ERROR_MSG))
         }
 
     @Test
-    fun `check that noDataErrorState is returned when RetryFetchResult is Error`() =
+    fun `check that noDataErrorState is returned when RetryFetchResult is Error and recipes is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultError.toList().last()
+                FakeRecipeActionProcessor.retryRecipeResultError.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNotNull()
-            assertThat(viewState.error).isEqualTo(ERROR_MSG)
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.noDataErrorState(ERROR_MSG))
         }
 
     @Test
-    fun `check that noDataErrorState is returned when RefreshRecipesResult is Error`() =
+    fun `check that noDataErrorState is returned when RefreshRecipesResult is Error and recipes is Empty`() =
         runBlockingTest {
+            val initialState: RecipeViewState = RecipeViewState.init
             val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultError.toList().last()
+                FakeRecipeActionProcessor.refreshRecipeResultError.toList().last()
             val viewState: RecipeViewState =
-                recipeViewStateReducer.reduce(RecipeViewState.init, result)
+                recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNotNull()
-            assertThat(viewState.error).isEqualTo(ERROR_MSG)
-            assertThat(viewState.errorEvent).isNull()
-            assertThat(viewState.recipes).isEmpty()
+            assertThat(viewState).isEqualTo(initialState.noDataErrorState(ERROR_MSG))
         }
 
     @Test
-    fun `check that dataAvailableErrorState is returned when LoadInitialResult is Error`() =
+    fun `check that dataAvailableErrorState is returned when LoadInitialResult is Error and recipes is not Empty`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultError.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.loadInitialRecipeResultError.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNotNull()
-            assertThat(viewState.errorEvent).isEqualTo(ViewEvent(ERROR_MSG))
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(initialState.dataAvailableErrorState(ERROR_MSG))
         }
 
     @Test
-    fun `check that dataAvailableErrorState is returned when RetryFetchResult is Error`() =
+    fun `check that dataAvailableErrorState is returned when RetryFetchResult is Error and recipes is not Empty`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultError.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.retryRecipeResultError.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNotNull()
-            assertThat(viewState.errorEvent).isEqualTo(ViewEvent(ERROR_MSG))
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(initialState.dataAvailableErrorState(ERROR_MSG))
         }
 
     @Test
-    fun `check that dataAvailableErrorState is returned when RefreshRecipesResult is Error`() =
+    fun `check that dataAvailableErrorState is returned when RefreshRecipesResult is Error and recipes is not Empty`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultError.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.refreshRecipeResultError.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Error::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNotNull()
-            assertThat(viewState.errorEvent).isEqualTo(ViewEvent(ERROR_MSG))
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(initialState.dataAvailableErrorState(ERROR_MSG))
         }
 
     @Test
     fun `check that loadedViewState is returned when LoadInitialResult is Empty and recipes are loaded`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.loadInitialRecipeResultEmpty.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    recipes = DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.loadInitialRecipeResultEmpty.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(LoadInitialResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
 
     @Test
     fun `check that loadedViewState is returned when RetryFetchResult is Empty and recipes are loaded`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.retryRecipeResultEmpty.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    recipes = DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.retryRecipeResultEmpty.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RetryFetchResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
 
     @Test
     fun `check that loadedViewState is returned when RefreshRecipesResult is Empty and recipes are loaded`() =
         runBlockingTest {
-            val result: RecipeViewResult =
-                FakeActionProcessor.refreshRecipeResultEmpty.toList().last()
-            val viewState: RecipeViewState = recipeViewStateReducer.reduce(
-                RecipeViewState.init.loadedState(
-                    recipes = DummyData.recipeModelList(recipeModelMapper)
-                ), result
+            val initialState: RecipeViewState = RecipeViewState.init.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
             )
+            val result: RecipeViewResult =
+                FakeRecipeActionProcessor.refreshRecipeResultEmpty.toList().last()
+            val viewState: RecipeViewState = recipeViewStateReducer.reduce(initialState, result)
             assertThat(result).isInstanceOf(RefreshRecipesResult.Empty::class.java)
-            assertThat(viewState.isLoading).isFalse()
-            assertThat(viewState.isRefreshing).isFalse()
-            assertThat(viewState.isDataUnavailable).isFalse()
-            assertThat(viewState.error).isNull()
-            assertThat(viewState.errorEvent).isNull()
-            assertRecipeHasData(viewState)
+            assertThat(viewState).isEqualTo(
+                initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+            )
         }
-
-    private fun assertRecipeHasData(viewState: RecipeViewState) {
-        assertThat(viewState.recipes).isNotEmpty()
-        assertThat(viewState.recipes).isEqualTo(DummyData.recipeModelList(recipeModelMapper))
-    }
 }

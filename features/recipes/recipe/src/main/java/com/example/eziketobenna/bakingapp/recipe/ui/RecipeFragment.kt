@@ -19,7 +19,7 @@ import com.example.eziketobenna.bakingapp.recipe.di.inject
 import com.example.eziketobenna.bakingapp.recipe.presentation.RecipeViewModel
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRefreshViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRetryViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RetryFetchViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -64,10 +64,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
 
-    private val emptyStateIntent: Flow<RecipeRetryViewIntent>
+    private val emptyStateIntent: Flow<RetryFetchViewIntent>
         get() = binding.emptyState.clicks
             .map {
-                RecipeRetryViewIntent
+                RetryFetchViewIntent
             }
 
     private val swipeRefreshIntent: Flow<RecipeRefreshViewIntent>

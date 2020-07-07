@@ -2,6 +2,7 @@ package com.example.eziketobenna.bakingapp.recipedetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eziketobenna.bakingapp.model.StepInfoModel
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import javax.inject.Inject
@@ -19,8 +20,7 @@ class RecipeDetailViewModel @Inject constructor(
     private val recipeDetailIntentProcessor: DetailIntentProcessor,
     private val recipeDetailStateReducer: DetailViewStateReducer,
     private val navigationDispatcher: NavigationDispatcher
-) : ViewModel(), MVIPresenter<RecipeDetailViewIntent, RecipeDetailViewState>,
-    NavigationDispatcher by navigationDispatcher {
+) : ViewModel(), MVIPresenter<RecipeDetailViewIntent, RecipeDetailViewState> {
 
     private val actionsFlow: MutableStateFlow<RecipeDetailViewAction> =
         MutableStateFlow(RecipeDetailViewAction.Idle)
@@ -43,14 +43,17 @@ class RecipeDetailViewModel @Inject constructor(
 
     private fun processActions() {
         actionsFlow
-            .flatMapMerge {
-                recipeDetailActionProcessor.actionToResult(it)
-            }
-            .scan(RecipeDetailViewState.Idle) { previous: RecipeDetailViewState, result ->
+            .flatMapMerge { viewAction ->
+                recipeDetailActionProcessor.actionToResult(viewAction)
+            }.scan(RecipeDetailViewState.Idle) { previous: RecipeDetailViewState, result ->
                 recipeDetailStateReducer.reduce(previous, result)
             }.distinctUntilChanged()
             .onEach { viewState ->
                 recipeDetailViewState.value = viewState
             }.launchIn(viewModelScope)
+    }
+
+    fun openStepDetail(stepInfoModel: StepInfoModel) {
+        navigationDispatcher.openStepDetail(stepInfoModel)
     }
 }

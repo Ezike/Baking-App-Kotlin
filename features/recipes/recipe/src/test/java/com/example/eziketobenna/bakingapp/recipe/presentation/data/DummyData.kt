@@ -5,6 +5,8 @@ import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 
 internal object DummyData {
 
@@ -35,4 +37,30 @@ internal object DummyData {
 
     fun recipeModelList(recipeModelMapper: RecipeModelMapper): List<RecipeModel> =
         recipeModelMapper.mapToModelList(listOf(recipe))
+}
+
+class DummyViewState(recipeModelMapper: RecipeModelMapper) {
+
+    private val initialState: RecipeViewState = RecipeViewState.init
+
+    private val loadedState: RecipeViewState =
+        initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+
+    val loadInitialViewState: Array<RecipeViewState> = arrayOf(
+        initialState,
+        initialState.loadingState,
+        initialState.loadingState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+    )
+
+    val refreshRecipesViewState: Array<RecipeViewState> = arrayOf(
+        loadedState, loadedState.refreshingState,
+        loadedState.refreshingState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+    )
+
+    val retryFetchViewState: Array<RecipeViewState> = arrayOf(
+        initialState.noDataErrorState(ERROR_MSG),
+        initialState.noDataErrorState(ERROR_MSG).loadingState,
+        initialState.noDataErrorState(ERROR_MSG).loadingState.loadedState(
+            DummyData.recipeModelList(recipeModelMapper))
+    )
 }

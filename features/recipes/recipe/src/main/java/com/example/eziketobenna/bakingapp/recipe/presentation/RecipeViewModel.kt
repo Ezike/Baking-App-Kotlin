@@ -2,6 +2,7 @@ package com.example.eziketobenna.bakingapp.recipe.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
@@ -24,8 +25,7 @@ class RecipeViewModel @Inject constructor(
     private val recipeViewStateReducer: RecipeStateReducer,
     private val recipeViewIntentProcessor: RecipeIntentProcessor,
     private val navigationDispatcher: NavigationDispatcher
-) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState>,
-    NavigationDispatcher by navigationDispatcher {
+) : ViewModel(), MVIPresenter<RecipeViewIntent, RecipeViewState> {
 
     private val _recipeViewState: MutableStateFlow<RecipeViewState> =
         MutableStateFlow(RecipeViewState.init)
@@ -35,11 +35,7 @@ class RecipeViewModel @Inject constructor(
 
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
-        ConflatedBroadcastChannel<RecipeViewAction>(
-            RecipeViewAction.LoadInitialAction)
-
-    private val actionFlow: Flow<RecipeViewAction>
-        get() = actionsChannel.asFlow()
+        ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
 
     init {
         processActions()
@@ -52,7 +48,7 @@ class RecipeViewModel @Inject constructor(
     }
 
     private fun processActions() {
-        actionFlow
+        actionsChannel.asFlow()
             .flatMapMerge { action ->
                 recipeActionProcessor.actionToResult(action)
             }.scan(RecipeViewState.init) { previous, result ->
@@ -61,5 +57,9 @@ class RecipeViewModel @Inject constructor(
             .onEach { recipeViewState ->
                 _recipeViewState.value = recipeViewState
             }.launchIn(viewModelScope)
+    }
+
+    fun openRecipeDetail(model: RecipeModel) {
+        navigationDispatcher.openRecipeDetail(model)
     }
 }

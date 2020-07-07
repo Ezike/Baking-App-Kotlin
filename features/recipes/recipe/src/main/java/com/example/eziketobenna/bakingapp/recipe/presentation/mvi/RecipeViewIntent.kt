@@ -4,6 +4,6 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.ViewIntent
 
 sealed class RecipeViewIntent : ViewIntent {
     object LoadInitialViewIntent : RecipeViewIntent()
-    object RecipeRetryViewIntent : RecipeViewIntent()
+    object RetryFetchViewIntent : RecipeViewIntent()
     object RecipeRefreshViewIntent : RecipeViewIntent()
 }
