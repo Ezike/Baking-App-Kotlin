@@ -6,7 +6,7 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewActi
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RetryFetchAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.LoadInitialViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRefreshViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRetryViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RetryFetchViewIntent
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
@@ -24,7 +24,7 @@ class RecipeViewIntentProcessorTest {
     @Test
     fun `check that RecipeRetryViewIntent is mapped to RetryFetchAction`() {
         val action: RecipeViewAction =
-            recipeViewIntentProcessor.intentToAction(RecipeRetryViewIntent)
+            recipeViewIntentProcessor.intentToAction(RetryFetchViewIntent)
         assertThat(action).isInstanceOf(RetryFetchAction::class.java)
     }
 

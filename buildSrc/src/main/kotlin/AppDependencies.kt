@@ -203,4 +203,5 @@ object ProjectLib {
     const val recipeModel: String = ":features:recipes:model"
     const val views: String = ":common:views"
     const val videoPlayer: String = ":features:videoPlayer"
+    const val commonTest: String = ":common:common-test"
 }

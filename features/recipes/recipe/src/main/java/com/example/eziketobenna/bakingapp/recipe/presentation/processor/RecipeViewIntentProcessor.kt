@@ -9,7 +9,7 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewActi
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.LoadInitialViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRefreshViewIntent
-import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RecipeRetryViewIntent
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RetryFetchViewIntent
 import javax.inject.Inject
 
 @FeatureScope
@@ -19,7 +19,7 @@ class RecipeViewIntentProcessor @Inject constructor() :
     override fun intentToAction(intent: RecipeViewIntent): RecipeViewAction {
         return when (intent) {
             LoadInitialViewIntent -> LoadInitialAction
-            RecipeRetryViewIntent -> RetryFetchAction
+            RetryFetchViewIntent -> RetryFetchAction
             RecipeRefreshViewIntent -> RefreshRecipesAction
         }
     }

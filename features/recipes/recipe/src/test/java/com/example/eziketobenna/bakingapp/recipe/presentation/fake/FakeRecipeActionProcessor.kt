@@ -1,7 +1,7 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation.fake
 
+import com.example.eziketobenna.bakingapp.common_test.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
-import com.example.eziketobenna.bakingapp.recipe.presentation.executor.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.LoadInitialAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RefreshRecipesAction
@@ -11,7 +11,7 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeAc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.take
 
-object FakeActionProcessor {
+object FakeRecipeActionProcessor {
 
     private fun baseRecipeResult(
         type: RepoType,

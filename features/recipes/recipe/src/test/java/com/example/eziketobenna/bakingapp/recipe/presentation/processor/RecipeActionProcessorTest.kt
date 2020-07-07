@@ -1,7 +1,7 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
+import com.example.eziketobenna.bakingapp.common_test.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
-import com.example.eziketobenna.bakingapp.recipe.presentation.executor.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.RepoType
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.makeFakeRecipeRepository

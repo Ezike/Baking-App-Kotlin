@@ -1,6 +1,5 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.model.RecipeModel
@@ -34,9 +33,6 @@ class RecipeViewModel @Inject constructor(
     override val viewState: StateFlow<RecipeViewState>
         get() = _recipeViewState
 
-    @get:VisibleForTesting
-    val en = mutableSetOf<RecipeViewState>()
-
     /** Using a channel cos [MutableStateFlow] doesn't emit subsequent values of the same type */
     private val actionsChannel =
         ConflatedBroadcastChannel<RecipeViewAction>(RecipeViewAction.LoadInitialAction)
@@ -60,7 +56,6 @@ class RecipeViewModel @Inject constructor(
             }.distinctUntilChanged()
             .onEach { recipeViewState ->
                 _recipeViewState.value = recipeViewState
-                en.add(recipeViewState)
             }.launchIn(viewModelScope)
     }
 

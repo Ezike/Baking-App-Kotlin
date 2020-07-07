@@ -3,9 +3,9 @@ import Dependencies.Coroutines
 import Dependencies.DI
 import Dependencies.FlowBinding
 import Dependencies.Kotlin
-import Dependencies.Test
 import Dependencies.View
 import ProjectLib.app
+import ProjectLib.commonTest
 import ProjectLib.core
 import ProjectLib.domain
 import ProjectLib.presentation
@@ -68,7 +68,5 @@ dependencies {
 
     kapt(DI.AnnotationProcessor.daggerHiltAndroid)
 
-    testImplementation(Test.junit)
-    testImplementation(Test.truth)
-    testImplementation(Test.coroutinesTest)
+    testImplementation(project(commonTest))
 }

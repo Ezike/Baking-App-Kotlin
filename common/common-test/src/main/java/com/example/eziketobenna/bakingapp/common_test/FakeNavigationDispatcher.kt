@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.recipe.presentation.fake
+package com.example.eziketobenna.bakingapp.common_test
 
 import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.model.StepInfoModel
