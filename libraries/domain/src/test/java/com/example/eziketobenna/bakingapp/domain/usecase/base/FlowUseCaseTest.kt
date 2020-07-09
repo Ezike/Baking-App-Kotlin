@@ -4,17 +4,21 @@ import com.example.eziketobenna.bakingapp.domain.exception.NoParamsException
 import com.example.eziketobenna.bakingapp.domain.executor.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.domain.fake.ExceptionUseCase
 import com.example.eziketobenna.bakingapp.domain.fake.ParamUseCase
+import com.example.eziketobenna.bakingapp.domain.fake.assertThrows
 import com.google.common.truth.Truth.assertThat
 import java.net.SocketTimeoutException
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 class FlowUseCaseTest {
 
-    @Test(expected = SocketTimeoutException::class)
+    @Test
     fun `check that ExceptionUseCase throws exception`() = runBlockingTest {
-        ExceptionUseCase(TestPostExecutionThread())()
+        assertThrows<SocketTimeoutException> {
+            ExceptionUseCase(TestPostExecutionThread())().collect()
+        }
     }
 
     @Test(expected = NoParamsException::class)

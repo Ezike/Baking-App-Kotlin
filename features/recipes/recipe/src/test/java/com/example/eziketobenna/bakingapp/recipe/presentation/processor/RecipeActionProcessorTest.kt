@@ -1,10 +1,13 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation.processor
 
+import com.example.eziketobenna.bakingapp.common_test.FlowRecorder
 import com.example.eziketobenna.bakingapp.common_test.TestPostExecutionThread
+import com.example.eziketobenna.bakingapp.common_test.recordWith
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.RepoType
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.makeFakeRecipeRepository
+import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyData
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.ResponseType
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.LoadInitialAction
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewAction.RefreshRecipesAction
@@ -13,11 +16,10 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResu
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.LoadInitialResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RefreshRecipesResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RetryFetchResult
+import com.google.common.truth.IterableSubject
 import com.google.common.truth.Truth.assertThat
 import java.net.SocketTimeoutException
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
@@ -25,87 +27,112 @@ class RecipeActionProcessorTest {
 
     private val testPostExecutionThread = TestPostExecutionThread()
 
+    private val fakeRecipeRepository = FakeRecipeRepository()
+
+    private val fetchRecipes = FetchRecipes(fakeRecipeRepository, testPostExecutionThread)
+
+    private val recipeActionProcessor = RecipeActionProcessor(fetchRecipes)
+
+    private val resultRecorder: FlowRecorder<RecipeViewResult> = FlowRecorder(TestCoroutineScope())
+
     @Test
     fun `check that LoadInitialAction returns Loaded LoadInitialResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(LoadInitialAction, RepoType.DATA)
-        assertThat(result.first()).isInstanceOf(LoadInitialResult.Loading::class.java)
-        assertThat(result.last()).isInstanceOf(LoadInitialResult.Loaded::class.java)
+        recordResult(LoadInitialAction, ResponseType.DATA)
+        assertThat(resultRecorder.takeAll())
+            .contains(LoadInitialResult.Loading, LoadInitialResult.Loaded(DummyData.recipeList))
     }
 
     @Test
     fun `check that LoadInitialAction returns Empty LoadInitialResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(LoadInitialAction, RepoType.EMPTY)
-        assertThat(result.first()).isInstanceOf(LoadInitialResult.Loading::class.java)
-        assertThat(result.last()).isInstanceOf(LoadInitialResult.Empty::class.java)
+        recordResult(LoadInitialAction, ResponseType.EMPTY)
+        assertThat(resultRecorder.takeAll())
+            .contains(LoadInitialResult.Loading, LoadInitialResult.Empty)
     }
 
     @Test
     fun `check that LoadInitialAction throws Error`() = runBlockingTest {
-        val value: RecipeViewResult = testData(LoadInitialAction, RepoType.ERROR).last()
-        assertThat(value).isInstanceOf(LoadInitialResult.Error::class.java)
-        assertThat((value as LoadInitialResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java
-        )
-        assertThat(value.cause.message).isEqualTo(ERROR_MSG)
+        recordResult(LoadInitialAction, ResponseType.ERROR)
+        val results: List<RecipeViewResult> = resultRecorder.takeAll()
+        assertThat(results.map { it.javaClass })
+            .contains(
+                LoadInitialResult.Loading::class.java,
+                LoadInitialResult.Error::class.java
+            )
+        val errorResult: LoadInitialResult.Error = results.last() as LoadInitialResult.Error
+        assertThat(errorResult.cause).isInstanceOf(SocketTimeoutException::class.java)
+        assertThat(errorResult.cause.message).isEqualTo(ERROR_MSG)
     }
 
     @Test
     fun `check that RetryFetchAction returns Loaded RetryFetchResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(RetryFetchAction, RepoType.DATA)
-        assertThat(result.first()).isInstanceOf(RetryFetchResult.Loading::class.java)
-        assertThat(result.last()).isInstanceOf(RetryFetchResult.Loaded::class.java)
+        recordResult(RetryFetchAction, ResponseType.DATA)
+        assertThat(resultRecorder.takeAll()).contains(
+            RetryFetchResult.Loading,
+            RetryFetchResult.Loaded(DummyData.recipeList)
+        )
     }
 
     @Test
     fun `check that RetryFetchAction returns Empty RetryFetchResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(RetryFetchAction, RepoType.EMPTY)
-        assertThat(result.first()).isInstanceOf(RetryFetchResult.Loading::class.java)
-        assertThat(result.last()).isInstanceOf(RetryFetchResult.Empty::class.java)
+        recordResult(RetryFetchAction, ResponseType.EMPTY)
+        assertThat(resultRecorder.takeAll()).contains(
+            RetryFetchResult.Loading,
+            RetryFetchResult.Empty
+        )
     }
 
     @Test
     fun `check that RetryFetchAction throws Error`() = runBlockingTest {
-        val value: RecipeViewResult = testData(RetryFetchAction, RepoType.ERROR).last()
-        assertThat(value).isInstanceOf(RetryFetchResult.Error::class.java)
-        assertThat((value as RetryFetchResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java
-        )
-        assertThat(value.cause.message).isEqualTo(ERROR_MSG)
+        recordResult(RetryFetchAction, ResponseType.ERROR)
+        val results: List<RecipeViewResult> = resultRecorder.takeAll()
+        assertThat(results.map { it.javaClass })
+            .contains(
+                RetryFetchResult.Loading::class.java,
+                RetryFetchResult.Error::class.java
+            )
+        val errorResult: RetryFetchResult.Error = results.last() as RetryFetchResult.Error
+        assertThat(errorResult.cause).isInstanceOf(SocketTimeoutException::class.java)
+        assertThat(errorResult.cause.message).isEqualTo(ERROR_MSG)
     }
 
     @Test
     fun `check that RefreshRecipesAction returns Loaded RefreshRecipesResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(RefreshRecipesAction, RepoType.DATA)
-        assertThat(result.first()).isInstanceOf(RefreshRecipesResult.Refreshing::class.java)
-        assertThat(result.last()).isInstanceOf(RefreshRecipesResult.Loaded::class.java)
+        recordResult(RefreshRecipesAction, ResponseType.DATA)
+        assertThat(resultRecorder.takeAll()).contains(
+            RefreshRecipesResult.Refreshing,
+            RefreshRecipesResult.Loaded(DummyData.recipeList)
+        )
     }
 
     @Test
     fun `check that RefreshRecipesAction returns Empty RefreshRecipesResult`() = runBlockingTest {
-        val result: List<RecipeViewResult> = testData(RefreshRecipesAction, RepoType.EMPTY)
-        assertThat(result.first()).isInstanceOf(RefreshRecipesResult.Refreshing::class.java)
-        assertThat(result.last()).isInstanceOf(RefreshRecipesResult.Empty::class.java)
+        recordResult(RefreshRecipesAction, ResponseType.EMPTY)
+        assertThat(resultRecorder.takeAll()).contains(
+            RefreshRecipesResult.Refreshing,
+            RefreshRecipesResult.Empty
+        )
     }
 
     @Test
     fun `check that RefreshRecipesAction throws Error`() = runBlockingTest {
-        val value: RecipeViewResult = testData(RefreshRecipesAction, RepoType.ERROR).last()
-        assertThat(value).isInstanceOf(RefreshRecipesResult.Error::class.java)
-        assertThat((value as RefreshRecipesResult.Error).cause).isInstanceOf(
-            SocketTimeoutException::class.java
-        )
-        assertThat(value.cause.message).isEqualTo(ERROR_MSG)
+        recordResult(RefreshRecipesAction, ResponseType.ERROR)
+        val results: List<RecipeViewResult> = resultRecorder.takeAll()
+        assertThat(results.map { it.javaClass })
+            .contains(
+                RefreshRecipesResult.Refreshing::class.java,
+                RefreshRecipesResult.Error::class.java
+            )
+        val errorResult: RefreshRecipesResult.Error = results.last() as RefreshRecipesResult.Error
+        assertThat(errorResult.cause).isInstanceOf(SocketTimeoutException::class.java)
+        assertThat(errorResult.cause.message).isEqualTo(ERROR_MSG)
     }
 
-    private suspend fun testData(
-        action: RecipeViewAction,
-        type: RepoType,
-        emissions: Int = 2
-    ): List<RecipeViewResult> {
-        val fetchRecipes = FetchRecipes(makeFakeRecipeRepository(type), testPostExecutionThread)
-        val recipeActionProcessor = RecipeActionProcessor(fetchRecipes)
-        val flowResult: Flow<RecipeViewResult> =
-            recipeActionProcessor.actionToResult(action)
-        return flowResult.take(emissions).toList()
+    private fun recordResult(action: RecipeViewAction, type: ResponseType) {
+        fakeRecipeRepository.responseType = type
+        recipeActionProcessor.actionToResult(action).recordWith(resultRecorder)
+    }
+
+    private inline fun <reified T> IterableSubject.contains(vararg instance: T) {
+        containsExactlyElementsIn(instance).inOrder()
     }
 }

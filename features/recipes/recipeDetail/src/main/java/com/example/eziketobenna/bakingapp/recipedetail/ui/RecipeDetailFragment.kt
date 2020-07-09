@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
@@ -33,7 +34,7 @@ import reactivecircus.flowbinding.lifecycle.events
 class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     MVIView<RecipeDetailViewIntent, RecipeDetailViewState> {
 
-    private val args by navArgs<RecipeDetailFragmentArgs>()
+    private val args: RecipeDetailFragmentArgs by navArgs()
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -58,6 +59,7 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        actionBar?.title = args.recipe.name
         binding.detailRv.adapter = ingredientStepAdapter
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
