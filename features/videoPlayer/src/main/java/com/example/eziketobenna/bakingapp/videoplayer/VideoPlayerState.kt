@@ -6,8 +6,19 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class VideoPlayerState(
-    var playWhenReady: Boolean = true,
-    var currentWindow: Int = C.INDEX_UNSET,
-    var playBackPosition: Long = 0,
-    var videoUrl: String? = null
-) : Parcelable
+    internal var playWhenReady: Boolean = true,
+    internal var currentWindow: Int = C.INDEX_UNSET,
+    internal var playBackPosition: Long = 0,
+    internal var videoUrl: String? = null
+) : Parcelable {
+
+    fun checkAndSet(url: String): VideoPlayerState =
+        if (videoUrl == url) {
+            this
+        } else {
+            this.apply {
+                videoUrl = url
+                playBackPosition = 0
+            }
+        }
+}

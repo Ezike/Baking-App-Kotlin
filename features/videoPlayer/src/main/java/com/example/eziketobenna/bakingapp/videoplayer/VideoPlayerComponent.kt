@@ -24,23 +24,20 @@ internal class VideoPlayerComponent(
 
     private var player: SimpleExoPlayer? = null
 
-    private val simpleExoPlayer: SimpleExoPlayer
-        get() = ExoPlayerFactory.newSimpleInstance(context,
-            DefaultTrackSelector().apply {
-                setParameters(buildUponParameters().setMaxVideoSizeSd())
-            })
-
     private fun initPlayer() {
         if (player == null) {
-            player = simpleExoPlayer
+            player = ExoPlayerFactory.newSimpleInstance(context,
+                DefaultTrackSelector().apply {
+                    setParameters(buildUponParameters().setMaxVideoSizeSd())
+                })
         }
         playerView.player = player
         setPlayerParams(playerState)
     }
 
     private fun setPlayerParams(state: VideoPlayerState) {
-        state.videoUrl?.let {
-            val uri: Uri = Uri.parse(it)
+        state.videoUrl?.let { url ->
+            val uri: Uri = Uri.parse(url)
             val mediaSource: MediaSource = buildMediaSource(uri)
             player?.playWhenReady = state.playWhenReady
             val hasResumePosition: Boolean = state.currentWindow != C.INDEX_UNSET
@@ -63,8 +60,7 @@ internal class VideoPlayerComponent(
 
     private fun buildMediaSource(uri: Uri): MediaSource {
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
-            context,
-            Util.getUserAgent(context, "bakingApp")
+            context, Util.getUserAgent(context, "bakingApp")
         )
         return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }

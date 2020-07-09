@@ -5,7 +5,7 @@ import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 
 internal object DummyData {
@@ -35,8 +35,10 @@ internal object DummyData {
             thumbnailURL = "thumb.com"
         )
 
+    val recipeList: List<Recipe> = listOf(recipe)
+
     fun recipeModelList(recipeModelMapper: RecipeModelMapper): List<RecipeModel> =
-        recipeModelMapper.mapToModelList(listOf(recipe))
+        recipeModelMapper.mapToModelList(recipeList)
 }
 
 class DummyViewState(recipeModelMapper: RecipeModelMapper) {
@@ -61,6 +63,7 @@ class DummyViewState(recipeModelMapper: RecipeModelMapper) {
         initialState.noDataErrorState(ERROR_MSG),
         initialState.noDataErrorState(ERROR_MSG).loadingState,
         initialState.noDataErrorState(ERROR_MSG).loadingState.loadedState(
-            DummyData.recipeModelList(recipeModelMapper))
+            DummyData.recipeModelList(recipeModelMapper)
+        )
     )
 }
