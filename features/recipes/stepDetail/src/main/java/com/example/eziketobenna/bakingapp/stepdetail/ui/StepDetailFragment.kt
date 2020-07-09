@@ -107,8 +107,8 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
         binding.previousButton.isInvisible = !state.showPrev
         binding.nextButton.text = getNextButtonText(state.showNext)
         binding.videoPlayer.isVisible = state.showVideo
-        playerState.videoUrl = state.videoUrl
-        binding.videoPlayer.init(this, playerState)
+        playerState = playerState.checkAndSet(state.videoUrl)
+        binding.videoPlayer.play(this, playerState)
     }
 
     private fun getNextButtonText(state: Boolean): String =

@@ -5,7 +5,7 @@ import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyData
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeActionProcessor
-import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepositoryError.Companion.ERROR_MSG
+import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.LoadInitialResult
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RefreshRecipesResult
@@ -19,6 +19,7 @@ import org.junit.Test
 class RecipeViewStateReducerTest {
 
     private val recipeModelMapper = RecipeModelMapper(StepModelMapper(), IngredientModelMapper())
+
     private val recipeViewStateReducer = RecipeViewStateReducer(recipeModelMapper)
 
     @Test

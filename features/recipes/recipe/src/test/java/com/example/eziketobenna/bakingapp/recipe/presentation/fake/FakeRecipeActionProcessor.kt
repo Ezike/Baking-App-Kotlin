@@ -13,40 +13,44 @@ import kotlinx.coroutines.flow.take
 
 object FakeRecipeActionProcessor {
 
+    private val testPostExecutionThread: TestPostExecutionThread = TestPostExecutionThread()
+
+    private val recipeRepository: FakeRecipeRepository = FakeRecipeRepository()
+
+    private val fetchRecipes = FetchRecipes(recipeRepository, testPostExecutionThread)
+
     private fun baseRecipeResult(
-        type: RepoType,
-        action: RecipeViewAction,
-        testPostExecutionThread: TestPostExecutionThread = TestPostExecutionThread()
+        type: ResponseType,
+        action: RecipeViewAction
     ): Flow<RecipeViewResult> {
-        val fetchRecipes = FetchRecipes(makeFakeRecipeRepository(type), testPostExecutionThread)
-        val recipeActionProcessor = RecipeActionProcessor(fetchRecipes)
-        return recipeActionProcessor.actionToResult(action).take(2)
+        recipeRepository.responseType = type
+        return RecipeActionProcessor(fetchRecipes).actionToResult(action).take(2)
     }
 
     val loadInitialRecipeResultData: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.DATA, LoadInitialAction)
+        get() = baseRecipeResult(ResponseType.DATA, LoadInitialAction)
 
     val loadInitialRecipeResultEmpty: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.EMPTY, LoadInitialAction)
+        get() = baseRecipeResult(ResponseType.EMPTY, LoadInitialAction)
 
     val loadInitialRecipeResultError: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.ERROR, LoadInitialAction)
+        get() = baseRecipeResult(ResponseType.ERROR, LoadInitialAction)
 
     val retryRecipeResultData: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.DATA, RetryFetchAction)
+        get() = baseRecipeResult(ResponseType.DATA, RetryFetchAction)
 
     val retryRecipeResultEmpty: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.EMPTY, RetryFetchAction)
+        get() = baseRecipeResult(ResponseType.EMPTY, RetryFetchAction)
 
     val retryRecipeResultError: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.ERROR, RetryFetchAction)
+        get() = baseRecipeResult(ResponseType.ERROR, RetryFetchAction)
 
     val refreshRecipeResultData: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.DATA, RefreshRecipesAction)
+        get() = baseRecipeResult(ResponseType.DATA, RefreshRecipesAction)
 
     val refreshRecipeResultEmpty: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.EMPTY, RefreshRecipesAction)
+        get() = baseRecipeResult(ResponseType.EMPTY, RefreshRecipesAction)
 
     val refreshRecipeResultError: Flow<RecipeViewResult>
-        get() = baseRecipeResult(RepoType.ERROR, RefreshRecipesAction)
+        get() = baseRecipeResult(ResponseType.ERROR, RefreshRecipesAction)
 }

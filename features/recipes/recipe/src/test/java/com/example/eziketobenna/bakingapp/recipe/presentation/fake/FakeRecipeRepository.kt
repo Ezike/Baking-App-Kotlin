@@ -8,40 +8,34 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeRecipeRepository : RecipeRepository {
-
-    override fun fetchRecipes(): Flow<List<Recipe>> {
-        return flowOf(listOf(DummyData.recipe))
-    }
-}
-
-class FakeRecipeRepositoryEmpty : RecipeRepository {
-
-    override fun fetchRecipes(): Flow<List<Recipe>> {
-        return flowOf(listOf())
-    }
-}
-
-class FakeRecipeRepositoryError : RecipeRepository {
+internal class FakeRecipeRepository : RecipeRepository {
 
     companion object {
-        const val ERROR_MSG: String = "No data"
+        const val ERROR_MSG: String = "No network"
     }
+
+    private var recipesFlow: Flow<List<Recipe>> = flowOf(listOf(DummyData.recipe))
 
     override fun fetchRecipes(): Flow<List<Recipe>> {
-        return flow { throw SocketTimeoutException(ERROR_MSG) }
+        return recipesFlow
+    }
+
+    var responseType: ResponseType = ResponseType.DATA
+        set(value) {
+            field = value
+            recipesFlow = makeResponse(value)
+        }
+
+    private fun makeResponse(type: ResponseType): Flow<List<Recipe>> {
+        return when (type) {
+            ResponseType.DATA -> flowOf(listOf(DummyData.recipe))
+            ResponseType.EMPTY -> flowOf(listOf())
+            ResponseType.ERROR -> flow { throw SocketTimeoutException(ERROR_MSG) }
+        }
     }
 }
 
-fun makeFakeRecipeRepository(type: RepoType): RecipeRepository {
-    return when (type) {
-        RepoType.DATA -> FakeRecipeRepository()
-        RepoType.EMPTY -> FakeRecipeRepositoryEmpty()
-        RepoType.ERROR -> FakeRecipeRepositoryError()
-    }
-}
-
-enum class RepoType {
+internal enum class ResponseType {
     DATA,
     EMPTY,
     ERROR

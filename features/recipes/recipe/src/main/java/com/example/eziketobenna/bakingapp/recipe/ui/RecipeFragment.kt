@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.eziketobenna.bakingapp.core.ext.getDrawable
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
-import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipe.R
 import com.example.eziketobenna.bakingapp.recipe.clicks
@@ -29,7 +28,7 @@ import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe),
-    MVIView<RecipeViewIntent, RecipeViewState>, RecipeClickListener {
+    MVIView<RecipeViewIntent, RecipeViewState> {
 
     @Inject
     lateinit var recipeAdapter: RecipeAdapter
@@ -40,10 +39,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     private val viewModel: RecipeViewModel by viewModels { factory }
 
     private val binding: FragmentRecipeBinding by viewBinding(FragmentRecipeBinding::bind)
-
-    override fun invoke(model: RecipeModel) {
-        viewModel.openRecipeDetail(model)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -58,8 +53,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recipeAdapter.clickListener = this
-        binding.mainRv.adapter = recipeAdapter
+        binding.mainRv.adapter = recipeAdapter.apply {
+            clickListener = viewModel::openRecipeDetail
+        }
 
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }

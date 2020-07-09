@@ -24,8 +24,12 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attributeSet: Attr
         binding = VideoPlayerBinding.inflate(inflater, this, true)
     }
 
-    fun init(owner: LifecycleOwner, playerState: VideoPlayerState) {
+    fun play(owner: LifecycleOwner, playerState: VideoPlayerState) {
         initVideoComponent(playerState)
+        setPlayerState(playerState, owner)
+    }
+
+    private fun setPlayerState(playerState: VideoPlayerState, owner: LifecycleOwner) {
         if (playerState.videoUrl.isNullOrEmpty()) {
             binding.playerView.onPause()
             videoComponent.disposePlayer()
@@ -37,7 +41,7 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attributeSet: Attr
     }
 
     private fun initVideoComponent(playerState: VideoPlayerState) {
-        if (!this::videoComponent.isInitialized) {
+        if (::videoComponent.isInitialized.not()) {
             videoComponent = VideoPlayerComponent(context, binding.playerView, playerState)
         }
     }
