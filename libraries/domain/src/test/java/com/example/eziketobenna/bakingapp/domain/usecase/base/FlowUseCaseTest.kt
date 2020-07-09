@@ -3,6 +3,7 @@ package com.example.eziketobenna.bakingapp.domain.usecase.base
 import com.example.eziketobenna.bakingapp.domain.exception.NoParamsException
 import com.example.eziketobenna.bakingapp.domain.executor.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.domain.fake.ExceptionUseCase
+import com.example.eziketobenna.bakingapp.domain.fake.FakeRecipeRepository.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.domain.fake.ParamUseCase
 import com.example.eziketobenna.bakingapp.domain.fake.assertThrows
 import com.google.common.truth.Truth.assertThat
@@ -16,9 +17,12 @@ class FlowUseCaseTest {
 
     @Test
     fun `check that ExceptionUseCase throws exception`() = runBlockingTest {
-        assertThrows<SocketTimeoutException> {
+        val exception: SocketTimeoutException = assertThrows {
             ExceptionUseCase(TestPostExecutionThread())().collect()
         }
+        assertThat(exception)
+            .hasMessageThat()
+            .isEqualTo(ERROR_MSG)
     }
 
     @Test(expected = NoParamsException::class)
