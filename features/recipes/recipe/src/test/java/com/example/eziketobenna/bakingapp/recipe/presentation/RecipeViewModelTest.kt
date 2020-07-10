@@ -1,6 +1,5 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
-import android.os.Parcelable
 import com.example.eziketobenna.bakingapp.common_test.FakeNavigationDispatcher
 import com.example.eziketobenna.bakingapp.common_test.FlowRecorder
 import com.example.eziketobenna.bakingapp.common_test.MainCoroutineRule
@@ -32,8 +31,6 @@ class RecipeViewModelTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     private val stateRecorder: FlowRecorder<RecipeViewState> = FlowRecorder(TestCoroutineScope())
-    private val navigationEventRecorder: FlowRecorder<Parcelable?> =
-        FlowRecorder(TestCoroutineScope())
 
     private val recipeModelMapper = RecipeModelMapper(StepModelMapper(), IngredientModelMapper())
     private val recipeViewStateReducer = RecipeViewStateReducer(recipeModelMapper)
@@ -217,12 +214,9 @@ class RecipeViewModelTest {
 
     @Test
     fun `openRecipeDetail calls NavigationDispatcher`() {
-        FakeNavigationDispatcher.event.recordWith(navigationEventRecorder)
         val model: RecipeModel = recipeModelMapper.mapToModel(DummyData.recipe)
         recipeViewModel.openRecipeDetail(model)
-        val events: List<Parcelable?> = navigationEventRecorder.takeAll().filterNotNull()
-        assertThat(events.size).isEqualTo(1)
-        assertThat(events[0]).isNotNull()
-        assertThat(events[0]).isEqualTo(model)
+        assertThat(FakeNavigationDispatcher.event.value).isNotNull()
+        assertThat(FakeNavigationDispatcher.event.value).isEqualTo(model)
     }
 }

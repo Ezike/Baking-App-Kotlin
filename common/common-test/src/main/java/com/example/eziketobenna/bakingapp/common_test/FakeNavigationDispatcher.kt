@@ -8,17 +8,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 object FakeNavigationDispatcher : NavigationDispatcher {
 
-    val event: MutableStateFlow<Parcelable?> = MutableStateFlow(null)
+    private val mutableEvent: MutableStateFlow<Parcelable?> = MutableStateFlow(null)
+    val event: MutableStateFlow<Parcelable?>
+        get() = mutableEvent
 
     override fun openRecipeDetail(model: RecipeModel) {
-        event.value = model
+        mutableEvent.value = model
     }
 
     override fun openStepDetail(stepInfoModel: StepInfoModel) {
-        event.value = stepInfoModel
+        mutableEvent.value = stepInfoModel
     }
 
     override fun goBack() {
-        event.value = null
+        mutableEvent.value = null
     }
 }
