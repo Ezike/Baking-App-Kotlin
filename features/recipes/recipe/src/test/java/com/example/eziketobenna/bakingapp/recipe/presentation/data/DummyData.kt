@@ -41,29 +41,56 @@ internal object DummyData {
         recipeModelMapper.mapToModelList(recipeList)
 }
 
-class DummyViewState(recipeModelMapper: RecipeModelMapper) {
+class DummyViewState(private val recipeModelMapper: RecipeModelMapper) {
 
-    private val initialState: RecipeViewState = RecipeViewState.init
+    private val initialState: RecipeViewState
+        get() = RecipeViewState.init
 
-    private val loadedState: RecipeViewState =
-        initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
+    private val loadedState: RecipeViewState
+        get() = initialState.loadedState(DummyData.recipeModelList(recipeModelMapper))
 
-    val loadInitialViewState: Array<RecipeViewState> = arrayOf(
-        initialState,
-        initialState.loadingState,
-        initialState.loadingState.loadedState(DummyData.recipeModelList(recipeModelMapper))
-    )
-
-    val refreshRecipesViewState: Array<RecipeViewState> = arrayOf(
-        loadedState, loadedState.refreshingState,
-        loadedState.refreshingState.loadedState(DummyData.recipeModelList(recipeModelMapper))
-    )
-
-    val retryFetchViewState: Array<RecipeViewState> = arrayOf(
-        initialState.noDataErrorState(ERROR_MSG),
-        initialState.noDataErrorState(ERROR_MSG).loadingState,
-        initialState.noDataErrorState(ERROR_MSG).loadingState.loadedState(
-            DummyData.recipeModelList(recipeModelMapper)
+    val loadInitialViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            initialState,
+            initialState.loadingState,
+            initialState.loadingState.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
+            )
         )
-    )
+
+    val refreshRecipesViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            loadedState.refreshingState,
+            loadedState.refreshingState.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
+            )
+        )
+
+    val retryFetchViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            initialState.noDataErrorState(ERROR_MSG).loadingState,
+            initialState.noDataErrorState(ERROR_MSG).loadingState.loadedState(
+                DummyData.recipeModelList(recipeModelMapper)
+            )
+        )
+
+    val emptyViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            initialState,
+            initialState.loadingState,
+            initialState.loadingState.emptyState
+        )
+
+    val noDataErrorViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            initialState,
+            initialState.loadingState,
+            initialState.loadingState.noDataErrorState(ERROR_MSG)
+        )
+
+    val dataErrorViewState: Array<RecipeViewState>
+        get() = arrayOf(
+            loadedState.loadingState,
+            loadedState.loadingState.dataAvailableErrorState(ERROR_MSG)
+        )
 }
