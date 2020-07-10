@@ -96,7 +96,6 @@ class RecipeViewStateReducer @Inject constructor(private val recipeModelMapper: 
                     refreshRecipesResult.recipes
                 )
             )
-
             is RefreshRecipesResult.Error -> handleErrorState(
                 previous,
                 refreshRecipesResult.cause.errorMessage
