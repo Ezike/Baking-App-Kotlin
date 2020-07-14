@@ -2,7 +2,6 @@ package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIPresenter
 import javax.inject.Inject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -19,8 +18,7 @@ import kotlinx.coroutines.flow.scan
 class StepDetailViewModel @Inject constructor(
     private val stepDetailIntentProcessor: StepIntentProcessor,
     private val stepDetailActionProcessor: StepActionProcessor,
-    private val viewStateReducer: StepViewStateReducer,
-    private val navigationDispatcher: NavigationDispatcher
+    private val viewStateReducer: StepViewStateReducer
 ) : ViewModel(), MVIPresenter<StepDetailViewIntent, StepDetailViewState> {
 
     private val stepDetailViewState: MutableStateFlow<StepDetailViewState> =
@@ -52,9 +50,5 @@ class StepDetailViewModel @Inject constructor(
             .onEach { viewState ->
                 stepDetailViewState.value = viewState
             }.launchIn(viewModelScope)
-    }
-
-    fun goBack() {
-        navigationDispatcher.goBack()
     }
 }

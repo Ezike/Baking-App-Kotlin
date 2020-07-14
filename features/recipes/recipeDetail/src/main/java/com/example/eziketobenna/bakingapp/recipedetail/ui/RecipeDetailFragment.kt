@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
+import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.recipedetail.R
 import com.example.eziketobenna.bakingapp.recipedetail.databinding.FragmentRecipeDetailBinding
@@ -25,6 +26,7 @@ import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetail
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.IngredientStepAdapter
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.stepClicks
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -38,6 +40,9 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var navigator: Provider<NavigationDispatcher>
 
     private val viewModel: RecipeDetailViewModel by viewModels { factory }
 
@@ -69,9 +74,8 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
             RecipeDetailViewState.Idle -> {
             }
             is Success -> ingredientStepAdapter.submitList(state.model)
-            is NavigateToStepInfo -> state.openStepInfoEvent.consume { stepInfoModel ->
-                viewModel.openStepDetail(stepInfoModel)
-            }
+            is NavigateToStepInfo ->
+                state.openStepInfoEvent.consume(navigator.get()::openStepDetail)
         }
     }
 
@@ -83,15 +87,12 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
              * and resets the [RecyclerView] scroll state
              */
             ingredientStepAdapter.isEmpty
-        }.map {
-            LoadRecipeDetailIntent(args.recipe)
-        }
+        }.map { LoadRecipeDetailIntent(args.recipe) }
 
     private val openStepInfoIntent: Flow<OpenStepInfoViewIntent>
-        get() = ingredientStepAdapter.stepClicks
-            .map { stepDetailItem ->
-                OpenStepInfoViewIntent(stepDetailItem, args.recipe.steps)
-            }
+        get() = ingredientStepAdapter.stepClicks.map { stepDetailItem ->
+            OpenStepInfoViewIntent(stepDetailItem, args.recipe.steps)
+        }
 
     override val intents: Flow<RecipeDetailViewIntent>
         get() = merge(loadRecipeDetailIntent, openStepInfoIntent)
