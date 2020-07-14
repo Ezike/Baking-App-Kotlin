@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.eziketobenna.bakingapp.core.factory.ViewModelFactory
 import dagger.Binds
 import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.migration.DisableInstallInCheck
 
-@InstallIn(ApplicationComponent::class)
-@Module
-interface FactoriesModule {
+@[Module DisableInstallInCheck]
+interface FactoryModule {
 
     @get:Binds
     val ViewModelFactory.viewModelFactory: ViewModelProvider.Factory
