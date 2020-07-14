@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
      * since they offer lazy retrieval and or initialization.
      */
     @Inject
-    lateinit var _navController: Provider<NavController>
+    lateinit var navControllerProvider: Provider<NavController>
 
     private val navController: NavController
-        get() = _navController.get()
+        get() = navControllerProvider.get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
