@@ -11,17 +11,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
 
 @InstallIn(ActivityComponent::class)
 @Module
 interface NavigationModule {
 
-    @get:[Binds ActivityScoped]
+    @get:Binds
     val NavigationDispatcherImpl.navigationDispatcher: NavigationDispatcher
 
     companion object {
-        @[Provides ActivityScoped]
+        @Provides
         fun provideNavController(activity: Activity): NavController =
             activity.findNavController(R.id.mainNavHostFragment)
     }

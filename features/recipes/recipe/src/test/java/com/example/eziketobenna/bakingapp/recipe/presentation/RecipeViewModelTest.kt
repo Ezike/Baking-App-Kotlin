@@ -1,16 +1,13 @@
 package com.example.eziketobenna.bakingapp.recipe.presentation
 
-import com.example.eziketobenna.bakingapp.common_test.FakeNavigationDispatcher
 import com.example.eziketobenna.bakingapp.common_test.FlowRecorder
 import com.example.eziketobenna.bakingapp.common_test.MainCoroutineRule
 import com.example.eziketobenna.bakingapp.common_test.TestPostExecutionThread
 import com.example.eziketobenna.bakingapp.common_test.recordWith
 import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
-import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
-import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyData
 import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyViewState
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
@@ -44,8 +41,7 @@ class RecipeViewModelTest {
         RecipeViewModel(
             recipeActionProcessor,
             recipeViewStateReducer,
-            RecipeViewIntentProcessor(),
-            FakeNavigationDispatcher
+            RecipeViewIntentProcessor()
         )
     }
 
@@ -210,13 +206,5 @@ class RecipeViewModelTest {
                 dummyViewState.loadInitialViewState +
                     dummyViewState.dataErrorViewState
             ).inOrder()
-    }
-
-    @Test
-    fun `openRecipeDetail calls NavigationDispatcher`() {
-        val model: RecipeModel = recipeModelMapper.mapToModel(DummyData.recipe)
-        recipeViewModel.openRecipeDetail(model)
-        assertThat(FakeNavigationDispatcher.event.value).isNotNull()
-        assertThat(FakeNavigationDispatcher.event.value).isEqualTo(model)
     }
 }

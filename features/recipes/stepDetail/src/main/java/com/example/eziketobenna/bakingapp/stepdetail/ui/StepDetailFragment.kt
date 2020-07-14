@@ -14,6 +14,7 @@ import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.ext.observe
 import com.example.eziketobenna.bakingapp.core.ext.visible
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
+import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.stepdetail.R
 import com.example.eziketobenna.bakingapp.stepdetail.databinding.FragmentStepDetailBinding
@@ -26,6 +27,7 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailView
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState
 import com.example.eziketobenna.bakingapp.videoplayer.VideoPlayerState
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -38,6 +40,9 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var navigator: Provider<NavigationDispatcher>
 
     private val viewModel: StepDetailViewModel by viewModels { factory }
 
@@ -96,7 +101,7 @@ class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
             }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
             is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
-                viewModel.goBack()
+                navigator.get().goBack()
             }
         }
     }
