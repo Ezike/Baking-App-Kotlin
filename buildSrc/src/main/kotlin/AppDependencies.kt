@@ -137,7 +137,7 @@ object Dependencies {
     object DI {
         object Version {
             const val javaxInject: String = "1"
-            const val daggerHiltAndroid: String = "2.28-alpha"
+            const val daggerHiltAndroid: String = "2.28.2-alpha"
         }
 
         object AnnotationProcessor {
