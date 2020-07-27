@@ -3,9 +3,11 @@ package com.example.eziketobenna.bakingapp.recipedetail.presentation
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewStateReducer
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult.LoadedData
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult.OpenStepInfo
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.factory.RecipeDetailModelFactory
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult.LoadedData
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult.OpenStepInfo
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewState
 import javax.inject.Inject
 
 @FeatureScope

@@ -2,11 +2,11 @@ package com.example.eziketobenna.bakingapp.recipedetail.presentation.processor
 
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.presentation.mvi.ActionProcessor
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewResult.OpenStepInfo
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction.LoadRecipeDetailAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult.OpenStepInfo
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

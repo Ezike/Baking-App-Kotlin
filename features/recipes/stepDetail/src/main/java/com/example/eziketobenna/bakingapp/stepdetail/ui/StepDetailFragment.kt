@@ -19,12 +19,12 @@ import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
 import com.example.eziketobenna.bakingapp.stepdetail.R
 import com.example.eziketobenna.bakingapp.stepdetail.databinding.FragmentStepDetailBinding
 import com.example.eziketobenna.bakingapp.stepdetail.di.inject
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToNextStepViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToPreviousStepViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.LoadInitialViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewModel
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewState
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.GoToNextStepViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.GoToPreviousStepViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.LoadInitialViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewState
 import com.example.eziketobenna.bakingapp.videoplayer.VideoPlayerState
 import javax.inject.Inject
 import javax.inject.Provider

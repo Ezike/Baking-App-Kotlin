@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.recipedetail.presentation
+package com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi
 
 import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.model.StepModel

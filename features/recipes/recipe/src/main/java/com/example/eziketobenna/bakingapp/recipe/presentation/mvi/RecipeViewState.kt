@@ -4,7 +4,7 @@ import com.example.eziketobenna.bakingapp.model.RecipeModel
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewState
 
-data class RecipeViewState(
+data class RecipeViewState private constructor(
     val isLoading: Boolean,
     val isRefreshing: Boolean,
     val isDataUnavailable: Boolean,

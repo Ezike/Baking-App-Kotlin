@@ -1,4 +1,4 @@
-package com.example.eziketobenna.bakingapp.stepdetail.presentation
+package com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi
 
 import com.example.eziketobenna.bakingapp.presentation.event.ViewEvent
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewState

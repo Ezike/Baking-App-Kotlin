@@ -1,4 +1,4 @@
-const val kotlinVersion: String = "1.4-M3"
+const val kotlinVersion: String = "1.4.0-rc"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
 const val kotlinKapt: String = "kapt"

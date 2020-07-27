@@ -40,11 +40,13 @@ internal class VideoPlayerComponent(
             val uri: Uri = Uri.parse(url)
             val mediaSource: MediaSource = buildMediaSource(uri)
             player?.playWhenReady = state.playWhenReady
-            val hasResumePosition: Boolean = state.currentWindow != C.INDEX_UNSET
+            val hasResumePosition: Boolean =
+                state.currentWindow != C.INDEX_UNSET && state.playBackPosition.toInt() != 0
             if (hasResumePosition) {
                 player?.seekTo(state.currentWindow, state.playBackPosition)
             }
-            player?.prepare(mediaSource, false, false)
+            val resetState: Boolean = !hasResumePosition
+            player?.prepare(mediaSource, resetState, resetState)
         }
     }
 

@@ -3,14 +3,14 @@ package com.example.eziketobenna.bakingapp.stepdetail.presentation.processor
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToNextStepViewAction
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.GoToPreviousStepViewAction
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewAction.LoadInitialViewAction
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToNextStepViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.GoToPreviousStepViewIntent
-import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepDetailViewIntent.LoadInitialViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewAction.GoToNextStepViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewAction.GoToPreviousStepViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewAction.LoadInitialViewAction
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.GoToNextStepViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.GoToPreviousStepViewIntent
+import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.LoadInitialViewIntent
 import javax.inject.Inject
 
 @FeatureScope
