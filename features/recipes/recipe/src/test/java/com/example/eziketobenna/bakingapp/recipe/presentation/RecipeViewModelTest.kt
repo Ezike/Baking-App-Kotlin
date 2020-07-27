@@ -12,6 +12,7 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyViewStat
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.ResponseType
+import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.HomeStateMachine
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeActionProcessor
@@ -30,18 +31,18 @@ class RecipeViewModelTest {
     private val stateRecorder: FlowRecorder<RecipeViewState> = FlowRecorder(TestCoroutineScope())
 
     private val recipeModelMapper = RecipeModelMapper(StepModelMapper(), IngredientModelMapper())
-    private val recipeViewStateReducer = RecipeViewStateReducer(recipeModelMapper)
     private val fakeRecipeRepository = FakeRecipeRepository()
     private val fetchRecipes = FetchRecipes(fakeRecipeRepository, TestPostExecutionThread())
-    private val recipeActionProcessor = RecipeActionProcessor(fetchRecipes)
 
     private val dummyViewState = DummyViewState(recipeModelMapper)
 
     private val recipeViewModel: RecipeViewModel by lazy {
         RecipeViewModel(
-            recipeActionProcessor,
-            recipeViewStateReducer,
-            RecipeViewIntentProcessor()
+            HomeStateMachine(
+                RecipeActionProcessor(fetchRecipes),
+                RecipeViewIntentProcessor(),
+                RecipeViewStateReducer(recipeModelMapper)
+            )
         )
     }
 
@@ -128,12 +129,12 @@ class RecipeViewModelTest {
 
     @Test
     fun `dataAvailableViewState is emitted when RefreshRecipesAction is processed but data is already loaded`() {
-        // First set the fetchRecipes response to data
         mainCoroutineRule.pauseDispatcher()
+        // First set the fetchRecipes response to load recipe data
         fakeRecipeRepository.responseType = ResponseType.DATA
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        // Reset fetchRecipes response to error before sending new intent,
+        // Reset fetchRecipes response to throw error before sending new intent,
         // so as to simulate a `data available error state` [Transient error]
         fakeRecipeRepository.responseType = ResponseType.ERROR
         recipeViewModel.processIntent(flowOf(RecipeViewIntent.RecipeRefreshViewIntent))

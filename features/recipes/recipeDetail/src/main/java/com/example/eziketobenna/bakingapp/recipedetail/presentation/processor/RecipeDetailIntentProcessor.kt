@@ -5,12 +5,12 @@ import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
 import com.example.eziketobenna.bakingapp.presentation.mvi.IntentProcessor
 import com.example.eziketobenna.bakingapp.recipedetail.model.StepDetailMapper
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.LoadRecipeDetailAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewAction.OpenStepInfoViewAction
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.LoadRecipeDetailIntent
-import com.example.eziketobenna.bakingapp.recipedetail.presentation.RecipeDetailViewIntent.OpenStepInfoViewIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction.LoadRecipeDetailAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction.OpenStepInfoViewAction
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewIntent.LoadRecipeDetailIntent
+import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewIntent.OpenStepInfoViewIntent
 import javax.inject.Inject
 
 @FeatureScope

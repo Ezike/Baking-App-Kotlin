@@ -12,6 +12,9 @@ data class VideoPlayerState(
     internal var videoUrl: String? = null
 ) : Parcelable {
 
+    /**
+     * reset the playback position only if the video url changes
+     */
     fun checkAndSet(url: String): VideoPlayerState =
         if (videoUrl == url) {
             this
@@ -19,6 +22,7 @@ data class VideoPlayerState(
             this.apply {
                 videoUrl = url
                 playBackPosition = 0
+                currentWindow = C.INDEX_UNSET
             }
         }
 }
