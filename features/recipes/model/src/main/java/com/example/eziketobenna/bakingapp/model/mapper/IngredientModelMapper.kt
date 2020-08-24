@@ -17,9 +17,9 @@ class IngredientModelMapper @Inject constructor() : ModelMapper<IngredientModel,
 
     override fun mapToDomain(model: IngredientModel): Ingredient {
         return Ingredient(
-                model.quantity,
-                model.measure,
-                model.ingredient
+            model.quantity,
+            model.measure,
+            model.ingredient
         )
     }
 }

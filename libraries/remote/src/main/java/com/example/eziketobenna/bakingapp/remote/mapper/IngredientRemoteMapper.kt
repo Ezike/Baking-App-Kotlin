@@ -6,13 +6,13 @@ import com.example.eziketobenna.bakingapp.remote.model.IngredientRemoteModel
 import javax.inject.Inject
 
 class IngredientRemoteMapper @Inject constructor() :
-        RemoteModelMapper<IngredientRemoteModel, IngredientEntity> {
+    RemoteModelMapper<IngredientRemoteModel, IngredientEntity> {
 
     override fun mapFromModel(model: IngredientRemoteModel): IngredientEntity {
         return IngredientEntity(
-                model.quantity,
-                model.measure,
-                model.ingredient
+            model.quantity,
+            model.measure,
+            model.ingredient
         )
     }
 }

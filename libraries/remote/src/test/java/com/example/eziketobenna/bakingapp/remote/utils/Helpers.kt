@@ -4,12 +4,12 @@ import com.example.eziketobenna.bakingapp.remote.ApiService
 import com.google.common.io.Resources
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import java.io.File
-import java.net.URL
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
+import java.net.URL
 
 const val REQUEST_PATH: String = "/baking.json"
 

@@ -1,9 +1,9 @@
 package com.example.eziketobenna.bakingapp.remote.utils
 
-import java.net.HttpURLConnection
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
+import java.net.HttpURLConnection
 
 internal class RecipeRequestDispatcher : Dispatcher() {
 

@@ -1,7 +1,7 @@
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
 const val kotlinKapt: String = "kapt"
-const val ktLintVersion: String = "0.38.0"
+const val ktLintVersion: String = "0.37.2"
 
 object Config {
     object Version {

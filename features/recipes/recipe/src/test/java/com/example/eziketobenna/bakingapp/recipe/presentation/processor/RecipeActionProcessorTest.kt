@@ -18,10 +18,10 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResu
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewResult.RetryFetchResult
 import com.google.common.truth.IterableSubject
 import com.google.common.truth.Truth.assertThat
-import java.net.SocketTimeoutException
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
+import java.net.SocketTimeoutException
 
 class RecipeActionProcessorTest {
 

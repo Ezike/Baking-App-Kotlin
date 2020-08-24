@@ -12,9 +12,11 @@ class ImageLoaderImpl @Inject constructor() : ImageLoader {
         view.load(url) {
             crossfade(true)
             size(ViewSizeResolver(view, false))
-            listener(onError = { _, throwable ->
-                throwable.printStackTrace()
-            })
+            listener(
+                onError = { _, throwable ->
+                    throwable.printStackTrace()
+                }
+            )
         }
     }
 }

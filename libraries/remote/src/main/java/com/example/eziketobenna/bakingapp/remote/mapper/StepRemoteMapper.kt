@@ -9,11 +9,11 @@ class StepRemoteMapper @Inject constructor() : RemoteModelMapper<StepRemoteModel
 
     override fun mapFromModel(model: StepRemoteModel): StepEntity {
         return StepEntity(
-                model.id,
-                model.videoURL,
-                model.description,
-                model.shortDescription,
-                model.thumbnailURL
+            model.id,
+            model.videoURL,
+            model.description,
+            model.shortDescription,
+            model.thumbnailURL
         )
     }
 }

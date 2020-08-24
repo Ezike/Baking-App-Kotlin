@@ -26,16 +26,17 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetail
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent.LoadInitialViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewState
 import com.example.eziketobenna.bakingapp.videoplayer.VideoPlayerState
-import javax.inject.Inject
-import javax.inject.Provider
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.android.view.clicks
+import javax.inject.Inject
+import javax.inject.Provider
 
-class StepDetailFragment : Fragment(R.layout.fragment_step_detail),
+class StepDetailFragment :
+    Fragment(R.layout.fragment_step_detail),
     MVIView<StepDetailViewIntent, StepDetailViewState> {
 
     @Inject

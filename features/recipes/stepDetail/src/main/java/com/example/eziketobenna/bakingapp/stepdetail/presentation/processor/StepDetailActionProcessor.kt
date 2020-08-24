@@ -10,9 +10,9 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetail
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewResult.GoToNextStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewResult.GoToPreviousStepViewResult
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewResult.LoadedInitialResult
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 @FeatureScope
 class StepDetailActionProcessor @Inject constructor() :

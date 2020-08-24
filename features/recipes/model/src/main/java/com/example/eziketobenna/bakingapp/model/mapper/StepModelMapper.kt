@@ -19,11 +19,11 @@ class StepModelMapper @Inject constructor() : ModelMapper<StepModel, Step> {
 
     override fun mapToDomain(model: StepModel): Step {
         return Step(
-                model.id,
-                model.videoURL,
-                model.description,
-                model.shortDescription,
-                model.thumbnailURL
+            model.id,
+            model.videoURL,
+            model.description,
+            model.shortDescription,
+            model.thumbnailURL
         )
     }
 }
