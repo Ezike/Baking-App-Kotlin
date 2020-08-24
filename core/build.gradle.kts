@@ -1,6 +1,5 @@
 import Dependencies.Coroutines
 import Dependencies.DI
-import Dependencies.Kotlin
 import Dependencies.Network
 import Dependencies.View
 import ProjectLib.data
@@ -44,7 +43,6 @@ dependencies {
     implementation(project(data))
     implementation(project(remote))
 
-    implementation(Kotlin.stdlib)
     implementation(DI.daggerHiltAndroid)
     implementation(Network.moshi)
     implementation(Coroutines.core)

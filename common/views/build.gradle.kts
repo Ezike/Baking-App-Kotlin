@@ -1,5 +1,4 @@
 import Dependencies.AndroidX.coreKtx
-import Dependencies.Kotlin
 import Dependencies.View
 
 plugins {
@@ -34,7 +33,6 @@ android {
 }
 
 dependencies {
-    implementation(Kotlin.stdlib)
     View.run {
         implementation(materialComponent)
         implementation(appCompat)

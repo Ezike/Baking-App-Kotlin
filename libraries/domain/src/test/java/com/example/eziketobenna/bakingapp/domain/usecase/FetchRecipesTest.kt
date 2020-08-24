@@ -12,7 +12,6 @@ import java.net.SocketTimeoutException
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class FetchRecipesTest {
@@ -43,11 +42,12 @@ class FetchRecipesTest {
     }
 
     @Test
-    fun `check that calling fetchRecipes returns empty list if response is empty`() = runBlockingTest {
-        fakeRecipeRepository.responseType = ResponseType.EMPTY
-        val recipes: List<Recipe> = fetchRecipesUseCase().first()
-        assertThat(recipes).isEmpty()
-    }
+    fun `check that calling fetchRecipes returns empty list if response is empty`() =
+        runBlockingTest {
+            fakeRecipeRepository.responseType = ResponseType.EMPTY
+            val recipes: List<Recipe> = fetchRecipesUseCase().first()
+            assertThat(recipes).isEmpty()
+        }
 
     @Test
     fun `check that calling fetchRecipes returns error if call fails`() = runBlockingTest {

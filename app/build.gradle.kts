@@ -1,6 +1,5 @@
 import Dependencies.AndroidX
 import Dependencies.DI
-import Dependencies.Kotlin
 import Dependencies.Network
 import Dependencies.View
 import ProjectLib.core
@@ -68,7 +67,6 @@ dependencies {
     implementation(project(remote))
 
     implementAll(View.components)
-    implementation(Kotlin.stdlib)
     implementation(Network.moshi)
     implementation(DI.daggerHiltAndroid)
 

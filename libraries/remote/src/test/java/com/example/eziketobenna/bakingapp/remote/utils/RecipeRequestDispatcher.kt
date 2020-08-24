@@ -9,9 +9,10 @@ internal class RecipeRequestDispatcher : Dispatcher() {
 
     override fun dispatch(request: RecordedRequest): MockResponse {
         return when (request.path) {
-            REQUEST_PATH -> MockResponse()
-                .setResponseCode(HttpURLConnection.HTTP_OK)
-                .setBody(getJson("response/recipe_response.json"))
+            REQUEST_PATH ->
+                MockResponse()
+                    .setResponseCode(HttpURLConnection.HTTP_OK)
+                    .setBody(getJson("response/recipe_response.json"))
             else -> throw IllegalArgumentException("Unknown Request Path ${request.path}")
         }
     }

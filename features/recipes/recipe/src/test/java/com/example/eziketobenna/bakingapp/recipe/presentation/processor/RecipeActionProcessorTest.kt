@@ -25,13 +25,10 @@ import org.junit.Test
 
 class RecipeActionProcessorTest {
 
-    private val testPostExecutionThread = TestPostExecutionThread()
-
     private val fakeRecipeRepository = FakeRecipeRepository()
 
-    private val fetchRecipes = FetchRecipes(fakeRecipeRepository, testPostExecutionThread)
-
-    private val recipeActionProcessor = RecipeActionProcessor(fetchRecipes)
+    private val recipeActionProcessor =
+        RecipeActionProcessor(FetchRecipes(fakeRecipeRepository, TestPostExecutionThread()))
 
     private val resultRecorder: FlowRecorder<RecipeViewResult> = FlowRecorder(TestCoroutineScope())
 

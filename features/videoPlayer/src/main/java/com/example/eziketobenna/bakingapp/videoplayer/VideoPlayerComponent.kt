@@ -26,10 +26,12 @@ internal class VideoPlayerComponent(
 
     private fun initPlayer() {
         if (player == null) {
-            player = ExoPlayerFactory.newSimpleInstance(context,
+            player = ExoPlayerFactory.newSimpleInstance(
+                context,
                 DefaultTrackSelector().apply {
                     setParameters(buildUponParameters().setMaxVideoSizeSd())
-                })
+                }
+            )
         }
         playerView.player = player
         setPlayerParams(playerState)
@@ -62,7 +64,8 @@ internal class VideoPlayerComponent(
 
     private fun buildMediaSource(uri: Uri): MediaSource {
         val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
-            context, Util.getUserAgent(context, "bakingApp")
+            context,
+            Util.getUserAgent(context, "bakingApp")
         )
         return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }

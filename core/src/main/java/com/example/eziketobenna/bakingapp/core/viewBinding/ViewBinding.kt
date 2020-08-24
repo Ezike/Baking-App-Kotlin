@@ -25,11 +25,11 @@ class ViewBindingDelegate<T : ViewBinding>(
     private var _value: T? = null
 
     private val viewLifecycleObserver: DefaultLifecycleObserver =
-            object : DefaultLifecycleObserver {
-                override fun onDestroy(owner: LifecycleOwner) {
-                    disposeValue()
-                }
+        object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                disposeValue()
             }
+        }
 
     private fun disposeValue() {
         _value = null
@@ -50,8 +50,8 @@ class ViewBindingDelegate<T : ViewBinding>(
         val lifecycle: Lifecycle = fragment.viewLifecycleOwner.lifecycle
         if (!lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED)) {
             throw IllegalStateException(
-                    "Should not attempt to get bindings when " +
-                            "Fragment views are destroyed."
+                "Should not attempt to get bindings when " +
+                    "Fragment views are destroyed."
             )
         }
 

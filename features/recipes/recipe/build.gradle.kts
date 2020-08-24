@@ -2,7 +2,6 @@ import Dependencies.AndroidX
 import Dependencies.Coroutines
 import Dependencies.DI
 import Dependencies.FlowBinding
-import Dependencies.Kotlin
 import Dependencies.View
 import ProjectLib.app
 import ProjectLib.commonTest
@@ -62,7 +61,6 @@ dependencies {
     implementation(FlowBinding.swipeRefresh)
     implementation(DI.daggerHiltAndroid)
 
-    implementation(Kotlin.stdlib)
     implementAll(AndroidX.components)
     implementAll(Coroutines.components)
 
