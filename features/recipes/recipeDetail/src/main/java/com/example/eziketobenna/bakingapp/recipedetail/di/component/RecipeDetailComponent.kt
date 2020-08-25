@@ -11,8 +11,10 @@ import dagger.Component
 @FeatureScope
 @Component(
     dependencies = [AppComponent::class],
-    modules = [FactoryModule::class, ViewModelModule::class,
-        PresentationModule::class]
+    modules = [
+        FactoryModule::class, ViewModelModule::class,
+        PresentationModule::class
+    ]
 )
 interface RecipeDetailComponent {
 

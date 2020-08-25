@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailStateMachine
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewState
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
+import javax.inject.Inject
 
 class StepDetailViewModel @Inject constructor(
     private val stepDetailStateMachine: StepDetailStateMachine

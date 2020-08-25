@@ -31,26 +31,6 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-<!--        <activity-->
-<!--            android:name=".ui.details.StepListActivity"-->
-<!--            android:label="@string/title_step_list"-->
-<!--            android:launchMode="singleTop"-->
-<!--            android:parentActivityName=".ui.recipes.MainActivity"-->
-<!--            android:theme="@style/AppTheme">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value="com.example.eziketobenna.bakingapp.ui.MainActivity" />-->
-<!--        </activity>-->
-<!--        <activity-->
-<!--            android:name=".ui.details.StepDetailActivity"-->
-<!--            android:label="@string/title_step_detail"-->
-<!--            android:parentActivityName=".ui.details.StepListActivity"-->
-<!--            android:theme="@style/AppTheme">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value="com.example.eziketobenna.bakingapp.ui.details.StepListActivity" />-->
-<!--        </activity>-->
-<!--        -->
     </application>
 
 </manifest>

@@ -12,12 +12,12 @@ class RecipeRemoteMapper @Inject constructor(
 
     override fun mapFromModel(model: RecipeRemoteModel): RecipeEntity {
         return RecipeEntity(
-                model.id,
-                model.name,
-                model.image,
-                model.servings,
-                ingredientRemoteMapper.mapModelList(model.ingredients),
-                stepRemoteMapper.mapModelList(model.steps)
+            model.id,
+            model.name,
+            model.image,
+            model.servings,
+            ingredientRemoteMapper.mapModelList(model.ingredients),
+            stepRemoteMapper.mapModelList(model.steps)
         )
     }
 }

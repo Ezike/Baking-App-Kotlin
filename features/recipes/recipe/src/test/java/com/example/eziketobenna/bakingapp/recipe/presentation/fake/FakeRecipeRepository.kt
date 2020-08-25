@@ -3,10 +3,10 @@ package com.example.eziketobenna.bakingapp.recipe.presentation.fake
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.repository.RecipeRepository
 import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyData
-import java.net.SocketTimeoutException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import java.net.SocketTimeoutException
 
 internal class FakeRecipeRepository : RecipeRepository {
 

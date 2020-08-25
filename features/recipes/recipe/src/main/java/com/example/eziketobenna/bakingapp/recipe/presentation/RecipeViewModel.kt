@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.HomeStateMachine
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
+import javax.inject.Inject
 
 class RecipeViewModel @Inject constructor(
     private val homeStateMachine: HomeStateMachine

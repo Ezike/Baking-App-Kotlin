@@ -2,7 +2,6 @@ import Dependencies.AndroidX
 import Dependencies.Coroutines
 import Dependencies.DI
 import Dependencies.FlowBinding
-import Dependencies.Kotlin
 import Dependencies.View
 import ProjectLib.app
 import ProjectLib.core
@@ -56,7 +55,6 @@ dependencies {
 
     implementAll(View.components)
     implementation(DI.daggerHiltAndroid)
-    implementation(Kotlin.stdlib)
     implementAll(AndroidX.components)
     implementAll(Coroutines.components)
 

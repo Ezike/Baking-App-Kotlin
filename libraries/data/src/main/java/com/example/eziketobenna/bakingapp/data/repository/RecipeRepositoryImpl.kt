@@ -5,9 +5,9 @@ import com.example.eziketobenna.bakingapp.data.mapper.RecipeEntityMapper
 import com.example.eziketobenna.bakingapp.data.model.RecipeEntity
 import com.example.eziketobenna.bakingapp.domain.model.Recipe
 import com.example.eziketobenna.bakingapp.domain.repository.RecipeRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
     private val recipeRemote: RecipeRemote,

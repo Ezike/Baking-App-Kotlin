@@ -9,17 +9,17 @@ class IngredientEntityMapper @Inject constructor() : EntityMapper<IngredientEnti
 
     override fun mapFromEntity(entity: IngredientEntity): Ingredient {
         return Ingredient(
-                entity.quantity,
-                entity.measure,
-                entity.ingredient
+            entity.quantity,
+            entity.measure,
+            entity.ingredient
         )
     }
 
     override fun mapToEntity(domain: Ingredient): IngredientEntity {
         return IngredientEntity(
-                domain.quantity,
-                domain.measure,
-                domain.ingredient
+            domain.quantity,
+            domain.measure,
+            domain.ingredient
         )
     }
 }

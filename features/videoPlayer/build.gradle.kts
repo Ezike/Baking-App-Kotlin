@@ -1,5 +1,4 @@
 import Dependencies.AndroidX
-import Dependencies.Kotlin
 import Dependencies.View.appCompat
 import Dependencies.View.constraintLayout
 import Dependencies.View.exoPlayerCore
@@ -45,6 +44,4 @@ dependencies {
     implementation(exoPlayerUI)
     implementation(constraintLayout)
     implementation(AndroidX.lifeCycleCommon)
-
-    implementation(Kotlin.stdlib)
 }

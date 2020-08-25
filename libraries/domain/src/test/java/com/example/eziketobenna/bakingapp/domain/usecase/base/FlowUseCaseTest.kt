@@ -7,11 +7,11 @@ import com.example.eziketobenna.bakingapp.domain.fake.FakeRecipeRepository.Compa
 import com.example.eziketobenna.bakingapp.domain.fake.ParamUseCase
 import com.example.eziketobenna.bakingapp.domain.fake.assertThrows
 import com.google.common.truth.Truth.assertThat
-import java.net.SocketTimeoutException
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
+import java.net.SocketTimeoutException
 
 class FlowUseCaseTest {
 

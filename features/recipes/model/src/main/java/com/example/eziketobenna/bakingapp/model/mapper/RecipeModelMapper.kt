@@ -23,12 +23,12 @@ class RecipeModelMapper @Inject constructor(
 
     override fun mapToDomain(model: RecipeModel): Recipe {
         return Recipe(
-                model.id,
-                model.name,
-                model.image,
-                model.servings,
-                ingredientModelMapper.mapToDomainList(model.ingredients),
-                stepModelMapper.mapToDomainList(model.steps)
+            model.id,
+            model.name,
+            model.image,
+            model.servings,
+            ingredientModelMapper.mapToDomainList(model.ingredients),
+            stepModelMapper.mapToDomainList(model.steps)
         )
     }
 }

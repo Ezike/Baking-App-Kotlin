@@ -13,13 +13,15 @@ class NavigationDispatcherImpl @Inject constructor(
 
     override fun openRecipeDetail(model: RecipeModel) {
         navController.navigate(
-            R.id.recipeDetailFragment, bundleOf(RECIPE_ARG to model)
+            R.id.recipeDetailFragment,
+            bundleOf(RECIPE_ARG to model)
         )
     }
 
     override fun openStepDetail(stepInfoModel: StepInfoModel) {
         navController.navigate(
-            R.id.stepDetailFragment, bundleOf(STEP_INFO_ARG to stepInfoModel)
+            R.id.stepDetailFragment,
+            bundleOf(STEP_INFO_ARG to stepInfoModel)
         )
     }
 

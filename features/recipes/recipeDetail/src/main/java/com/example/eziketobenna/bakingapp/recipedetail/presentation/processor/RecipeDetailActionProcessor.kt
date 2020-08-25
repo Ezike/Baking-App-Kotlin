@@ -7,9 +7,9 @@ import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDe
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewAction.OpenStepInfoViewAction
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewResult.OpenStepInfo
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 @FeatureScope
 class RecipeDetailActionProcessor @Inject constructor() :

@@ -1,8 +1,7 @@
-const val kotlinVersion: String = "1.4.0-rc"
 const val kotlinAndroid: String = "android"
 const val kotlinAndroidExtension: String = "android.extensions"
 const val kotlinKapt: String = "kapt"
-const val ktLintVersion: String = "0.36.0"
+const val ktLintVersion: String = "0.37.2"
 
 object Config {
     object Version {
@@ -105,10 +104,6 @@ object Dependencies {
             "io.github.reactivecircus.flowbinding:flowbinding-lifecycle:$flowBindingVersion"
     }
 
-    object Kotlin {
-        const val stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    }
-
     object Network : Libraries {
         object Version {
             const val okhttp: String = "4.7.2"
@@ -137,7 +132,7 @@ object Dependencies {
     object DI {
         object Version {
             const val javaxInject: String = "1"
-            const val daggerHiltAndroid: String = "2.28.2-alpha"
+            const val daggerHiltAndroid: String = "2.28.3-alpha"
         }
 
         object AnnotationProcessor {
@@ -152,7 +147,7 @@ object Dependencies {
 
     object Coroutines : Libraries {
         object Version {
-            const val coroutines: String = "1.3.7"
+            const val coroutines: String = "1.3.9"
         }
 
         const val core: String =
@@ -173,7 +168,6 @@ object Dependencies {
             const val fragment: String = "1.1.0-rc04"
             const val truth: String = "1.0.1"
             const val mockWebServer: String = "4.7.2"
-            const val coroutineTest: String = "1.2.1"
         }
 
         const val junit: String = "junit:junit:${Version.junit}"
@@ -186,7 +180,7 @@ object Dependencies {
         const val mockWebServer: String =
             "com.squareup.okhttp3:mockwebserver:${Version.mockWebServer}"
         const val coroutinesTest: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutineTest}"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependencies.Coroutines.Version.coroutines}"
     }
 }
 

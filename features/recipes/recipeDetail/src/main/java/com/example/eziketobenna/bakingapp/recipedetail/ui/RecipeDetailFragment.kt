@@ -25,15 +25,16 @@ import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDe
 import com.example.eziketobenna.bakingapp.recipedetail.presentation.mvi.RecipeDetailViewState.Success
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.IngredientStepAdapter
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.stepClicks
-import javax.inject.Inject
-import javax.inject.Provider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.lifecycle.events
+import javax.inject.Inject
+import javax.inject.Provider
 
-class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_detail),
+class RecipeDetailFragment :
+    Fragment(R.layout.fragment_recipe_detail),
     MVIView<RecipeDetailViewIntent, RecipeDetailViewState> {
 
     private val args: RecipeDetailFragmentArgs by navArgs()
