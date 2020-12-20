@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.eziketobenna.bakingapp.core.ext.getDrawable
-import com.example.eziketobenna.bakingapp.core.ext.observe
+import com.example.eziketobenna.bakingapp.core.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView

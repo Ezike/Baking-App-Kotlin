@@ -6,7 +6,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.debounce
 
 val IngredientStepAdapter.stepClicks: Flow<StepDetailItem>
     get() = callbackFlow {
@@ -16,4 +15,4 @@ val IngredientStepAdapter.stepClicks: Flow<StepDetailItem>
         }
         stepClickListener = listener
         awaitClose { stepClickListener = null }
-    }.conflate().debounce(200)
+    }.conflate()

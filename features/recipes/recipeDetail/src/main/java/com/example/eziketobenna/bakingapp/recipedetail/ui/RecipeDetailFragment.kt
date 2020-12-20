@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
-import com.example.eziketobenna.bakingapp.core.ext.observe
+import com.example.eziketobenna.bakingapp.core.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
 import com.example.eziketobenna.bakingapp.presentation.mvi.MVIView
@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import reactivecircus.flowbinding.lifecycle.events
 import javax.inject.Inject
-import javax.inject.Provider
 
 class RecipeDetailFragment :
     Fragment(R.layout.fragment_recipe_detail),
@@ -43,7 +42,7 @@ class RecipeDetailFragment :
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: Provider<NavigationDispatcher>
+    lateinit var navigator: NavigationDispatcher
 
     private val viewModel: RecipeDetailViewModel by viewModels { factory }
 
@@ -76,7 +75,7 @@ class RecipeDetailFragment :
             }
             is Success -> ingredientStepAdapter.submitList(state.model)
             is NavigateToStepInfo ->
-                state.openStepInfoEvent.consume(navigator.get()::openStepDetail)
+                state.openStepInfoEvent.consume(navigator::openStepDetail)
         }
     }
 

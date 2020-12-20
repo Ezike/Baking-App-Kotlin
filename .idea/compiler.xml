@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="Baking-App-Kotlin.app" target="11" />
+      <module name="Baking-App-Kotlin.buildSrc" target="11" />
+      <module name="Baking-App-Kotlin.common.common-test" target="11" />
+      <module name="Baking-App-Kotlin.common.views" target="11" />
+      <module name="Baking-App-Kotlin.core" target="11" />
+      <module name="Baking-App-Kotlin.features.recipes.model" target="11" />
+      <module name="Baking-App-Kotlin.features.recipes.recipe" target="11" />
+      <module name="Baking-App-Kotlin.features.recipes.recipeDetail" target="11" />
+      <module name="Baking-App-Kotlin.features.recipes.stepDetail" target="11" />
+      <module name="Baking-App-Kotlin.features.videoPlayer" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
