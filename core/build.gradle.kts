@@ -50,5 +50,5 @@ dependencies {
     implementation(View.fragment)
     implementation(View.appCompat)
 
-    kapt(DI.AnnotationProcessor.daggerHiltAndroid)
+    kapt(DI.AnnotationProcessor.daggerHilt)
 }

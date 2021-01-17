@@ -1,6 +1,7 @@
 const val kotlinAndroid: String = "android"
 const val kotlinKapt: String = "kapt"
 const val ktLintVersion: String = "0.37.2"
+const val kotlinVersion: String = "1.4.21"
 
 object Config {
     object Version {
@@ -131,17 +132,23 @@ object Dependencies {
     object DI {
         object Version {
             const val javaxInject: String = "1"
-            const val daggerHiltAndroid: String = "2.29.1-alpha"
+            const val daggerHilt: String = "2.31-alpha"
+            const val hiltViewModel: String = "1.0.0-alpha02"
         }
 
         object AnnotationProcessor {
-            const val daggerHiltAndroid: String =
-                    "com.google.dagger:hilt-android-compiler:${Version.daggerHiltAndroid}"
+            const val daggerHilt: String =
+                "com.google.dagger:hilt-compiler:${Version.daggerHilt}"
+            const val jetpackHiltCompiler: String =
+                "androidx.hilt:hilt-compiler:${Version.hiltViewModel}"
         }
 
         const val javaxInject: String = "javax.inject:javax.inject:${Version.javaxInject}"
         const val daggerHiltAndroid: String =
-                "com.google.dagger:hilt-android:${Version.daggerHiltAndroid}"
+            "com.google.dagger:hilt-android:${Version.daggerHilt}"
+        const val hiltViewModel: String =
+            "androidx.hilt:hilt-lifecycle-viewmodel:${Version.hiltViewModel}"
+        const val hiltCore: String = "com.google.dagger:hilt-core:${Version.daggerHilt}"
     }
 
     object Coroutines : Libraries {

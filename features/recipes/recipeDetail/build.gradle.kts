@@ -59,5 +59,5 @@ dependencies {
     implementAll(AndroidX.components)
     implementAll(Coroutines.components)
 
-    kapt(DI.AnnotationProcessor.daggerHiltAndroid)
+    kapt(DI.AnnotationProcessor.daggerHilt)
 }

@@ -9,6 +9,13 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion(kotlinVersion)
+            }
+        }
+    }
 }
 
 subprojects {
