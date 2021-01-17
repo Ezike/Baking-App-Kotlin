@@ -13,7 +13,6 @@ import ProjectLib.videoPlayer
 plugins {
     dynamicFeature
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
     kotlin(kotlinKapt)
     daggerHilt
 }

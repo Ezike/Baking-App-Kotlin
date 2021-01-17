@@ -6,7 +6,7 @@ import ProjectLib.presentation
 plugins {
     androidLibrary
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
+    parcelize
 }
 
 android {

@@ -31,6 +31,9 @@ val PluginDependenciesSpec.kotlinLibrary: PluginDependencySpec
 val PluginDependenciesSpec.safeArgs: PluginDependencySpec
     get() = id("androidx.navigation.safeargs.kotlin")
 
+val PluginDependenciesSpec.parcelize: PluginDependencySpec
+    get() = id("kotlin-parcelize")
+
 fun RepositoryHandler.maven(url: String) {
     maven {
         setUrl(url)

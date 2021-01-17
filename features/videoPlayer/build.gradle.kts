@@ -8,7 +8,7 @@ import ProjectLib.app
 plugins {
     dynamicFeature
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
+    parcelize
 }
 
 android {

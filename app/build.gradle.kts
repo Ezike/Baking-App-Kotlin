@@ -15,7 +15,6 @@ import ProjectLib.videoPlayer
 plugins {
     androidApplication
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
     kotlin(kotlinKapt)
     safeArgs
     daggerHilt
@@ -31,10 +30,6 @@ android {
         versionName = Config.Version.versionName
         multiDexEnabled = Config.isMultiDexEnabled
         testInstrumentationRunner = Config.Android.testInstrumentationRunner
-    }
-
-    androidExtensions {
-        isExperimental = true
     }
 
     kotlinOptions {

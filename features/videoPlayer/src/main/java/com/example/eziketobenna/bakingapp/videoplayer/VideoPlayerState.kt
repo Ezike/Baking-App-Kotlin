@@ -2,7 +2,7 @@ package com.example.eziketobenna.bakingapp.videoplayer
 
 import android.os.Parcelable
 import com.google.android.exoplayer2.C
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class VideoPlayerState(

@@ -4,7 +4,6 @@ import Dependencies.View
 plugins {
     androidLibrary
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
 }
 
 android {

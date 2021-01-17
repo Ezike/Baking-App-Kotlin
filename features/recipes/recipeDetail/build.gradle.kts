@@ -13,7 +13,6 @@ import ProjectLib.stepDetail
 plugins {
     dynamicFeature
     kotlin(kotlinAndroid)
-    kotlin(kotlinAndroidExtension)
     kotlin(kotlinKapt)
     daggerHilt
 }

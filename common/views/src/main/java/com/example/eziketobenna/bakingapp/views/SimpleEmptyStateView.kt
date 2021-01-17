@@ -10,7 +10,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import kotlinx.android.synthetic.main.simple_empty_state_view_layout.view.*
+import com.example.eziketobenna.bakingapp.views.databinding.SimpleEmptyStateViewLayoutBinding
 
 /**
  * @author MomohGreat on 08/07/19
@@ -19,7 +19,8 @@ typealias ActionButtonClickListener = () -> Unit
 
 class SimpleEmptyStateView : LinearLayout {
 
-    private var view: View
+    private var binding: SimpleEmptyStateViewLayoutBinding
+
     var buttonClickListener: ActionButtonClickListener? = null
 
     constructor(context: Context) : this(context, null)
@@ -34,7 +35,7 @@ class SimpleEmptyStateView : LinearLayout {
         val inflater = context
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        view = inflater.inflate(R.layout.simple_empty_state_view_layout, this, true)
+        binding = SimpleEmptyStateViewLayoutBinding.inflate(inflater, this, true)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SimpleEmptyStateView, 0, 0)
 
@@ -57,9 +58,9 @@ class SimpleEmptyStateView : LinearLayout {
         setTitle(emptyStateTitle)
 
         if (emptyStateTitleVisible) {
-            title.visibility = View.VISIBLE
+            binding.title.visibility = View.VISIBLE
         } else {
-            title.visibility = View.INVISIBLE
+            binding.title.visibility = View.INVISIBLE
         }
 
         setImage(emptyStateImageSrc)
@@ -67,21 +68,21 @@ class SimpleEmptyStateView : LinearLayout {
         setCaption(emptyStateCaption)
 
         if (emptyStateButtonText != null) {
-            retry_btn.text = emptyStateButtonText
+            binding.retryBtn.text = emptyStateButtonText
         }
 
         if (emptyStateButtonVisible) {
-            retry_btn.visibility = View.VISIBLE
+            binding.retryBtn.visibility = View.VISIBLE
         } else {
-            retry_btn.visibility = View.GONE
+            binding.retryBtn.visibility = View.GONE
         }
 
-        retry_btn.setOnClickListener {
+        binding.retryBtn.setOnClickListener {
             buttonClickListener?.invoke()
         }
 
         val actionBtnBounceAnim =
-            ObjectAnimator.ofFloat(image, "translationY", 0f, 25f, 0f)
+            ObjectAnimator.ofFloat(binding.image, "translationY", 0f, 25f, 0f)
         actionBtnBounceAnim.interpolator = AccelerateDecelerateInterpolator()
         actionBtnBounceAnim.duration = 3000
         actionBtnBounceAnim.repeatMode = ValueAnimator.RESTART
@@ -91,33 +92,33 @@ class SimpleEmptyStateView : LinearLayout {
 
     fun setImage(emptyStateImageSrc: Drawable?) {
         if (emptyStateImageSrc != null) {
-            image.setImageDrawable(emptyStateImageSrc)
+            binding.image.setImageDrawable(emptyStateImageSrc)
         } else {
-            image.visibility = View.INVISIBLE
+            binding.image.visibility = View.INVISIBLE
         }
     }
 
     var isButtonVisible: Boolean = false
         set(value) {
             field = value
-            retry_btn.isVisible = value
+            binding.retryBtn.isVisible = value
         }
 
     var isTitleVisible: Boolean = false
         set(value) {
             field = value
-            title.isVisible = value
+            binding.title.isVisible = value
         }
 
     fun setCaption(emptyStateCaption: String?) {
         if (emptyStateCaption != null) {
-            caption.text = emptyStateCaption
+            binding.caption.text = emptyStateCaption
         }
     }
 
     fun setTitle(emptyStateTitle: String?) {
         if (emptyStateTitle != null) {
-            title.text = emptyStateTitle
+            binding.title.text = emptyStateTitle
         }
     }
 }
