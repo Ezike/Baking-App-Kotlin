@@ -24,7 +24,7 @@ object Plugin {
         const val kotlin: String = "1.4.21"
         const val androidGradle: String = "7.0.0-alpha04"
         const val navigation: String = "2.3.1"
-        const val daggerHiltAndroid: String = "2.29.1-alpha"
+        const val daggerHiltAndroid: String = "2.31-alpha"
     }
 
     const val spotless: String = "com.diffplug.spotless:spotless-plugin-gradle:${Version.spotless}"
