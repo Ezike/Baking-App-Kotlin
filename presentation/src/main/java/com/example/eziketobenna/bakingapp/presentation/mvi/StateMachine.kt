@@ -31,10 +31,8 @@ abstract class StateMachine<A : ViewAction, I : ViewIntent, S : ViewState, out R
             tryEmit(initialAction)
         }
 
-    fun processIntents(intents: Flow<I>) {
-        intents.onEach { intent ->
-            intentFlow.tryEmit(intentProcessor.intentToAction(intent))
-        }.launchIn(mainScope)
+    fun processIntent(intent: I) {
+        intentFlow.tryEmit(intentProcessor.intentToAction(intent))
     }
 
     val viewState: StateFlow<S>

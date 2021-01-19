@@ -14,8 +14,8 @@ class RecipeDetailViewModel @Inject constructor(
 
     val viewState: StateFlow<RecipeDetailViewState> = detailStateMachine.viewState
 
-    fun processIntent(intents: Flow<RecipeDetailViewIntent>) {
-        detailStateMachine.processIntents(intents)
+    fun processIntent(intents: RecipeDetailViewIntent) {
+        detailStateMachine.processIntent(intents)
     }
 
     override fun onCleared() {

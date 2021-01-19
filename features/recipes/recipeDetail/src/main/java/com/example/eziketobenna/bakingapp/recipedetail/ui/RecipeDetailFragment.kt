@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.observe
@@ -27,8 +28,10 @@ import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.IngredientStep
 import com.example.eziketobenna.bakingapp.recipedetail.ui.adapter.stepClicks
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.lifecycle.events
 import javax.inject.Inject
 
@@ -56,17 +59,15 @@ class RecipeDetailFragment :
         inject(this)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.processIntent(intents)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         actionBar?.title = args.recipe.name
         binding.detailRv.adapter = ingredientStepAdapter
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
+        merge(
+            loadRecipeDetailIntent,
+            openStepInfoIntent
+        ).onEach(viewModel::processIntent).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun render(state: RecipeDetailViewState) {
@@ -93,7 +94,4 @@ class RecipeDetailFragment :
         get() = ingredientStepAdapter.stepClicks.map { stepDetailItem ->
             OpenStepInfoViewIntent(stepDetailItem, args.recipe.steps)
         }
-
-    override val intents: Flow<RecipeDetailViewIntent>
-        get() = merge(loadRecipeDetailIntent, openStepInfoIntent)
 }

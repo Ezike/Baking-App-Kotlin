@@ -9,9 +9,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.eziketobenna.bakingapp.core.ext.actionBar
 import com.example.eziketobenna.bakingapp.core.ext.visible
+import com.example.eziketobenna.bakingapp.core.factory.create
 import com.example.eziketobenna.bakingapp.core.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
 import com.example.eziketobenna.bakingapp.navigation.NavigationDispatcher
@@ -29,8 +31,10 @@ import com.example.eziketobenna.bakingapp.videoplayer.VideoPlayerState
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.android.view.clicks
 import javax.inject.Inject
 import javax.inject.Provider
@@ -40,12 +44,12 @@ class StepDetailFragment :
     MVIView<StepDetailViewIntent, StepDetailViewState> {
 
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: StepDetailViewModel.Factory
 
     @Inject
-    lateinit var navigator: Provider<NavigationDispatcher>
+    lateinit var navigator: NavigationDispatcher
 
-    private val viewModel: StepDetailViewModel by viewModels { factory }
+    private val viewModel: StepDetailViewModel by viewModels { create(factory, args.stepInfo) }
 
     private val binding: FragmentStepDetailBinding by viewBinding(FragmentStepDetailBinding::bind)
 
@@ -56,20 +60,6 @@ class StepDetailFragment :
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject(this)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        /**
-         * Making sure this doesn't emit again on config change.
-         * Replaced old impl for emitting [LoadInitialViewIntent] that used
-         * FlowBinding for lifecycle, cos twas emitting each time the fragment got created,
-         * and resets the view state to the initial clicked step
-         */
-        if (savedInstanceState == null) {
-            loadStepInfoIntent.offer(LoadInitialViewIntent(args.stepInfo))
-        }
-        viewModel.processIntent(intents)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -85,6 +75,11 @@ class StepDetailFragment :
         savedInstanceState?.getParcelable<VideoPlayerState>(PLAYER_STATE_KEY)?.let { state ->
             playerState = state
         }
+
+        merge(
+            gotoNextStepIntent,
+            gotoPreviousStepIntent
+        ).onEach(viewModel::processIntent).launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
     }
@@ -102,7 +97,7 @@ class StepDetailFragment :
             }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
             is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
-                navigator.get().goBack()
+                navigator.goBack()
             }
         }
     }
@@ -120,8 +115,6 @@ class StepDetailFragment :
     private fun getNextButtonText(state: Boolean): String =
         if (state) getString(R.string.next) else getString(R.string.finish)
 
-    private val loadStepInfoIntent = ConflatedBroadcastChannel<LoadInitialViewIntent>()
-
     private val gotoNextStepIntent: Flow<GoToNextStepViewIntent>
         get() = binding.nextButton.clicks().map {
             GoToNextStepViewIntent(args.stepInfo.steps)
@@ -131,9 +124,6 @@ class StepDetailFragment :
         get() = binding.previousButton.clicks().map {
             GoToPreviousStepViewIntent(args.stepInfo.steps)
         }
-
-    override val intents: Flow<StepDetailViewIntent>
-        get() = merge(loadStepInfoIntent.asFlow(), gotoNextStepIntent, gotoPreviousStepIntent)
 
     companion object {
         const val PLAYER_STATE_KEY: String = "p"

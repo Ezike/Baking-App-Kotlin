@@ -18,7 +18,6 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewStat
 import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeActionProcessor
 import com.example.eziketobenna.bakingapp.recipe.presentation.processor.RecipeViewIntentProcessor
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.Rule
 import org.junit.Test
@@ -88,7 +87,7 @@ class RecipeViewModelTest {
         mainCoroutineRule.pauseDispatcher()
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RecipeRefreshViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RecipeRefreshViewIntent)
         // Assert the entire stream starting from LoadInitialAction
         assertThat(stateRecorder.takeAll()).containsExactlyElementsIn(
             dummyViewState.loadInitialViewState +
@@ -102,7 +101,7 @@ class RecipeViewModelTest {
         fakeRecipeRepository.responseType = ResponseType.EMPTY
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RecipeRefreshViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RecipeRefreshViewIntent)
         assertThat(stateRecorder.takeAll()).containsExactlyElementsIn(
             dummyViewState.emptyViewState + arrayOf(
                 dummyViewState.emptyViewState.last().refreshingState,
@@ -117,7 +116,7 @@ class RecipeViewModelTest {
         fakeRecipeRepository.responseType = ResponseType.ERROR
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RecipeRefreshViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RecipeRefreshViewIntent)
         assertThat(stateRecorder.takeAll()).containsExactlyElementsIn(
             dummyViewState.noDataErrorViewState + arrayOf(
                 dummyViewState.noDataErrorViewState.last().refreshingState,
@@ -137,7 +136,7 @@ class RecipeViewModelTest {
         // Reset fetchRecipes response to throw error before sending new intent,
         // so as to simulate a `data available error state` [Transient error]
         fakeRecipeRepository.responseType = ResponseType.ERROR
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RecipeRefreshViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RecipeRefreshViewIntent)
         assertThat(stateRecorder.takeAll()).containsExactlyElementsIn(
             dummyViewState.loadInitialViewState + arrayOf(
                 dummyViewState.loadInitialViewState.last().refreshingState,
@@ -154,7 +153,7 @@ class RecipeViewModelTest {
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
         fakeRecipeRepository.responseType = ResponseType.DATA
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RetryFetchViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RetryFetchViewIntent)
         assertThat(stateRecorder.takeAll())
             .containsExactlyElementsIn(
                 dummyViewState.noDataErrorViewState +
@@ -168,7 +167,7 @@ class RecipeViewModelTest {
         fakeRecipeRepository.responseType = ResponseType.EMPTY
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RetryFetchViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RetryFetchViewIntent)
         assertThat(stateRecorder.takeAll())
             .containsExactlyElementsIn(
                 dummyViewState.emptyViewState + arrayOf(
@@ -184,7 +183,7 @@ class RecipeViewModelTest {
         fakeRecipeRepository.responseType = ResponseType.ERROR
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RetryFetchViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RetryFetchViewIntent)
         assertThat(stateRecorder.takeAll())
             .containsExactlyElementsIn(
                 dummyViewState.noDataErrorViewState + arrayOf(
@@ -201,7 +200,7 @@ class RecipeViewModelTest {
         recipeViewModel.viewState.recordWith(stateRecorder)
         mainCoroutineRule.resumeDispatcher()
         fakeRecipeRepository.responseType = ResponseType.ERROR
-        recipeViewModel.processIntent(flowOf(RecipeViewIntent.RetryFetchViewIntent))
+        recipeViewModel.processIntent(RecipeViewIntent.RetryFetchViewIntent)
         assertThat(stateRecorder.takeAll())
             .containsExactlyElementsIn(
                 dummyViewState.loadInitialViewState +

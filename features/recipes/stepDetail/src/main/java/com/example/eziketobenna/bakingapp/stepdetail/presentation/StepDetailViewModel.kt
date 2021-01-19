@@ -1,21 +1,35 @@
 package com.example.eziketobenna.bakingapp.stepdetail.presentation
 
 import androidx.lifecycle.ViewModel
+import com.example.eziketobenna.bakingapp.core.factory.AssistedViewModelFactory
+import com.example.eziketobenna.bakingapp.model.StepInfoModel
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailStateMachine
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewIntent
 import com.example.eziketobenna.bakingapp.stepdetail.presentation.mvi.StepDetailViewState
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class StepDetailViewModel @Inject constructor(
-    private val stepDetailStateMachine: StepDetailStateMachine
+class StepDetailViewModel @AssistedInject constructor(
+    private val factory: StepDetailStateMachine.Factory,
+    @Assisted private val stepInfoModel: StepInfoModel
 ) : ViewModel() {
 
-    val viewState: StateFlow<StepDetailViewState> = stepDetailStateMachine.viewState
+    @AssistedFactory
+    interface Factory : AssistedViewModelFactory<StepInfoModel> {
+        override fun create(data: StepInfoModel): StepDetailViewModel
+    }
 
-    fun processIntent(intents: Flow<StepDetailViewIntent>) {
-        stepDetailStateMachine.processIntents(intents)
+    private val stepDetailStateMachine = factory.create(stepInfoModel)
+
+    val viewState: StateFlow<StepDetailViewState>
+        get() = stepDetailStateMachine.viewState
+
+    fun processIntent(intents: StepDetailViewIntent) {
+        stepDetailStateMachine.processIntent(intents)
     }
 
     override fun onCleared() {

@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.eziketobenna.bakingapp.core.ext.getDrawable
 import com.example.eziketobenna.bakingapp.core.observe
 import com.example.eziketobenna.bakingapp.core.viewBinding.viewBinding
@@ -23,8 +24,10 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewInte
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
 import javax.inject.Provider
@@ -40,7 +43,7 @@ class RecipeFragment :
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: Provider<NavigationDispatcher>
+    lateinit var navigator: NavigationDispatcher
 
     private val viewModel: RecipeViewModel by viewModels { factory }
 
@@ -53,27 +56,21 @@ class RecipeFragment :
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.processIntent(intents)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.mainRv.adapter = recipeAdapter.apply {
-            clickListener = navigator.get()::openRecipeDetail
+            clickListener = navigator::openRecipeDetail
         }
 
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
+        merge(binding.emptyState.clicks.map { RetryFetchViewIntent },
+            binding.swipeRefresh.refreshes().map { RecipeRefreshViewIntent })
+            .onEach(viewModel::processIntent)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
-
-    private val emptyStateIntent: Flow<RetryFetchViewIntent>
-        get() = binding.emptyState.clicks.map { RetryFetchViewIntent }
-
-    private val swipeRefreshIntent: Flow<RecipeRefreshViewIntent>
-        get() = binding.swipeRefresh.refreshes().map { RecipeRefreshViewIntent }
-
-    override val intents: Flow<RecipeViewIntent>
-        get() = merge(swipeRefreshIntent, emptyStateIntent)
 
     override fun render(state: RecipeViewState) {
         when {
