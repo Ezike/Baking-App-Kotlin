@@ -8,6 +8,7 @@ import com.example.eziketobenna.bakingapp.domain.usecase.FetchRecipes
 import com.example.eziketobenna.bakingapp.model.mapper.IngredientModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.RecipeModelMapper
 import com.example.eziketobenna.bakingapp.model.mapper.StepModelMapper
+import com.example.eziketobenna.bakingapp.presentation.mvi.StateMachine
 import com.example.eziketobenna.bakingapp.recipe.presentation.data.DummyViewState
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository
 import com.example.eziketobenna.bakingapp.recipe.presentation.fake.FakeRecipeRepository.Companion.ERROR_MSG
@@ -35,15 +36,19 @@ class RecipeViewModelTest {
 
     private val dummyViewState = DummyViewState(recipeModelMapper)
 
-    private val recipeViewModel: RecipeViewModel by lazy {
-        RecipeViewModel(
-            HomeStateMachine(
-                RecipeActionProcessor(fetchRecipes),
-                RecipeViewIntentProcessor(),
-                RecipeViewStateReducer(recipeModelMapper)
-            )
-        )
+    private val stateMachine by lazy {
+        object : HomeStateMachine.Factory {
+            override fun create(threader: StateMachine.ThreadUtil): HomeStateMachine {
+                return HomeStateMachine(
+                    RecipeActionProcessor(fetchRecipes),
+                    RecipeViewIntentProcessor(),
+                    RecipeViewStateReducer(recipeModelMapper),
+                    threader
+                )
+            }
+        }
     }
+    private val recipeViewModel: RecipeViewModel by lazy { RecipeViewModel(stateMachine) }
 
     @Test
     fun `loadInitialViewState is emitted when loadInitialAction is processed and returns data`() {

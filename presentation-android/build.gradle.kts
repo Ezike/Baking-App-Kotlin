@@ -1,21 +1,11 @@
 import Dependencies.AndroidX
 import Dependencies.Coroutines
-import Dependencies.DI
-import Dependencies.FlowBinding
-import Dependencies.View
-import ProjectLib.app
-import ProjectLib.core
-import ProjectLib.domain
 import ProjectLib.presentation
-import ProjectLib.presentationAndroid
-import ProjectLib.recipeModel
-import ProjectLib.stepDetail
+import ProjectLib.domain
 
 plugins {
-    dynamicFeature
+    androidLibrary
     kotlin(kotlinAndroid)
-    kotlin(kotlinKapt)
-    daggerHilt
 }
 
 android {
@@ -44,22 +34,6 @@ android {
 }
 
 dependencies {
-    implementation(project(app))
-    implementation(project(core))
     implementation(project(presentation))
-    implementation(project(presentationAndroid))
-    implementation(project(recipeModel))
-    implementation(project(stepDetail))
-    implementation(project(domain))
-
-    implementAll(View.components)
-    implementation(View.recyclerView)
-    implementation(FlowBinding.lifecycle)
-
-    implementation(DI.daggerHiltAndroid)
-
-    implementAll(AndroidX.components)
-    implementAll(Coroutines.components)
-
-    kapt(DI.AnnotationProcessor.daggerHilt)
+    implementation(AndroidX.viewModel)
 }

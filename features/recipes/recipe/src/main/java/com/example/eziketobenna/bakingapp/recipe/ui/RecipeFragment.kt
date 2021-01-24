@@ -23,14 +23,12 @@ import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewInte
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewIntent.RetryFetchViewIntent
 import com.example.eziketobenna.bakingapp.recipe.presentation.mvi.RecipeViewState
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.swiperefreshlayout.refreshes
 import javax.inject.Inject
-import javax.inject.Provider
 
 class RecipeFragment :
     Fragment(R.layout.fragment_recipe),
@@ -66,6 +64,7 @@ class RecipeFragment :
         }
 
         viewModel.viewState.observe(viewLifecycleOwner, ::render)
+
         merge(binding.emptyState.clicks.map { RetryFetchViewIntent },
             binding.swipeRefresh.refreshes().map { RecipeRefreshViewIntent })
             .onEach(viewModel::processIntent)

@@ -7,6 +7,7 @@ import ProjectLib.app
 import ProjectLib.core
 import ProjectLib.domain
 import ProjectLib.presentation
+import ProjectLib.presentationAndroid
 import ProjectLib.recipeModel
 import ProjectLib.videoPlayer
 
@@ -46,6 +47,7 @@ dependencies {
     implementation(project(app))
     implementation(project(core))
     implementation(project(presentation))
+    implementation(project(presentationAndroid))
     implementation(project(videoPlayer))
     implementation(project(recipeModel))
     implementation(project(domain))

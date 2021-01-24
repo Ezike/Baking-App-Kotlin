@@ -50,14 +50,14 @@ class RecipeAdapter @Inject constructor(private val imageLoader: ImageLoader) :
         val diffUtilCallback: DiffUtil.ItemCallback<RecipeModel>
             get() = object : DiffUtil.ItemCallback<RecipeModel>() {
                 override fun areItemsTheSame(oldItem: RecipeModel, newItem: RecipeModel): Boolean {
-                    return oldItem === newItem && oldItem.id == newItem.id
+                    return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
                     oldItem: RecipeModel,
                     newItem: RecipeModel
                 ): Boolean {
-                    return oldItem == newItem
+                    return oldItem.id == newItem.id
                 }
             }
     }

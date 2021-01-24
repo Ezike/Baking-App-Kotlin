@@ -8,6 +8,7 @@ import ProjectLib.commonTest
 import ProjectLib.core
 import ProjectLib.domain
 import ProjectLib.presentation
+import ProjectLib.presentationAndroid
 import ProjectLib.recipeDetail
 import ProjectLib.recipeModel
 import ProjectLib.views
@@ -48,6 +49,7 @@ dependencies {
     implementation(project(app))
     implementation(project(core))
     implementation(project(presentation))
+    implementation(project(presentationAndroid))
     implementation(project(recipeModel))
     implementation(project(recipeDetail))
     implementation(project(domain))

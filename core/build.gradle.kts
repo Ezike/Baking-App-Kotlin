@@ -48,6 +48,7 @@ dependencies {
     implementation(Coroutines.core)
     implementation(View.coil)
     implementation(View.fragment)
+    implementation(Dependencies.AndroidX.activity)
     implementation(View.appCompat)
 
     kapt(DI.AnnotationProcessor.daggerHilt)

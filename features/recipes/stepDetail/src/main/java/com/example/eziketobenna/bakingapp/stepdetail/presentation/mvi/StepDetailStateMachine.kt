@@ -8,23 +8,26 @@ import com.example.eziketobenna.bakingapp.stepdetail.presentation.StepViewStateR
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 class StepDetailStateMachine @AssistedInject constructor(
-    intentProcessor: StepIntentProcessor,
+    private val intentProcessor: StepIntentProcessor,
     actionProcessor: StepActionProcessor,
     stateReducer: StepViewStateReducer,
-    @Assisted stepInfo: StepInfoModel
+    @Assisted private val stepInfo: StepInfoModel,
+    @Assisted threader: ThreadUtil,
 ) : StateMachine<StepDetailViewAction, StepDetailViewIntent,
     StepDetailViewState, StepDetailViewResult>(
     actionProcessor,
     intentProcessor,
     stateReducer,
-    intentProcessor.intentToAction(StepDetailViewIntent.LoadInitialViewIntent(stepInfo)),
-    StepDetailViewState.Idle
+    intentProcessor.intentToAction(
+        StepDetailViewIntent.LoadInitialViewIntent(stepInfo)
+    ),
+    StepDetailViewState.Idle,
+    threader
 ) {
     @AssistedFactory
     interface Factory {
-        fun create(stepInfo: StepInfoModel): StepDetailStateMachine
+        fun create(stepInfo: StepInfoModel, threader: ThreadUtil): StepDetailStateMachine
     }
 }

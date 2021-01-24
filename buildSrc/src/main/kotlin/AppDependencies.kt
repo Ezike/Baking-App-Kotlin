@@ -6,8 +6,8 @@ const val kotlinVersion: String = "1.4.21"
 object Config {
     object Version {
         const val minSdkVersion: Int = 21
-        const val compileSdkVersion: Int = 29
-        const val targetSdkVersion: Int = 29
+        const val compileSdkVersion: Int = 30
+        const val targetSdkVersion: Int = 30
         const val versionName: String = "1.0"
         const val versionCode: Int = 1
     }
@@ -30,7 +30,7 @@ object Dependencies {
             const val coreKtx: String = "1.3.2"
             const val navigation: String = "2.3.1"
             const val multidex: String = "2.0.1"
-            const val lifeCycle: String = "2.3.0-beta01"
+            const val lifeCycle: String = "2.3.0-rc01"
             const val activity: String = "1.2.0-beta01"
         }
 
@@ -153,7 +153,7 @@ object Dependencies {
 
     object Coroutines : Libraries {
         object Version {
-            const val coroutines: String = "1.4.1"
+            const val coroutines: String = "1.4.2"
         }
 
         const val core: String =
@@ -197,6 +197,7 @@ object ProjectLib {
     const val app: String = ":app"
     const val core: String = ":core"
     const val presentation: String = ":presentation"
+    const val presentationAndroid: String = ":presentation-android"
     const val domain: String = ":libraries:domain"
     const val data: String = ":libraries:data"
     const val remote: String = ":libraries:remote"

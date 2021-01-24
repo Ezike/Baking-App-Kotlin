@@ -11,5 +11,6 @@ include(
     ":features:recipes:recipeDetail",
     ":features:recipes:stepDetail",
     ":features:videoPlayer",
-    ":common:common-test"
+    ":common:common-test",
+    ":presentation-android"
 )

@@ -5,8 +5,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class LifecycleFlow<T>(
     private val flow: Flow<T>,
@@ -22,11 +22,12 @@ class LifecycleFlow<T>(
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        job = owner.lifecycleScope.launch { flow.collect(action) }
+        job = flow.onEach(action).launchIn(owner.lifecycleScope)
     }
 
     override fun onStop(owner: LifecycleOwner) {
         job?.cancel()
+        job = null
         super.onStop(owner)
     }
 
