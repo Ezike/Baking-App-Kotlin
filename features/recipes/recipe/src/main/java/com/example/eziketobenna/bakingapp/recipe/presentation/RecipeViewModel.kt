@@ -18,7 +18,7 @@ class RecipeViewModel @Inject constructor(
     val viewState: StateFlow<RecipeViewState>
         get() = homeStateMachine.viewState
 
-    fun processIntent(intents: RecipeViewIntent) {
-        homeStateMachine.processIntent(intents)
+    fun processIntent(intent: RecipeViewIntent) {
+        homeStateMachine.processIntent(intent)
     }
 }

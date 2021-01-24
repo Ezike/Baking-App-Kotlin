@@ -13,7 +13,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.StateFlow
 
 class StepDetailViewModel @AssistedInject constructor(
-    private val factory: StepDetailStateMachine.Factory,
+    factory: StepDetailStateMachine.Factory,
     @Assisted private val stepInfoModel: StepInfoModel
 ) : ViewModel() {
 
@@ -28,7 +28,7 @@ class StepDetailViewModel @AssistedInject constructor(
     val viewState: StateFlow<StepDetailViewState>
         get() = stepDetailStateMachine.viewState
 
-    fun processIntent(intents: StepDetailViewIntent) {
-        stepDetailStateMachine.processIntent(intents)
+    fun processIntent(intent: StepDetailViewIntent) {
+        stepDetailStateMachine.processIntent(intent)
     }
 }

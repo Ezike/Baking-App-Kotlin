@@ -19,17 +19,18 @@ abstract class StateMachine<A : ViewAction, I : ViewIntent, S : ViewState, out R
     threader: ThreadUtil
 ) {
 
-    private val intents = Channel<A>(onBufferOverflow = BufferOverflow.DROP_OLDEST)
-        .apply { offer(initialAction) }
+    private val intents = Channel<A>(
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    ).apply { offer(initialAction) }
 
     val viewState: StateFlow<S> = intents.receiveAsFlow()
         .flatMapMerge(transform = actionProcessor::actionToResult)
         .scan(initialState, reducer::reduce)
-        .stateIn(threader.ioScope, SharingStarted.Lazily, initialState)
+        .stateIn(threader.mainScope, SharingStarted.Lazily, initialState)
 
     fun processIntent(intent: I) {
         intents.offer(intentProcessor.intentToAction(intent))
     }
 
-    class ThreadUtil(val ioScope: CoroutineScope)
+    class ThreadUtil(val mainScope: CoroutineScope)
 }
