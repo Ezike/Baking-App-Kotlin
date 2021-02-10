@@ -15,6 +15,10 @@ The Baking App displays a list of recipes, ingredients required to make it, and 
 * Dagger Hilt
 * Kotlin Gradle DSL
 
+## Prerequisite
+To build this project, you require:
+- Android Studio artic fox canary 5
+- Gradle 6.8
 
 ## Libraries
 *   [FlowBinding](https://github.com/ReactiveCircus/FlowBinding)
