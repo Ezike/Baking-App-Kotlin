@@ -17,7 +17,7 @@ The Baking App displays a list of recipes, ingredients required to make it, and 
 
 ## Prerequisite
 To build this project, you require:
-- Android Studio artic fox canary 5
+- Android Studio artic fox canary 6
 - Gradle 6.8
 
 ## Libraries
