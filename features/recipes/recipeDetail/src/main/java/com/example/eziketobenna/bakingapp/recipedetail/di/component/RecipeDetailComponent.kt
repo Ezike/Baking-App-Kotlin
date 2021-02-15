@@ -4,7 +4,6 @@ import com.example.eziketobenna.bakingapp.core.di.module.FactoryModule
 import com.example.eziketobenna.bakingapp.core.di.scope.FeatureScope
 import com.example.eziketobenna.bakingapp.di.AppComponent
 import com.example.eziketobenna.bakingapp.recipedetail.di.module.PresentationModule
-import com.example.eziketobenna.bakingapp.recipedetail.di.module.ViewModelModule
 import com.example.eziketobenna.bakingapp.recipedetail.ui.RecipeDetailFragment
 import dagger.Component
 
@@ -12,7 +11,7 @@ import dagger.Component
 @Component(
     dependencies = [AppComponent::class],
     modules = [
-        FactoryModule::class, ViewModelModule::class,
+        FactoryModule::class,
         PresentationModule::class
     ]
 )

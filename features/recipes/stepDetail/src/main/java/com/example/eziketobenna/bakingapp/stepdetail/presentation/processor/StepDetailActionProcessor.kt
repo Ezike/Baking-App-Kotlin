@@ -32,7 +32,7 @@ class StepDetailActionProcessor @Inject constructor() :
             LoadedInitialResult(
                 viewAction.index,
                 viewAction.steps,
-                viewAction.step
+                viewAction.currentStep
             )
         )
 }

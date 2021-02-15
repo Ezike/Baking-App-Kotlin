@@ -17,9 +17,6 @@ class RecipeDetailActionProcessor @Inject constructor() :
 
     override fun actionToResult(viewAction: RecipeDetailViewAction): Flow<RecipeDetailViewResult> {
         return when (viewAction) {
-            RecipeDetailViewAction.Idle -> flowOf(
-                RecipeDetailViewResult.IdleResult
-            )
             is LoadRecipeDetailAction -> handleLoadRecipeDetailAction(viewAction)
             is OpenStepInfoViewAction -> openStepInfoResult(viewAction)
         }

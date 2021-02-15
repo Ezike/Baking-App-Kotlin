@@ -5,7 +5,6 @@ import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewResult
 
 sealed class RecipeDetailViewResult : ViewResult {
-    object IdleResult : RecipeDetailViewResult()
     data class LoadedData(val ingredients: List<Ingredient>, val steps: List<Step>) :
         RecipeDetailViewResult()
 

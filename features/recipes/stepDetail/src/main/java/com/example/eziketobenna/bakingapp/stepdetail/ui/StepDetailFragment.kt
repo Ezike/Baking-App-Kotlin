@@ -72,9 +72,10 @@ class StepDetailFragment :
 
         checkScreenOrientation()
 
-        savedInstanceState?.getParcelable<VideoPlayerState>(PLAYER_STATE_KEY)?.let { state ->
-            playerState = state
-        }
+        savedInstanceState?.getParcelable<VideoPlayerState>(PLAYER_STATE_KEY)
+            ?.let { state ->
+                playerState = state
+            }
 
         merge(
             gotoNextStepIntent,
@@ -92,13 +93,13 @@ class StepDetailFragment :
     }
 
     override fun render(state: StepDetailViewState) {
+        actionBar?.title = state.toolbarTitle
         when (state) {
-            StepDetailViewState.Idle -> {
-            }
             is StepDetailViewState.Loaded -> renderLoadedState(state)
             is StepDetailViewState.FinishEvent -> state.closeEvent.consume {
                 navigator.goBack()
             }
+            else -> return
         }
     }
 
@@ -106,14 +107,11 @@ class StepDetailFragment :
         binding.stepDetail.text = state.stepDescription
         binding.stepId.text = state.progressText
         binding.previousButton.isInvisible = !state.showPrev
-        binding.nextButton.text = getNextButtonText(state.showNext)
+        binding.nextButton.text = getString(state.nextButtonText)
         binding.videoPlayer.isVisible = state.showVideo
         playerState = playerState.checkAndSet(state.videoUrl)
         binding.videoPlayer.play(this, playerState)
     }
-
-    private fun getNextButtonText(state: Boolean): String =
-        if (state) getString(R.string.next) else getString(R.string.finish)
 
     private val gotoNextStepIntent: Flow<GoToNextStepViewIntent>
         get() = binding.nextButton.clicks().map {

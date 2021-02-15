@@ -20,7 +20,7 @@ class RecipeDetailModelFactory @Inject constructor(
 ) {
 
     fun createStepInfoModel(step: Step, steps: List<Step>): StepInfoModel = StepInfoModel(
-        step = stepModelMapper.mapToModel(step),
+        currentStep = stepModelMapper.mapToModel(step),
         steps = stepModelMapper.mapToModelList(steps)
     )
 

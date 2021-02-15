@@ -16,7 +16,7 @@ abstract class StateMachine<A : ViewAction, I : ViewIntent, S : ViewState, out R
     private val reducer: ViewStateReducer<S, R>,
     initialAction: A,
     initialState: S,
-    threader: ThreadUtil
+    threadUtil: ThreadUtil
 ) {
 
     private val intents = Channel<A>(
@@ -26,7 +26,7 @@ abstract class StateMachine<A : ViewAction, I : ViewIntent, S : ViewState, out R
     val viewState: StateFlow<S> = intents.receiveAsFlow()
         .flatMapMerge(transform = actionProcessor::actionToResult)
         .scan(initialState, reducer::reduce)
-        .stateIn(threader.mainScope, SharingStarted.Lazily, initialState)
+        .stateIn(threadUtil.mainScope, SharingStarted.Lazily, initialState)
 
     fun processIntent(intent: I) {
         intents.offer(intentProcessor.intentToAction(intent))

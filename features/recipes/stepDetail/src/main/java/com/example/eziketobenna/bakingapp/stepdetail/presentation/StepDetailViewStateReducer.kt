@@ -22,10 +22,9 @@ class StepDetailViewStateReducer @Inject constructor(
         previous: StepDetailViewState,
         result: StepDetailViewResult
     ): StepDetailViewState {
-
         return when (result) {
-            StepDetailViewResult.IdleResult -> Idle
-            is LoadedInitialResult -> loadInitialViewState(result)
+            StepDetailViewResult.IdleResult -> Idle(previous.toolbarTitle)
+            is LoadedInitialResult -> loadInitialViewState(previous, result)
             is GoToNextStepViewResult -> loadNextStepViewState(previous, result)
             is GoToPreviousStepViewResult -> loadPreviousStepViewState(previous, result)
         }
@@ -36,7 +35,7 @@ class StepDetailViewStateReducer @Inject constructor(
         result: GoToPreviousStepViewResult
     ): StepDetailViewState {
         return when (oldState) {
-            Idle, is FinishEvent -> oldState
+            is Idle, is FinishEvent -> oldState
             is Loaded -> stepDetailViewStateFactory.makePreviousStep(oldState, result)
         }
     }
@@ -47,11 +46,14 @@ class StepDetailViewStateReducer @Inject constructor(
     ): StepDetailViewState {
 
         return when (oldState) {
-            Idle, is FinishEvent -> oldState
+            is Idle, is FinishEvent -> oldState
             is Loaded -> stepDetailViewStateFactory.makeNextStep(oldState, result)
         }
     }
 
-    private fun loadInitialViewState(result: LoadedInitialResult): Loaded =
-        stepDetailViewStateFactory.createInitialViewState(result)
+    private fun loadInitialViewState(
+        oldState: StepDetailViewState,
+        result: LoadedInitialResult
+    ): Loaded =
+        stepDetailViewStateFactory.createInitialViewState(oldState,result)
 }

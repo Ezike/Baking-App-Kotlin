@@ -46,7 +46,7 @@
         android:id="@+id/stepDetailFragment"
         android:name="com.example.eziketobenna.bakingapp.stepdetail.ui.StepDetailFragment"
         app:moduleName="stepDetail"
-        android:label="Step detail"
+        android:label=""
         tools:layout="@layout/fragment_step_detail">
 
         <argument

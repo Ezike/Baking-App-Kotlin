@@ -10,7 +10,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class StepDetailStateMachine @AssistedInject constructor(
-    private val intentProcessor: StepIntentProcessor,
+    intentProcessor: StepIntentProcessor,
     actionProcessor: StepActionProcessor,
     stateReducer: StepViewStateReducer,
     @Assisted private val stepInfo: StepInfoModel,
@@ -23,7 +23,7 @@ class StepDetailStateMachine @AssistedInject constructor(
     intentProcessor.intentToAction(
         StepDetailViewIntent.LoadInitialViewIntent(stepInfo)
     ),
-    StepDetailViewState.Idle,
+    StepDetailViewState.Idle(stepInfo.currentStep.shortDescription),
     threader
 ) {
     @AssistedFactory

@@ -35,9 +35,9 @@ class StepDetailIntentProcessor @Inject constructor(private val stepModelMapper:
 
     private fun loadInitialAction(intent: LoadInitialViewIntent): LoadInitialViewAction {
         return LoadInitialViewAction(
-            intent.stepInfoModel.steps.indexOf(intent.stepInfoModel.step),
+            intent.stepInfoModel.steps.indexOf(intent.stepInfoModel.currentStep),
             stepModelMapper.mapToDomainList(intent.stepInfoModel.steps),
-            stepModelMapper.mapToDomain(intent.stepInfoModel.step)
+            stepModelMapper.mapToDomain(intent.stepInfoModel.currentStep)
         )
     }
 }

@@ -17,14 +17,16 @@
 
         <TextView
             android:id="@+id/short_description"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="@dimen/sixteen_dp"
-            android:text="@{step.shortDescription}"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            tools:text="Some shortDescription"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_toStartOf="@+id/play_btn" />
 
         <ImageView
+            android:id="@+id/play_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

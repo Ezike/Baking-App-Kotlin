@@ -19,23 +19,32 @@ class RecipeDetailViewStateReducer @Inject constructor(
         previous: RecipeDetailViewState,
         result: RecipeDetailViewResult
     ): RecipeDetailViewState {
-
         return when (result) {
-            RecipeDetailViewResult.IdleResult -> RecipeDetailViewState.Idle
-            is LoadedData -> handleLoadDataResult(result)
-            is OpenStepInfo -> navigateToStepInfo(result)
+            is LoadedData -> handleLoadDataResult(previous, result)
+            is OpenStepInfo -> navigateToStepInfo(previous, result)
         }
     }
 
-    private fun navigateToStepInfo(result: OpenStepInfo): RecipeDetailViewState.NavigateToStepInfo {
+    private fun navigateToStepInfo(
+        oldState: RecipeDetailViewState,
+        result: OpenStepInfo
+    ): RecipeDetailViewState.NavigateToStepInfo {
         return RecipeDetailViewState.NavigateToStepInfo(
+            oldState.toolbarTitle,
             ViewEvent(recipeDetailModelFactory.createStepInfoModel(result.step, result.steps))
         )
     }
 
-    private fun handleLoadDataResult(result: LoadedData): RecipeDetailViewState {
+    private fun handleLoadDataResult(
+        oldState: RecipeDetailViewState,
+        result: LoadedData
+    ): RecipeDetailViewState {
         return RecipeDetailViewState.Success(
-            recipeDetailModelFactory.makeRecipeDetailModelList(result.ingredients, result.steps)
+            oldState.toolbarTitle,
+            recipeDetailModelFactory.makeRecipeDetailModelList(
+                result.ingredients,
+                result.steps
+            )
         )
     }
 }

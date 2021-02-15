@@ -5,7 +5,6 @@ import com.example.eziketobenna.bakingapp.domain.model.Step
 import com.example.eziketobenna.bakingapp.presentation.mvi.ViewAction
 
 sealed class RecipeDetailViewAction : ViewAction {
-    object Idle : RecipeDetailViewAction()
     data class LoadRecipeDetailAction(
         val ingredients: List<Ingredient>,
         val steps: List<Step>
